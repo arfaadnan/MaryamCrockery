@@ -4,7 +4,7 @@
 
     <div class="container-fluid px-4">
 
-        
+
         <!-- Logo -->
         <a class="navbar-brand d-flex align-items-center" href="{% url 'store:home' %}">
 
@@ -84,7 +84,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{% url 'store:contact' %}">
                         Contact
                     </a>
                 </li>
@@ -92,11 +92,12 @@
             </ul>
             <!-- Search -->
 
-            <form class="search-box ms-lg-3">
+            <form action="{% url 'store:search' %}" method="GET" class="search-box ms-lg-3">
 
-                <input type="search" class="search-input" placeholder="Search products...">
+                <input type="search" name="q" value="{{ request.GET.q }}" class="search-input"
+                    placeholder="Search products...">
 
-                <button class="search-btn">
+                <button type="submit" class="search-btn">
 
                     <i class="bi bi-search"></i>
 
@@ -104,23 +105,103 @@
 
             </form>
 
+
+
             <!-- Icons -->
 
             <div class="nav-icons">
 
-                <a href="#">
+                {% if user.is_authenticated %}
+
+                <div class="dropdown">
+
+                    <a href="#" class="nav-link p-0" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+
+                        <i class="bi bi-person-circle"></i>
+
+                    </a>
+
+                    <i class="bi bi-person-circle"></i>
+
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+
+                        <li>
+
+                            <span class="dropdown-item-text fw-bold">
+
+                                {{ user.username }}
+
+                            </span>
+
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+
+                            <a class="dropdown-item" href="#">
+
+                                <i class="bi bi-person me-2"></i>
+
+                                My Profile
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a class="dropdown-item" href="#">
+
+                                <i class="bi bi-bag me-2"></i>
+
+                                My Orders
+
+                            </a>
+
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+
+                            <a class="dropdown-item text-danger" href="{% url 'store:logout' %}">
+
+                                <i class="bi bi-box-arrow-right me-2"></i>
+
+                                Logout
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                {% else %}
+
+                <a href="{% url 'store:login' %}" title="Login">
 
                     <i class="bi bi-person"></i>
 
                 </a>
 
-                <a href="#">
+                {% endif %}
+
+                <a href="#" title="Wishlist">
 
                     <i class="bi bi-heart"></i>
 
                 </a>
 
-                <a href="#">
+                <a href="{% url 'store:cart' %}" title="Cart">
 
                     <i class="bi bi-cart3"></i>
 
@@ -130,8 +211,8 @@
 
             </div>
 
-        </div>
+        </div> <!-- collapse navbar-collapse -->
 
-    </div>
+    </div> <!-- container-fluid -->
 
 </nav>

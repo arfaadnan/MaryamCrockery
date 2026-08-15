@@ -1,0 +1,165 @@
+/* ==========================================
+   CHECKOUT PAGE
+========================================== */
+
+.checkout-page{
+
+    background:#f8f9fa;
+
+    padding:80px 0;
+
+    min-height:100vh;
+
+}
+
+.checkout-page h2{
+
+    font-size:40px;
+
+    font-weight:700;
+
+    color:#222;
+
+    margin-bottom:30px;
+
+}
+
+/* ==========================================
+   CARDS
+========================================== */
+
+.checkout-page .card{
+
+    border:none;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.checkout-page .card-body{
+
+    padding:35px;
+
+}
+
+/* ==========================================
+   FORM
+========================================== */
+
+.checkout-page .form-label{
+
+    font-weight:600;
+
+    color:#333;
+
+}
+
+.checkout-page .form-control{
+
+    height:50px;
+
+    border-radius:12px;
+
+    border:1px solid #ddd;
+
+}
+
+.checkout-page textarea.form-control{
+
+    height:auto;
+
+}
+
+.checkout-page .form-control:focus{
+
+    border-color:#dc3545;
+
+    box-shadow:0 0 0 .2rem rgba(220,53,69,.15);
+
+}
+
+/* ==========================================
+   PAYMENT
+========================================== */
+
+.checkout-page .form-check{
+
+    padding:14px 0;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.checkout-page .form-check:last-child{
+
+    border-bottom:none;
+
+}
+
+.checkout-page .form-check-input:checked{
+
+    background-color:#dc3545;
+
+    border-color:#dc3545;
+
+}
+
+/* ==========================================
+   ORDER SUMMARY
+========================================== */
+
+.checkout-page .sticky-top{
+
+    top:100px;
+
+}
+
+.checkout-page .text-danger{
+
+    font-weight:700;
+
+}
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+.checkout-page .btn-danger{
+
+    border-radius:50px;
+
+    padding:14px;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.checkout-page .btn-danger:hover{
+
+    transform:translateY(-3px);
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:991px){
+
+    .checkout-page .sticky-top{
+
+        position:relative!important;
+
+        top:0;
+
+        margin-top:30px;
+
+    }
+
+}

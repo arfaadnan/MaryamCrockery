@@ -85,23 +85,59 @@ Shop
                 </div>
 
                 <!-- Pagination -->
+
+                {% if products.has_other_pages %}
+
                 <div class="mt-5">
 
                     <nav>
 
                         <ul class="pagination justify-content-center">
 
-                            <li class="page-item active">
-                                <a class="page-link" href="#">1</a>
-                            </li>
+                            {% if products.has_previous %}
 
                             <li class="page-item">
-                                <a class="page-link" href="#">2</a>
+
+                                <a class="page-link"
+                                    href="?page={{ products.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}">
+
+                                    Previous
+
+                                </a>
+
                             </li>
 
-                            <li class="page-item">
-                                <a class="page-link" href="#">3</a>
+                            {% endif %}
+
+                            {% for num in products.paginator.page_range %}
+
+                            <li class="page-item {% if products.number == num %}active{% endif %}">
+
+                                <a class="page-link"
+                                    href="?page={{ num }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}">
+
+                                    {{ num }}
+
+                                </a>
+
                             </li>
+
+                            {% endfor %}
+
+                            {% if products.has_next %}
+
+                            <li class="page-item">
+
+                                <a class="page-link"
+                                    href="?page={{ products.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}">
+
+                                    Next
+
+                                </a>
+
+                            </li>
+
+                            {% endif %}
 
                         </ul>
 
@@ -109,12 +145,4 @@ Shop
 
                 </div>
 
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-{% endblock %}
+                {% endif %}

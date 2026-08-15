@@ -1,57 +1,66 @@
+```html
 <div class="filter-card">
 
-    <h4>Filter Products</h4>
+    <h4>
+        Filter Products
+    </h4>
 
     <hr>
 
-    <h6>Categories</h6>
+    <!-- Categories -->
 
-    <ul class="filter-list">
+    <h6>
+        Categories
+    </h6>
+
+    <div class="list-group mb-4">
+
+        <a href="{% url 'store:shop' %}"
+            class="list-group-item list-group-item-action {% if not selected_category %}active{% endif %}">
+
+            All Products
+
+        </a>
 
         {% for category in categories %}
 
-        <li>
+        <a href="{% url 'store:shop' %}?category={{ category.id }}"
+            class="list-group-item list-group-item-action {% if selected_category == category.id|stringformat:'s' %}active{% endif %}">
 
-            <label>
+            {{ category.name }}
 
-                <input type="checkbox">
-
-                {{ category.name }}
-
-            </label>
-
-        </li>
+        </a>
 
         {% endfor %}
 
-    </ul>
+    </div>
 
     <hr>
 
-    <h6>Price</h6>
+    <!-- Sort -->
 
-    <input type="range" class="form-range">
+    <h6>
+        Sort By
+    </h6>
 
-    <hr>
+    <form method="GET">
 
-    <h6>Availability</h6>
+        {% if selected_category %}
+        <input type="hidden" name="category" value="{{ selected_category }}">
+        {% endif %}
 
-    <label>
+        <select name="sort" class="form-select" onchange="this.form.submit()">
 
-        <input type="checkbox">
+            <option value="low" {% if selected_sort == "low" %}selected{% endif %}>
+                Price Low → High
+            </option>
 
-        In Stock
+            <option value="high" {% if selected_sort == "high" %}selected{% endif %}>
+                Price High → Low
+            </option>
 
-    </label>
+        </select>
 
-    <br>
-
-    <label>
-
-        <input type="checkbox">
-
-        Out of Stock
-
-    </label>
+    </form>
 
 </div>
