@@ -21,9 +21,7 @@ class Category(models.Model):
 
 class SubCategory(models.Model):
     category = models.ForeignKey(
-        Category,
-        on_delete=models.CASCADE,
-        related_name="subcategories"
+        Category, on_delete=models.CASCADE, related_name="subcategories"
     )
 
     name = models.CharField(max_length=100)
@@ -45,75 +43,40 @@ class SubCategory(models.Model):
 class Product(models.Model):
 
     category = models.ForeignKey(
-        Category,
-        on_delete=models.PROTECT,
-        related_name="products"
+        Category, on_delete=models.PROTECT, related_name="products"
     )
 
     subcategory = models.ForeignKey(
-        SubCategory,
-        on_delete=models.PROTECT,
-        related_name="products"
+        SubCategory, on_delete=models.PROTECT, related_name="products"
     )
 
     name = models.CharField(max_length=200)
 
-    slug = models.SlugField(
-        max_length=220,
-        unique=True,
-        blank=True,
-        null=True
-    )
+    slug = models.SlugField(max_length=220, unique=True, blank=True, null=True)
 
     sku = models.CharField(max_length=100, unique=True)
 
     description = models.TextField(blank=True)
 
-    price = models.DecimalField(
-        max_digits=12,
-        decimal_places=2
-    )
+    price = models.DecimalField(max_digits=12, decimal_places=2)
 
     sale_price = models.DecimalField(
-        max_digits=12,
-        decimal_places=2,
-        blank=True,
-        null=True
+        max_digits=12, decimal_places=2, blank=True, null=True
     )
 
     stock = models.PositiveIntegerField(default=0)
 
-    pieces = models.PositiveIntegerField(
-        blank=True,
-        null=True
-    )
+    pieces = models.PositiveIntegerField(blank=True, null=True)
 
-    material = models.CharField(
-        max_length=100,
-        blank=True
-    )
+    material = models.CharField(max_length=100, blank=True)
 
-    size = models.CharField(
-        max_length=100,
-        blank=True
-    )
+    size = models.CharField(max_length=100, blank=True)
 
-    color = models.CharField(
-        max_length=100,
-        blank=True
-    )
+    color = models.CharField(max_length=100, blank=True)
 
-    main_image = models.ImageField(
-        upload_to="products/",
-        blank=True,
-        null=True
-    )
+    main_image = models.ImageField(upload_to="products/", blank=True, null=True)
 
-    rating = models.DecimalField(
-        max_digits=2,
-        decimal_places=1,
-        default=5.0
-    )
+    rating = models.DecimalField(max_digits=2, decimal_places=1, default=5.0)
 
     reviews = models.PositiveIntegerField(default=0)
 
@@ -127,13 +90,9 @@ class Product(models.Model):
 
     is_active = models.BooleanField(default=True)
 
-    created_at = models.DateTimeField(
-        auto_now_add=True
-    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    updated_at = models.DateTimeField(
-        auto_now=True
-    )
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ["-created_at"]
@@ -143,10 +102,8 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         from django.urls import reverse
-        return reverse(
-            "store:product_detail",
-            kwargs={"slug": self.slug}
-        )
+
+        return reverse("store:product_detail", kwargs={"slug": self.slug})
 
     @property
     def final_price(self):
@@ -161,18 +118,11 @@ class Product(models.Model):
 
 class Cart(models.Model):
 
-    session_key = models.CharField(
-        max_length=100,
-        unique=True
-    )
+    session_key = models.CharField(max_length=100, unique=True)
 
-    created_at = models.DateTimeField(
-        auto_now_add=True
-    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    updated_at = models.DateTimeField(
-        auto_now=True
-    )
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.session_key
@@ -180,26 +130,14 @@ class Cart(models.Model):
 
 class CartItem(models.Model):
 
-    cart = models.ForeignKey(
-        Cart,
-        on_delete=models.CASCADE,
-        related_name="items"
-    )
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
 
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE
-    )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
-    quantity = models.PositiveIntegerField(
-        default=1
-    )
+    quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
-        unique_together = (
-            "cart",
-            "product"
-        )
+        unique_together = ("cart", "product")
 
     @property
     def subtotal(self):
@@ -212,9 +150,7 @@ class CartItem(models.Model):
 class ProductImage(models.Model):
 
     product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE,
-        related_name="images"
+        Product, on_delete=models.CASCADE, related_name="images"
     )
 
     image = models.ImageField(upload_to="products/gallery/")
@@ -275,16 +211,9 @@ class Offer(models.Model):
 
 class SiteSettings(models.Model):
 
-    store_name = models.CharField(
-        max_length=150,
-        default="Maryam Crockery"
-    )
+    store_name = models.CharField(max_length=150, default="Maryam Crockery")
 
-    logo = models.ImageField(
-        upload_to="site/",
-        blank=True,
-        null=True
-    )
+    logo = models.ImageField(upload_to="site/", blank=True, null=True)
 
     tagline = models.CharField(max_length=200, blank=True)
 
@@ -304,10 +233,88 @@ class SiteSettings(models.Model):
 
     def __str__(self):
         return self.store_name
-    
-     # ==========================================
+
+
+# ======================================
+# Order
+# ======================================
+
+
+class Order(models.Model):
+
+    STATUS_CHOICES = (
+        ("Pending", "Pending"),
+        ("Confirmed", "Confirmed"),
+        ("Shipped", "Shipped"),
+        ("Delivered", "Delivered"),
+        ("Cancelled", "Cancelled"),
+    )
+
+    PAYMENT_CHOICES = (
+        ("COD", "Cash On Delivery"),
+        ("JazzCash", "JazzCash"),
+        ("EasyPaisa", "EasyPaisa"),
+        ("Bank", "Bank Transfer"),
+    )
+
+    order_number = models.CharField(max_length=30, unique=True)
+
+    full_name = models.CharField(max_length=200)
+
+    phone = models.CharField(max_length=20)
+
+    email = models.EmailField(blank=True)
+
+    address = models.TextField()
+
+    city = models.CharField(max_length=120)
+
+    notes = models.TextField(blank=True)
+
+    payment_method = models.CharField(
+        max_length=30, choices=PAYMENT_CHOICES, default="COD"
+    )
+
+    total = models.DecimalField(max_digits=12, decimal_places=2)
+
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.order_number
+
+
+# ======================================
+# Order Item
+# ======================================
+
+
+class OrderItem(models.Model):
+
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
+
+    product = models.ForeignKey(
+        Product, on_delete=models.SET_NULL, null=True, blank=True
+    )
+
+    price = models.DecimalField(max_digits=12, decimal_places=2)
+
+    quantity = models.PositiveIntegerField()
+
+    subtotal = models.DecimalField(max_digits=12, decimal_places=2)
+
+    def __str__(self):
+        if self.product:
+            return f"{self.order.order_number} - {self.product.name}"
+        return f"{self.order.order_number} - Deleted Product"
+
+    # ==========================================
+
+
 # AUTO GENERATE SLUG
 # ==========================================
+
 
 @receiver(pre_save, sender=Category)
 def category_slug(sender, instance, **kwargs):

@@ -2,23 +2,23 @@
 
 <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
 
-    <div class="container">
+    <div class="container-fluid px-4">
 
+        
         <!-- Logo -->
-        <a class="navbar-brand" href="{% url 'store:home' %}"></a>
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'store:home' %}">
 
-        {% if site_settings.logo %}
-        <img src="{{ site_settings.logo.url }}" class="logo-img" alt="{{ site_settings.store_name }}">
-        {% else %}
-        <img src="{% static 'images/logo.png' %}" class="logo-img" alt="Logo">
-        {% endif %}
+            {% if site_settings.logo %}
+            <img src="{{ site_settings.logo.url }}" class="logo-img" alt="{{ site_settings.store_name }}">
+            {% else %}
+            <img src="{% static 'images/logo.png' %}" class="logo-img" alt="Logo">
+            {% endif %}
 
-        <h5 class="logo-title">
-            {{ site_settings.store_name|default:"Maryam Crockery" }}
-        </h5>
+            <span class="logo-title ms-2">
+                {{ site_settings.store_name|default:"Maryam Crockery" }}
+            </span>
 
         </a>
-
         <!-- Mobile Button -->
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
@@ -31,7 +31,7 @@
 
             <!-- Categories -->
 
-            <ul class="navbar-nav ms-4 align-items-lg-center">
+            <ul class="navbar-nav ms-lg-4 mb-2 mb-lg-0">
 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'store:home' %}">
@@ -92,7 +92,7 @@
             </ul>
             <!-- Search -->
 
-            <form class="search-box mx-auto">
+            <form class="search-box ms-lg-3">
 
                 <input type="search" class="search-input" placeholder="Search products...">
 

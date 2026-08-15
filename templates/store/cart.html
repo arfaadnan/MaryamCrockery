@@ -6,31 +6,23 @@ Shopping Cart
 {% endblock %}
 
 {% block extra_css %}
-
-<link rel="stylesheet"
-      href="{% static 'css/cart.css' %}">
-
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
 {% endblock %}
 
 {% block content %}
+
 <section class="cart-page py-5">
 
     <div class="container">
 
-        <!-- Heading -->
-
         <div class="text-center mb-5">
 
             <h1 class="fw-bold">
-
                 Shopping Cart
-
             </h1>
 
             <p class="text-muted">
-
                 Review your selected products before checkout.
-
             </p>
 
         </div>
@@ -39,17 +31,17 @@ Shopping Cart
 
         <div class="row">
 
-            <!-- Cart Items -->
+            <!-- LEFT SIDE -->
 
             <div class="col-lg-8">
 
                 {% for item in items %}
 
-                <div class="card shadow-sm mb-4 border-0">
+                <div class="card shadow-sm border-0 mb-4">
 
                     <div class="row g-0 align-items-center">
 
-                        <!-- Image -->
+                        <!-- IMAGE -->
 
                         <div class="col-md-3">
 
@@ -67,7 +59,7 @@ Shopping Cart
 
                         </div>
 
-                        <!-- Details -->
+                        <!-- DETAILS -->
 
                         <div class="col-md-9">
 
@@ -90,15 +82,14 @@ Shopping Cart
                                     Rs. {{ item.product.final_price }}
 
                                 </h5>
+
                                 <!-- Quantity -->
-
-
 
                                 <div class="d-flex align-items-center mt-3">
 
                                     <span class="me-3 fw-bold">
 
-                                        Quantity:
+                                        Quantity
 
                                     </span>
 
@@ -110,7 +101,7 @@ Shopping Cart
                                     </a>
 
                                     <input type="text" class="form-control text-center mx-2" value="{{ item.quantity }}"
-                                        style="width:70px;" readonly>
+                                        readonly style="width:70px;">
 
                                     <a href="{% url 'store:increase_cart' item.id %}"
                                         class="btn btn-outline-secondary btn-sm">
@@ -152,587 +143,804 @@ Shopping Cart
 
                                 </div>
 
-                                {% endfor %}
-
-                            </div>
-
-                            <!-- Right Side Summary Starts -->
-                            <!-- Order Summary -->
-
-                            <div class="col-lg-4">
-
-                                <div class="card shadow border-0 sticky-top">
-
-                                    <div class="card-body">
-
-                                        <h3 class="mb-4">
-
-                                            Order Summary
-
-                                        </h3>
-
-                                        <div class="d-flex justify-content-between mb-3">
-
-                                            <span>
-
-                                                Items
-
-                                            </span>
-
-                                            <strong>
-
-                                                {{ items|length }}
-
-                                            </strong>
-
-                                        </div>
-
-                                        <div class="d-flex justify-content-between mb-3">
-
-                                            <span>
-
-                                                Shipping
-
-                                            </span>
-
-                                            <strong class="text-success">
-
-                                                Free
-
-                                            </strong>
-
-                                        </div>
-
-                                        <div class="d-flex justify-content-between mb-3">
-
-                                            <span>
-
-                                                Tax
-
-                                            </span>
-
-                                            <strong>
-
-                                                Rs. 0
-
-                                            </strong>
-
-                                        </div>
-
-                                        <hr>
-
-                                        <div class="d-flex justify-content-between">
-
-                                            <h5>
-
-                                                Total
-
-                                            </h5>
-
-                                            <h4 class="text-danger">
-
-                                                Rs. {{ total }}
-
-                                            </h4>
-
-                                        </div>
-
-                                        <div class="d-grid gap-3 mt-4">
-
-                                            <a href="#" class="btn btn-danger btn-lg">
-
-                                                Proceed To Checkout
-
-                                            </a>
-
-                                            <a href="{% url 'store:shop' %}" class="btn btn-outline-dark">
-
-                                                Continue Shopping
-
-                                            </a>
-
-                                        </div>
-
-                                        <hr>
-
-                                        <h5>
-
-                                            We Accept
-
-                                        </h5>
-
-                                        <div class="mt-3 d-flex gap-3 fs-2">
-
-                                            <i class="bi bi-credit-card"></i>
-
-                                            <i class="bi bi-wallet2"></i>
-
-                                            <i class="bi bi-bank"></i>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
                             </div>
 
                         </div>
 
-                        {% else %}
+                    </div>
 
-                        <!-- Empty Cart -->
+                </div>
 
-                        <div class="text-center py-5">
+                {% endfor %}
 
-                            <img src="{% static 'images/empty-cart.png' %}" alt="Empty Cart" style="max-width:220px;">
+            </div>
 
-                            <h2 class="mt-4">
+            <!-- RIGHT SIDE -->
 
-                                Your Cart Is Empty
+            <div class="col-lg-4">
 
-                            </h2>
+                <div class="card shadow border-0 sticky-top">
 
-                            <p class="text-muted">
+                    <div class="card-body">
 
-                                Looks like you haven't added anything yet.
+                        <h3 class="mb-4">
 
-                            </p>
+                            Order Summary
 
-                            <a href="{% url 'store:shop' %}" class="btn btn-danger btn-lg mt-3">
+                        </h3>
 
-                                Start Shopping
+                        <div class="d-flex justify-content-between mb-3">
+
+                            <span>
+
+                                Items
+
+                            </span>
+
+                            <strong>
+
+                                {{ items|length }}
+
+                            </strong>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3">
+
+                            <span>
+
+                                Shipping
+
+                            </span>
+
+                            <strong class="text-success">
+
+                                Free
+
+                            </strong>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3">
+
+                            <span>
+
+                                Tax
+
+                            </span>
+
+                            <strong>
+
+                                Rs. 0
+
+                            </strong>
+
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between">
+
+                            <h5>
+
+                                Total
+
+                            </h5>
+
+                            <h4 class="text-danger">
+
+                                Rs. {{ total }}
+
+                            </h4>
+
+                        </div>
+
+                        <div class="d-grid gap-3 mt-4">
+
+                            <a href="#" class="btn btn-danger btn-lg">
+
+                                Proceed To Checkout
+
+                            </a>
+
+                            <a href="{% url 'store:shop' %}" class="btn btn-outline-dark">
+
+                                Continue Shopping
 
                             </a>
 
                         </div>
 
+                        <hr>
+
+                        <h5>
+
+                            We Accept
+
+                        </h5>
+
+                        <div class="mt-3 d-flex gap-3 fs-2">
+
+                            <i class="bi bi-credit-card"></i>
+
+                            <i class="bi bi-wallet2"></i>
+
+                            <i class="bi bi-bank"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <!-- EMPTY CART -->
+
+
+
+        <div class="text-center py-5">
+
+            <img src="{% static 'images/empty-cart.png' %}" alt="Empty Cart" class="img-fluid mb-4"
+                style="max-width:280px;">
+
+            <h2 class="fw-bold">
+
+                Your Cart is Empty
+
+            </h2>
+
+            <p class="text-muted mt-3">
+
+                Looks like you haven't added any products yet.
+
+            </p>
+
+            <a href="{% url 'store:shop' %}" class="btn btn-danger btn-lg mt-4">
+
+                Continue Shopping
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+<!-- ======================================
+BENEFITS
+======================================= -->
+
+<section class="cart-benefits py-5 bg-light">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="benefit-card text-center p-4">
+
+                    <i class="bi bi-truck text-danger"></i>
+
+                    <h5>
+
+                        Fast Delivery
+
+                    </h5>
+
+                    <p>
+
+                        Fast delivery across Pakistan.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="benefit-card text-center p-4">
+
+                    <i class="bi bi-shield-check text-success"></i>
+
+                    <h5>
+
+                        Secure Payment
+
+                    </h5>
+
+                    <p>
+
+                        Safe and trusted payment methods.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="benefit-card text-center p-4">
+
+                    <i class="bi bi-arrow-repeat text-primary"></i>
+
+                    <h5>
+
+                        Easy Returns
+
+                    </h5>
+
+                    <p>
+
+                        Hassle-free replacement policy.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================
+PAYMENT INFORMATION
+====================================== -->
+
+<section class="payment-info py-5">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-8">
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-body">
+
+                        <h3>
+
+                            Payment Methods
+
+                        </h3>
+
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item">
+
+                                💵 Cash On Delivery (COD)
+
+                            </li>
+
+                            <li class="list-group-item">
+
+                                📱 JazzCash
+
+                            </li>
+
+                            <li class="list-group-item">
+
+                                💳 EasyPaisa
+
+                            </li>
+
+                            <li class="list-group-item">
+
+                                🏦 Bank Transfer
+
+                            </li>
+
+                        </ul>
+
+                        <div class="alert alert-info mt-4">
+
+                            After placing your order, our team will contact
+                            you to confirm your order.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body text-center">
+
+                        <i class="bi bi-headset display-3 text-danger"></i>
+
+                        <h4 class="mt-3">
+
+                            Need Help?
+
+                        </h4>
+
+                        <p class="text-muted">
+
+                            Contact our support team for any questions
+                            regarding your order.
+
+                        </p>
+
+                        {% if site_settings.phone %}
+
+                        <h5>
+
+                            {{ site_settings.phone }}
+
+                        </h5>
+
                         {% endif %}
 
-                        <!-- =========================================
-        Delivery & Benefits
-        ========================================== -->
+                        {% if site_settings.email %}
 
-                        <section class="cart-benefits mt-5">
+                        <p>
 
-                            <div class="row g-4">
+                            {{ site_settings.email }}
 
-                                <div class="col-lg-4">
+                        </p>
 
-                                    <div class="benefit-card text-center p-4 shadow-sm rounded">
+                        {% endif %}
 
-                                        <i class="bi bi-truck display-4 text-danger"></i>
+                    </div>
 
-                                        <h5 class="mt-3">
+                </div>
 
-                                            Free Delivery
+            </div>
 
-                                        </h5>
+        </div>
 
-                                        <p class="text-muted">
+    </div>
 
-                                            Free delivery all over Pakistan on eligible orders.
+</section>
 
-                                        </p>
+<!-- ======================================
+SUPPORT FEATURES
+====================================== -->
 
-                                    </div>
+<section class="support-section py-5 bg-light">
 
-                                </div>
+    <div class="container">
 
-                                <div class="col-lg-4">
+        <div class="row g-4">
 
-                                    <div class="benefit-card text-center p-4 shadow-sm rounded">
+            <div class="col-md-4">
 
-                                        <i class="bi bi-arrow-repeat display-4 text-success"></i>
+                <div class="support-box text-center">
 
-                                        <h5 class="mt-3">
+                    <i class="bi bi-award"></i>
 
-                                            Easy Returns
+                    <h5>
 
-                                        </h5>
+                        Premium Quality
 
-                                        <p class="text-muted">
+                    </h5>
 
-                                            Easy replacement for damaged products.
+                    <p>
 
-                                        </p>
+                        We provide premium quality crockery and household products.
 
-                                    </div>
+                    </p>
 
-                                </div>
+                </div>
 
-                                <div class="col-lg-4">
+            </div>
 
-                                    <div class="benefit-card text-center p-4 shadow-sm rounded">
+            <div class="col-md-4">
 
-                                        <i class="bi bi-shield-check display-4 text-primary"></i>
+                <div class="support-box text-center">
 
-                                        <h5 class="mt-3">
+                    <i class="bi bi-box-seam"></i>
 
-                                            Secure Shopping
+                    <h5>
 
-                                        </h5>
+                        Safe Packaging
 
-                                        <p class="text-muted">
+                    </h5>
 
-                                            Your payments and personal information are secure.
+                    <p>
 
-                                        </p>
+                        Every order is packed carefully to avoid damage.
 
-                                    </div>
+                    </p>
 
-                                </div>
+                </div>
 
-                            </div>
+            </div>
 
-                        </section>
+            <div class="col-md-4">
 
-                        <!-- =========================================
-        Payment Information
-        ========================================== -->
+                <div class="support-box text-center">
 
-                        <section class="payment-info mt-5">
+                    <i class="bi bi-patch-check"></i>
 
-                            <div class="card border-0 shadow">
+                    <h5>
 
-                                <div class="card-body p-4">
+                        Trusted Store
 
-                                    <h3 class="mb-4">
+                    </h5>
 
-                                        Payment Options
+                    <p>
 
-                                    </h3>
+                        Thousands of happy customers trust our products.
 
-                                    <div class="row">
+                    </p>
 
-                                        <div class="col-md-6">
+                </div>
 
-                                            <ul class="list-group list-group-flush">
+            </div>
 
-                                                <li class="list-group-item">
+        </div>
 
-                                                    ✅ Cash on Delivery
+    </div>
 
-                                                </li>
+</section>
 
-                                                <li class="list-group-item">
+<!-- ======================================
+CONTINUE SHOPPING BANNER
+====================================== -->
 
-                                                    ✅ JazzCash
+<section class="shopping-banner py-5">
 
-                                                </li>
+    <div class="container">
 
-                                                <li class="list-group-item">
+        <div class="bg-light rounded-4 shadow-sm p-5 text-center">
 
-                                                    ✅ EasyPaisa
+            <h2 class="fw-bold">
 
-                                                </li>
+                Continue Shopping
 
-                                                <li class="list-group-item">
+            </h2>
 
-                                                    ✅ Bank Transfer
+            <p class="text-muted mt-3">
 
-                                                </li>
+                Discover our latest crockery and household collections.
 
-                                            </ul>
+            </p>
 
-                                        </div>
+            <a href="{% url 'store:shop' %}" class="btn btn-danger btn-lg mt-3">
 
-                                        <div class="col-md-6">
+                Continue Shopping
 
-                                            <div class="alert alert-success">
+            </a>
 
-                                                <h5>
+        </div>
 
-                                                    Safe & Secure Checkout
+    </div>
 
-                                                </h5>
+</section>
 
-                                                <p class="mb-0">
+<!-- ======================================
+RECOMMENDED PRODUCTS
+====================================== -->
 
-                                                    We use secure payment methods to keep your information protected.
+{% if featured_products %}
 
-                                                </p>
+<section class="recommended-products py-5">
 
-                                            </div>
+    <div class="container">
 
-                                        </div>
+        <div class="text-center mb-5">
 
-                                    </div>
+            <h2 class="fw-bold">
 
-                                </div>
+                You May Also Like
 
-                            </div>
+            </h2>
 
-                        </section>
+            <p class="text-muted">
 
-                        <!-- =========================================
-        Customer Support
-        ========================================== -->
+                Featured products selected for you.
 
-                        <section class="support-section mt-5">
+            </p>
 
-                            <div class="row g-4">
+        </div>
 
-                                <div class="col-md-4">
+        <div class="row g-4">
 
-                                    <div class="support-box text-center">
+            {% for product in featured_products %}
 
-                                        <i class="bi bi-headset display-5"></i>
+            <div class="col-lg-3 col-md-6">
 
-                                        <h5 class="mt-3">
+                <div class="card h-100 shadow-sm">
 
-                                            24/7 Support
+                    {% if product.main_image %}
 
-                                        </h5>
+                    <img src="{{ product.main_image.url }}" class="card-img-top" alt="{{ product.name }}">
 
-                                        <p>
+                    {% else %}
 
-                                            We are always here to help.
+                    <img src="{% static 'images/product-placeholder.jpg' %}" class="card-img-top" alt="Product">
 
-                                        </p>
+                    {% endif %}
 
-                                    </div>
+                    <div class="card-body text-center">
 
-                                </div>
+                        <h5>
 
-                                <div class="col-md-4">
+                            {{ product.name }}
 
-                                    <div class="support-box text-center">
+                        </h5>
 
-                                        <i class="bi bi-box-seam display-5"></i>
+                        <p class="text-danger fw-bold">
 
-                                        <h5 class="mt-3">
+                            Rs. {{ product.final_price }}
 
-                                            Safe Packaging
+                        </p>
 
-                                        </h5>
+                        <a href="{{ product.get_absolute_url }}" class="btn btn-outline-dark">
 
-                                        <p>
-
-                                            Every product is packed with extra care.
-
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-4">
-
-                                    <div class="support-box text-center">
-
-                                        <i class="bi bi-award display-5"></i>
-
-                                        <h5 class="mt-3">
-
-                                            Premium Quality
-
-                                        </h5>
-
-                                        <p>
-
-                                            100% original premium crockery products.
-
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </section>
-
-                        <!-- =========================================
-        Recommended Products
-        ========================================== -->
-
-                        <section class="recommended-products mt-5">
-
-                            <div class="section-title mb-4 text-center">
-
-                                <h2>
-
-                                    You May Also Like
-
-                                </h2>
-
-                                <p class="text-muted">
-
-                                    Discover more premium crockery products.
-
-                                </p>
-
-                            </div>
-
-                            <div class="row g-4">
-
-                                {% for product in items|slice:":4" %}
-
-                                <div class="col-lg-3 col-md-6">
-
-                                    <div class="card border-0 shadow-sm h-100">
-
-                                        {% if product.product.main_image %}
-
-                                        <img src="{{ product.product.main_image.url }}" class="card-img-top"
-                                            alt="{{ product.product.name }}">
-
-                                        {% else %}
-
-                                        <img src="{% static 'images/product-placeholder.jpg' %}" class="card-img-top"
-                                            alt="Product">
-
-                                        {% endif %}
-
-                                        <div class="card-body">
-
-                                            <h5>
-
-                                                {{ product.product.name }}
-
-                                            </h5>
-
-                                            <p class="text-danger fw-bold">
-
-                                                Rs. {{ product.product.final_price }}
-
-                                            </p>
-
-                                            <a href="{% url 'store:product_detail' product.product.slug %}"
-                                                class="btn btn-outline-dark w-100">
-
-                                                View Details
-
-                                            </a>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                {% endfor %}
-
-                            </div>
-
-                        </section>
-
-                        <!-- =========================================
-        Continue Shopping Banner
-        ========================================== -->
-
-                        <section class="shopping-banner mt-5">
-
-                            <div class="p-5 rounded text-center bg-light shadow-sm">
-
-                                <h2>
-
-                                    Continue Shopping
-
-                                </h2>
-
-                                <p class="text-muted">
-
-                                    Explore hundreds of premium crockery items for your home.
-
-                                </p>
-
-                                <a href="{% url 'store:shop' %}" class="btn btn-danger btn-lg mt-3">
-
-                                    Browse Products
-
-                                </a>
-
-                            </div>
-
-                        </section>
-
-                        <!-- =========================================
-        Newsletter
-        ========================================== -->
-
-                        <section class="newsletter-section mt-5">
-
-                            <div class="card border-0 shadow">
-
-                                <div class="card-body text-center p-5">
-
-                                    <h2>
-
-                                        Subscribe To Our Newsletter
-
-                                    </h2>
-
-                                    <p class="text-muted">
-
-                                        Receive updates about new arrivals and exclusive discounts.
-
-                                    </p>
-
-                                    <form class="row justify-content-center mt-4">
-
-                                        <div class="col-md-6">
-
-                                            <input type="email" class="form-control" placeholder="Enter your email">
-
-                                        </div>
-
-                                        <div class="col-md-2">
-
-                                            <button class="btn btn-dark w-100" type="submit">
-
-                                                Subscribe
-
-                                            </button>
-
-                                        </div>
-
-                                    </form>
-
-                                </div>
-
-                            </div>
-
-                        </section>
-
-                        <!-- =========================================
-        Floating Buttons
-        ========================================== -->
-
-                        <a href="#" class="floating-whatsapp">
-
-                            <i class="bi bi-whatsapp"></i>
+                            View Product
 
                         </a>
 
-                        <button id="backToTop" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+                    </div>
 
-                            <i class="bi bi-chevron-up"></i>
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+<!-- ======================================
+NEWSLETTER
+====================================== -->
+
+<section class="newsletter-section py-5 bg-light">
+
+    <div class="container">
+
+        <div class="card border-0 shadow">
+
+            <div class="card-body text-center p-5">
+
+                <h2 class="fw-bold">
+
+                    Subscribe To Our Newsletter
+
+                </h2>
+
+                <p class="text-muted mt-3">
+
+                    Get updates about new arrivals, special offers,
+                    discounts and premium crockery collections.
+
+                </p>
+
+                <form class="row justify-content-center mt-4">
+
+                    <div class="col-lg-6 col-md-8 mb-3">
+
+                        <input type="email" class="form-control form-control-lg" placeholder="Enter your email address">
+
+                    </div>
+
+                    <div class="col-lg-2 col-md-4">
+
+                        <button type="submit" class="btn btn-danger btn-lg w-100">
+
+                            Subscribe
 
                         </button>
 
                     </div>
 
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
 
+<!-- ======================================
+STORE FEATURES
+====================================== -->
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row text-center g-4">
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="support-box">
+
+                    <i class="bi bi-truck text-danger display-5"></i>
+
+                    <h5 class="mt-3">
+
+                        Fast Delivery
+
+                    </h5>
+
+                    <p class="text-muted">
+
+                        Delivery available all over Pakistan.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="support-box">
+
+                    <i class="bi bi-credit-card text-primary display-5"></i>
+
+                    <h5 class="mt-3">
+
+                        Secure Payments
+
+                    </h5>
+
+                    <p class="text-muted">
+
+                        Safe and secure payment options.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="support-box">
+
+                    <i class="bi bi-arrow-repeat text-success display-5"></i>
+
+                    <h5 class="mt-3">
+
+                        Easy Returns
+
+                    </h5>
+
+                    <p class="text-muted">
+
+                        Easy replacement on damaged products.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="support-box">
+
+                    <i class="bi bi-headset text-warning display-5"></i>
+
+                    <h5 class="mt-3">
+
+                        24/7 Support
+
+                    </h5>
+
+                    <p class="text-muted">
+
+                        We're always here to help you.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================
+FLOATING BUTTONS
+====================================== -->
+
+{% if site_settings.whatsapp %}
+
+<a href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank" class="floating-whatsapp">
+
+    <i class="bi bi-whatsapp"></i>
+
+</a>
+
+{% endif %}
+
+<button id="backToTop" class="back-to-top">
+
+    <i class="bi bi-chevron-up"></i>
+
+</button>
+
+<!-- ======================================
+FOOTER MESSAGE
+====================================== -->
+
+<section class="py-5 bg-white border-top">
+
+    <div class="container">
+
+        <div class="text-center">
+
+            <h4 class="fw-bold">
+
+                Thank You For Shopping With Us ❤️
+
+            </h4>
+
+            <p class="text-muted mt-3">
+
+                Maryam Crockery Store is committed to providing
+                premium quality crockery and household products
+                with excellent customer service.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
 <script>
+
+    const backToTop = document.getElementById("backToTop");
 
     window.addEventListener("scroll", function () {
 
-        const btn = document.getElementById("backToTop");
+        if (window.pageYOffset > 300) {
 
-        if (window.scrollY > 300) {
+            backToTop.style.display = "flex";
 
-            btn.style.display = "flex";
+        } else {
 
-        }
-
-        else {
-
-            btn.style.display = "none";
+            backToTop.style.display = "none";
 
         }
+
+    });
+
+    backToTop.addEventListener("click", function () {
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
 
     });
 
