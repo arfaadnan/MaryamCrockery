@@ -1,0 +1,66 @@
+<section class="category-section">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="section-tag">
+                    Shop By Category
+                </span>
+
+                <h2>
+                    Find Your Perfect Collection
+                </h2>
+
+                <p>
+                    Explore our premium crockery and kitchen essentials.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="row g-4">
+
+            {% for category in categories %}
+
+            <div class="col-lg-3 col-md-4 col-6">
+
+                <a href="#" class="category-card">
+
+                    <div class="category-image">
+
+                        {% if category.image %}
+                        <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                        {% else %}
+                        <div class="category-placeholder">
+                            <i class="bi bi-grid"></i>
+                        </div>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="category-body">
+
+                        <h5>{{ category.name }}</h5>
+
+                        <span>
+                            Explore Collection
+                            <i class="bi bi-arrow-right"></i>
+                        </span>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>

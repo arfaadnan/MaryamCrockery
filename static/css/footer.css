@@ -1,0 +1,233 @@
+/*==========================================
+FOOTER
+==========================================*/
+
+
+
+.footer{
+
+    background:linear-gradient(180deg,#111827,#0B1220) !important;
+
+    color:#fff !important;
+
+    padding-top:90px;
+
+}
+
+.footer-logo{
+
+    font-size:34px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+    color:#fff;
+
+}
+
+.footer-text{
+
+    color:#c9d1d9;
+
+    line-height:1.9;
+
+    margin-bottom:30px;
+
+}
+
+.footer h5{
+
+    color:#fff;
+
+    margin-bottom:25px;
+
+    font-size:20px;
+
+}
+
+.footer ul{
+
+    list-style:none;
+
+    padding:0;
+
+}
+
+.footer li{
+
+    margin-bottom:14px;
+
+}
+
+.footer a{
+
+    color:#c9d1d9;
+
+    transition:.3s;
+
+}
+
+.footer a:hover{
+
+    color:#C9A227;
+
+    padding-left:8px;
+
+}
+
+.footer-social{
+
+    display:flex;
+
+    gap:14px;
+
+}
+
+.footer-social a{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:50%;
+
+    background:#1E293B;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#fff;
+
+    transition:.3s;
+
+}
+
+.footer-social a:hover{
+
+    background:#C9A227;
+
+    transform:translateY(-5px);
+
+}
+
+.footer-contact li{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:flex-start;
+
+}
+
+.footer-contact i{
+
+    color:#C9A227;
+
+    font-size:18px;
+
+    margin-top:3px;
+
+}
+
+.footer-bottom{
+
+    margin-top:70px;
+
+    background:#070D18;
+
+    padding:28px 0;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.footer-bottom strong{
+
+    color:#fff;
+
+}
+
+.footer-bottom small{
+
+    color:#9CA3AF;
+
+}
+
+.made-by{
+
+    color:#d1d5db;
+
+}
+
+.made-by strong{
+
+    color:#C9A227;
+
+}
+
+.made-by i{
+
+    color:#EF4444;
+
+    margin:0 6px;
+
+    animation:heart 1.5s infinite;
+
+}
+
+.payment-icon{
+
+    color:#C9A227;
+
+    font-size:24px;
+
+    margin-left:12px;
+
+    transition:.3s;
+
+}
+
+.payment-icon:hover{
+
+    transform:translateY(-4px);
+
+}
+
+@keyframes heart{
+
+    0%{transform:scale(1);}
+
+    50%{transform:scale(1.25);}
+
+    100%{transform:scale(1);}
+
+}
+
+@media(max-width:768px){
+
+.footer{
+
+text-align:center;
+
+}
+
+.footer-social{
+
+justify-content:center;
+
+margin-bottom:25px;
+
+}
+
+.footer-contact li{
+
+justify-content:center;
+
+}
+
+}

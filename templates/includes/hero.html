@@ -1,0 +1,132 @@
+{% load static %}
+
+<section class="hero-section">
+
+    <div class="container">
+
+        {% if banners %}
+
+        <div id="heroSlider"
+             class="carousel slide carousel-fade"
+             data-bs-ride="carousel">
+
+            <div class="carousel-indicators">
+
+                {% for banner in banners %}
+
+                <button
+                    type="button"
+                    data-bs-target="#heroSlider"
+                    data-bs-slide-to="{{ forloop.counter0 }}"
+                    class="{% if forloop.first %}active{% endif %}">
+                </button>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="carousel-inner">
+
+                {% for banner in banners %}
+
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+
+                    <div class="hero-banner">
+
+                        <img src="{{ banner.image.url }}"
+                             alt="{{ banner.title }}">
+
+                        <div class="hero-overlay"></div>
+
+                        <div class="hero-content">
+
+                            <span class="hero-tag">
+
+                                Premium Collection
+
+                            </span>
+
+                            {% if banner.title %}
+
+                            <h1>
+
+                                {{ banner.title }}
+
+                            </h1>
+
+                            {% endif %}
+
+                            {% if banner.subtitle %}
+
+                            <p>
+
+                                {{ banner.subtitle }}
+
+                            </p>
+
+                            {% endif %}
+
+                            {% if banner.button_text %}
+
+                            <a href="{{ banner.button_url|default:'#' }}"
+                               class="hero-btn">
+
+                                {{ banner.button_text }}
+
+                            </a>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <button class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#heroSlider"
+                    data-bs-slide="prev">
+
+                <span class="carousel-control-prev-icon"></span>
+
+            </button>
+
+            <button class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#heroSlider"
+                    data-bs-slide="next">
+
+                <span class="carousel-control-next-icon"></span>
+
+            </button>
+
+        </div>
+
+        {% else %}
+
+        <div class="hero-empty">
+
+            <h2>
+
+                Welcome to {{ site_settings.store_name }}
+
+            </h2>
+
+            <p>
+
+                Please add banners from Django Admin.
+
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>

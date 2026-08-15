@@ -1,0 +1,85 @@
+/* ==========================================
+   INSTAGRAM
+========================================== */
+
+.instagram-section{
+
+    padding:90px 0;
+
+}
+
+.instagram-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:18px;
+
+    cursor:pointer;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.instagram-card img{
+
+    width:100%;
+
+    height:220px;
+
+    object-fit:cover;
+
+    transition:.4s;
+
+}
+
+.instagram-card:hover img{
+
+    transform:scale(1.08);
+
+}
+
+.instagram-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(15,118,110,.75);
+
+    opacity:0;
+
+    transition:.35s;
+
+}
+
+.instagram-card:hover .instagram-overlay{
+
+    opacity:1;
+
+}
+
+.instagram-overlay i{
+
+    color:#fff;
+
+    font-size:42px;
+
+}
+
+@media(max-width:768px){
+
+.instagram-card img{
+
+height:160px;
+
+}
+
+}

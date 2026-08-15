@@ -1,0 +1,1713 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ product.name }} | {{ site_settings.store_name }}
+{% endblock %}
+
+{% block content %}
+
+<section class="product-detail-page py-5">
+
+    <div class="container">
+
+        <!-- Breadcrumb -->
+
+        <nav aria-label="breadcrumb" class="mb-4">
+
+            <ol class="breadcrumb">
+
+                <li class="breadcrumb-item">
+
+                    <a href="{% url 'store:home' %}">
+
+                        Home
+
+                    </a>
+
+                </li>
+
+                <li class="breadcrumb-item">
+
+                    <a href="{% url 'store:shop' %}">
+
+                        Shop
+
+                    </a>
+
+                </li>
+
+                <li class="breadcrumb-item">
+
+                    {{ product.category.name }}
+
+                </li>
+
+                <li class="breadcrumb-item active">
+
+                    {{ product.name }}
+
+                </li>
+
+            </ol>
+
+        </nav>
+
+        <div class="row g-5">
+
+            <!-- LEFT -->
+
+            <div class="col-lg-6">
+
+                <div class="product-gallery">
+
+                    {% if product.main_image %}
+
+                    <img id="mainImage" src="{{ product.main_image.url }}"
+                        class="img-fluid rounded shadow product-main-image" alt="{{ product.name }}">
+
+                    {% else %}
+
+                    <img id="mainImage" src="{% static 'images/product-placeholder.jpg' %}"
+                        class="img-fluid rounded shadow product-main-image" alt="Product">
+
+                    {% endif %}
+
+                    <div class="row mt-3 g-2">
+
+                        {% if product.main_image %}
+
+                        <div class="col-3">
+
+                            <img src="{{ product.main_image.url }}" class="img-thumbnail gallery-thumb active-thumb"
+                                onclick="changeImage(this)">
+
+                        </div>
+
+                        {% endif %}
+
+                        {% for image in product.images.all %}
+
+                        <div class="col-3">
+
+                            <img src="{{ image.image.url }}" class="img-thumbnail gallery-thumb"
+                                onclick="changeImage(this)">
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+
+            <div class="col-lg-6">
+
+                <span class="badge bg-danger mb-3">
+
+                    {% if product.is_sale %}
+                    Sale
+                    {% else %}
+                    Premium
+                    {% endif %}
+
+                </span>
+
+                <h1 class="fw-bold">
+
+                    {{ product.name }}
+
+                </h1>
+
+                <div class="d-flex align-items-center mb-3">
+
+                    <div class="text-warning">
+
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+
+                    </div>
+
+                    <span class="ms-3">
+
+                        {{ product.rating }}
+
+                        ({{ product.reviews }} Reviews)
+
+                    </span>
+
+                </div>
+
+                {% if product.sale_price %}
+
+                <h2 class="text-danger fw-bold">
+
+                    Rs. {{ product.sale_price }}
+
+                    <small class="text-decoration-line-through text-muted fs-5">
+
+                        Rs. {{ product.price }}
+
+                    </small>
+
+                </h2>
+
+                {% else %}
+
+                <h2 class="fw-bold">
+
+                    Rs. {{ product.price }}
+
+                </h2>
+
+                {% endif %}
+
+                <div class="product-meta mt-4">
+
+                    <div class="row">
+
+                        <div class="col-6">
+
+                            <strong>SKU</strong>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            {{ product.sku }}
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-6">
+
+                            <strong>Category</strong>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            {{ product.category.name }}
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-6">
+
+                            <strong>Sub Category</strong>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            {{ product.subcategory.name }}
+
+                        </div>
+
+                    </div>
+
+                    {% if product.material %}
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-6">
+
+                            <strong>Material</strong>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            {{ product.material }}
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+                    {% if product.color %}
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-6">
+
+                            <strong>Color</strong>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            {{ product.color }}
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+                    {% if product.size %}
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-6">
+
+                            <strong>Size</strong>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            {{ product.size }}
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+                    {% if product.pieces %}
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-6">
+
+                            <strong>Pieces</strong>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            {{ product.pieces }}
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-6">
+
+                            <strong>Availability</strong>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            {% if product.in_stock %}
+
+                            <span class="badge bg-success">
+
+                                In Stock
+
+                            </span>
+
+                            {% else %}
+
+                            <span class="badge bg-danger">
+
+                                Out Of Stock
+
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Quantity -->
+
+                <div class="mt-4">
+
+                    <label class="form-label fw-bold">
+
+                        Quantity
+
+                    </label>
+
+                    <div class="quantity-wrapper d-flex align-items-center">
+
+                        <button class="btn btn-outline-secondary" type="button" onclick="decreaseQty()">
+
+                            <i class="bi bi-dash"></i>
+
+                        </button>
+
+                        <input type="number" id="quantity" class="form-control text-center mx-2" value="1" min="1"
+                            style="width:90px;">
+
+                        <button class="btn btn-outline-secondary" type="button" onclick="increaseQty()">
+
+                            <i class="bi bi-plus"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- Buttons -->
+
+                <div class="d-grid gap-3 mt-4">
+
+                    <a href="{% url 'store:add_to_cart' product.slug %}" class="btn btn-danger btn-lg">
+
+                        <i class="bi bi-cart-plus"></i>
+
+                        Add To Cart
+
+                    </a>
+                    <a href="#" class="btn btn-dark btn-lg">
+
+                        <i class="bi bi-lightning-charge-fill"></i>
+
+                        Buy Now
+
+                    </a>
+
+                    <a href="#" class="btn btn-outline-danger">
+
+                        <i class="bi bi-heart"></i>
+
+                        Add To Wishlist
+
+                    </a>
+
+                </div>
+
+                <!-- Short Description -->
+
+                <div class="mt-5">
+
+                    <h4>
+
+                        Product Description
+
+                    </h4>
+
+                    <p class="text-muted mt-3">
+
+                        {{ product.description|truncatewords:40 }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- =========================================
+        Product Tabs
+        ========================================== -->
+
+        <div class="row mt-5">
+
+            <div class="col-12">
+
+                <ul class="nav nav-tabs" id="productTabs" role="tablist">
+
+                    <li class="nav-item">
+
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#description">
+
+                            Description
+
+                        </button>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#information">
+
+                            Additional Information
+
+                        </button>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#shipping">
+
+                            Shipping & Returns
+
+                        </button>
+
+                    </li>
+
+                </ul>
+
+                <div class="tab-content border border-top-0 p-4">
+
+                    <!-- Description -->
+
+                    <div class="tab-pane fade show active" id="description">
+
+                        {% if product.description %}
+
+                        {{ product.description|linebreaks }}
+
+                        {% else %}
+
+                        <p>
+
+                            Product description will be updated soon.
+
+                        </p>
+
+                        {% endif %}
+
+                    </div>
+
+                    <!-- Additional Information -->
+
+                    <div class="tab-pane fade" id="information">
+
+                        <table class="table table-bordered">
+
+                            <tbody>
+
+                                <tr>
+
+                                    <th width="220">
+
+                                        Category
+
+                                    </th>
+
+                                    <td>
+
+                                        {{ product.category.name }}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+
+                                        Sub Category
+
+                                    </th>
+
+                                    <td>
+
+                                        {{ product.subcategory.name }}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+
+                                        SKU
+
+                                    </th>
+
+                                    <td>
+
+                                        {{ product.sku }}
+
+                                    </td>
+
+                                </tr>
+
+                                {% if product.material %}
+
+                                <tr>
+
+                                    <th>
+
+                                        Material
+
+                                    </th>
+
+                                    <td>
+
+                                        {{ product.material }}
+
+                                    </td>
+
+                                </tr>
+
+                                {% endif %}
+
+                                {% if product.color %}
+
+                                <tr>
+
+                                    <th>
+
+                                        Color
+
+                                    </th>
+
+                                    <td>
+
+                                        {{ product.color }}
+
+                                    </td>
+
+                                </tr>
+
+                                {% endif %}
+
+                                {% if product.size %}
+
+                                <tr>
+
+                                    <th>
+
+                                        Size
+
+                                    </th>
+
+                                    <td>
+
+                                        {{ product.size }}
+
+                                    </td>
+
+                                </tr>
+
+                                {% endif %}
+
+                                {% if product.pieces %}
+
+                                <tr>
+
+                                    <th>
+
+                                        Pieces
+
+                                    </th>
+
+                                    <td>
+
+                                        {{ product.pieces }}
+
+                                    </td>
+
+                                </tr>
+
+                                {% endif %}
+
+                                <tr>
+
+                                    <th>
+
+                                        Stock
+
+                                    </th>
+
+                                    <td>
+
+                                        {{ product.stock }}
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <!-- Shipping -->
+
+                    <div class="tab-pane fade" id="shipping">
+
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item">
+
+                                🚚 Delivery available all over Pakistan.
+
+                            </li>
+
+                            <li class="list-group-item">
+
+                                📦 Secure packaging for fragile crockery.
+
+                            </li>
+
+                            <li class="list-group-item">
+
+                                🔄 Easy return policy for eligible products.
+
+                            </li>
+
+                            <li class="list-group-item">
+
+                                💳 Cash on Delivery, JazzCash & EasyPaisa available.
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- =========================================
+        Product Features
+        ========================================== -->
+
+        <div class="row mt-5">
+
+            <div class="col-lg-4">
+
+                <div class="feature-box text-center p-4 shadow-sm rounded">
+
+                    <i class="bi bi-patch-check fs-1 text-success"></i>
+
+                    <h5 class="mt-3">
+
+                        Premium Quality
+
+                    </h5>
+
+                    <p>
+
+                        Carefully selected premium crockery products.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="feature-box text-center p-4 shadow-sm rounded">
+
+                    <i class="bi bi-truck fs-1 text-primary"></i>
+
+                    <h5 class="mt-3">
+
+                        Fast Delivery
+
+                    </h5>
+
+                    <p>
+
+                        Nationwide delivery across Pakistan.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="feature-box text-center p-4 shadow-sm rounded">
+
+                    <i class="bi bi-shield-check fs-1 text-danger"></i>
+
+                    <h5 class="mt-3">
+
+                        Secure Shopping
+
+                    </h5>
+
+                    <p>
+
+                        Safe payments and trusted customer service.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+        Related Products
+        ========================================== -->
+
+        <div class="related-products mt-5">
+
+            <div class="section-title mb-4">
+
+                <h2>
+
+                    Related Products
+
+                </h2>
+
+                <p class="text-muted">
+
+                    You may also like these products
+
+                </p>
+
+            </div>
+
+            <div class="row g-4">
+
+                {% for related in related_products %}
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card product-card h-100">
+
+                        <div class="product-image">
+
+                            {% if related.main_image %}
+
+                            <img src="{{ related.main_image.url }}" class="card-img-top" alt="{{ related.name }}">
+
+                            {% else %}
+
+                            <img src="{% static 'images/product-placeholder.jpg' %}" class="card-img-top" alt="Product">
+
+                            {% endif %}
+
+                            {% if related.is_sale %}
+
+                            <span class="badge bg-danger position-absolute m-2">
+
+                                SALE
+
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <small class="text-muted">
+
+                                {{ related.category.name }}
+
+                            </small>
+
+                            <h5 class="mt-2">
+
+                                {{ related.name }}
+
+                            </h5>
+
+                            <div class="mt-3">
+
+                                {% if related.sale_price %}
+
+                                <span class="fw-bold text-danger">
+
+                                    Rs. {{ related.sale_price }}
+
+                                </span>
+
+                                <del class="text-muted ms-2">
+
+                                    Rs. {{ related.price }}
+
+                                </del>
+
+                                {% else %}
+
+                                <span class="fw-bold">
+
+                                    Rs. {{ related.price }}
+
+                                </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer bg-white border-0">
+
+                            <a href="{% url 'store:product_detail' related.slug %}" class="btn btn-dark w-100">
+
+                                View Details
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <div class="col-12 text-center">
+
+                    <h5>
+
+                        No Related Products Available
+
+                    </h5>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <!-- =========================================
+        Customer Reviews
+        ========================================== -->
+
+        <div class="customer-reviews mt-5">
+
+            <div class="section-title mb-4">
+
+                <h2>
+
+                    Customer Reviews
+
+                </h2>
+
+            </div>
+
+            <div class="review-summary p-4 rounded shadow-sm">
+
+                <div class="row align-items-center">
+
+                    <div class="col-lg-3 text-center">
+
+                        <h1 class="display-4 fw-bold">
+
+                            {{ product.rating }}
+
+                        </h1>
+
+                        <div class="text-warning">
+
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+
+                        </div>
+
+                        <p class="mt-2">
+
+                            {{ product.reviews }} Reviews
+
+                        </p>
+
+                    </div>
+
+                    <div class="col-lg-9">
+
+                        <div class="alert alert-light border">
+
+                            Customer review system will be fully dynamic.
+                            Reviews, ratings and customer names will come from Admin Panel.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- =========================================
+        Share Product
+        ========================================== -->
+
+        <div class="share-product mt-5">
+
+            <h4>
+
+                Share this Product
+
+            </h4>
+
+            <div class="d-flex gap-3 mt-3">
+
+                <a href="#" class="btn btn-primary">
+
+                    <i class="bi bi-facebook"></i>
+
+                </a>
+
+                <a href="#" class="btn btn-success">
+
+                    <i class="bi bi-whatsapp"></i>
+
+                </a>
+
+                <a href="#" class="btn btn-info">
+
+                    <i class="bi bi-telegram"></i>
+
+                </a>
+
+                <a href="#" class="btn btn-dark">
+
+                    <i class="bi bi-link-45deg"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+        FAQ Section
+        ========================================== -->
+
+        <section class="faq-section mt-5">
+
+            <div class="section-title mb-4">
+
+                <h2>
+
+                    Frequently Asked Questions
+
+                </h2>
+
+            </div>
+
+            <div class="accordion" id="productFAQ">
+
+                <div class="accordion-item">
+
+                    <h2 class="accordion-header">
+
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqOne">
+
+                            Is this product original?
+
+                        </button>
+
+                    </h2>
+
+                    <div id="faqOne" class="accordion-collapse collapse show" data-bs-parent="#productFAQ">
+
+                        <div class="accordion-body">
+
+                            Yes, all our products are 100% original and premium quality.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="accordion-item">
+
+                    <h2 class="accordion-header">
+
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqTwo">
+
+                            Do you deliver all over Pakistan?
+
+                        </button>
+
+                    </h2>
+
+                    <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#productFAQ">
+
+                        <div class="accordion-body">
+
+                            Yes, we deliver across Pakistan through trusted courier services.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="accordion-item">
+
+                    <h2 class="accordion-header">
+
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqThree">
+
+                            Which payment methods are available?
+
+                        </button>
+
+                    </h2>
+
+                    <div id="faqThree" class="accordion-collapse collapse" data-bs-parent="#productFAQ">
+
+                        <div class="accordion-body">
+
+                            Cash on Delivery, JazzCash, EasyPaisa and Bank Transfer.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =========================================
+        Delivery Information
+        ========================================== -->
+
+        <section class="delivery-section mt-5">
+
+            <div class="row g-4">
+
+                <div class="col-lg-4">
+
+                    <div class="delivery-card">
+
+                        <i class="bi bi-truck"></i>
+
+                        <h5>
+
+                            Fast Delivery
+
+                        </h5>
+
+                        <p>
+
+                            Orders are dispatched within 24 hours.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <div class="delivery-card">
+
+                        <i class="bi bi-box-seam"></i>
+
+                        <h5>
+
+                            Safe Packaging
+
+                        </h5>
+
+                        <p>
+
+                            Fragile crockery is packed with extra protection.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <div class="delivery-card">
+
+                        <i class="bi bi-arrow-repeat"></i>
+
+                        <h5>
+
+                            Easy Returns
+
+                        </h5>
+
+                        <p>
+
+                            Easy replacement for eligible damaged products.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =========================================
+        Why Choose Us
+        ========================================== -->
+
+        <section class="why-us mt-5">
+
+            <div class="section-title mb-4">
+
+                <h2>
+
+                    Why Choose Maryam Crockery?
+
+                </h2>
+
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-md-3">
+
+                    <div class="why-card">
+
+                        <i class="bi bi-award"></i>
+
+                        <h5>
+
+                            Premium Quality
+
+                        </h5>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="why-card">
+
+                        <i class="bi bi-shield-check"></i>
+
+                        <h5>
+
+                            Trusted Store
+
+                        </h5>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="why-card">
+
+                        <i class="bi bi-credit-card"></i>
+
+                        <h5>
+
+                            Secure Payment
+
+                        </h5>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="why-card">
+
+                        <i class="bi bi-headset"></i>
+
+                        <h5>
+
+                            24/7 Support
+
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- =========================================
+        Newsletter
+        ========================================== -->
+
+        <section class="newsletter-section mt-5">
+
+            <div class="newsletter-box">
+
+                <div class="row align-items-center">
+
+                    <div class="col-lg-7">
+
+                        <h2>
+
+                            Subscribe To Our Newsletter
+
+                        </h2>
+
+                        <p>
+
+                            Get updates about new arrivals, discounts and exclusive offers.
+
+                        </p>
+
+                    </div>
+
+                    <div class="col-lg-5">
+
+                        <form class="newsletter-form">
+
+                            <div class="input-group">
+
+                                <input type="email" class="form-control" placeholder="Enter your email">
+
+                                <button class="btn btn-dark" type="submit">
+
+                                    Subscribe
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+        Recently Viewed
+        ========================================== -->
+
+        <section class="recent-products mt-5">
+
+            <div class="section-title mb-4">
+
+                <h2>
+
+                    Recently Added Products
+
+                </h2>
+
+            </div>
+
+            <div class="row g-4">
+
+                {% for related in related_products %}
+
+                <div class="col-lg-3 col-md-6">
+
+                    <div class="card h-100 border-0 shadow-sm">
+
+                        {% if related.main_image %}
+
+                        <img src="{{ related.main_image.url }}" class="card-img-top" alt="{{ related.name }}">
+
+                        {% else %}
+
+                        <img src="{% static 'images/product-placeholder.jpg' %}" class="card-img-top" alt="Product">
+
+                        {% endif %}
+
+                        <div class="card-body">
+
+                            <small class="text-muted">
+
+                                {{ related.category.name }}
+
+                            </small>
+
+                            <h5 class="mt-2">
+
+                                {{ related.name }}
+
+                            </h5>
+
+                            <p class="fw-bold text-danger">
+
+                                Rs. {{ related.final_price }}
+
+                            </p>
+
+                        </div>
+
+                        <div class="card-footer bg-white border-0">
+
+                            <a href="{% url 'store:product_detail' related.slug %}" class="btn btn-outline-dark w-100">
+
+                                View Product
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <div class="col-12 text-center">
+
+                    <h5>
+
+                        No Products Available
+
+                    </h5>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+        CTA Banner
+        ========================================== -->
+
+        <section class="cta-banner mt-5">
+
+            <div class="cta-wrapper text-center">
+
+                <h2>
+
+                    Looking for Premium Crockery?
+
+                </h2>
+
+                <p>
+
+                    Explore our complete collection of dinner sets, tea sets,
+                    serving trays and kitchen essentials.
+
+                </p>
+
+                <a href="{% url 'store:shop' %}" class="btn btn-danger btn-lg mt-3">
+
+                    Continue Shopping
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+Customer Support
+========================================= -->
+
+<section class="support-section py-5">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-lg-4">
+
+                <div class="support-card">
+
+                    <i class="bi bi-headset"></i>
+
+                    <h4>
+
+                        24/7 Customer Support
+
+                    </h4>
+
+                    <p>
+
+                        Our support team is always ready to help you before and after your purchase.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="support-card">
+
+                    <i class="bi bi-truck"></i>
+
+                    <h4>
+
+                        Fast Delivery
+
+                    </h4>
+
+                    <p>
+
+                        We deliver safely across Pakistan with trusted courier partners.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="support-card">
+
+                    <i class="bi bi-patch-check"></i>
+
+                    <h4>
+
+                        Quality Guaranteed
+
+                    </h4>
+
+                    <p>
+
+                        Every product is carefully checked before shipping.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+Need Help
+========================================= -->
+
+<section class="need-help py-5">
+
+    <div class="container">
+
+        <div class="help-box">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-8">
+
+                    <h2>
+
+                        Need Help Choosing the Right Product?
+
+                    </h2>
+
+                    <p>
+
+                        Contact us anytime. We will help you select the perfect crockery set.
+
+                    </p>
+
+                </div>
+
+                <div class="col-lg-4 text-lg-end">
+
+                    <a href="#" class="btn btn-success btn-lg">
+
+                        <i class="bi bi-whatsapp"></i>
+
+                        WhatsApp Us
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+Trust Badges
+========================================= -->
+
+<section class="trust-section py-4">
+
+    <div class="container">
+
+        <div class="row text-center">
+
+            <div class="col-md-3">
+
+                <i class="bi bi-shield-check display-5"></i>
+
+                <h6 class="mt-3">
+
+                    Secure Shopping
+
+                </h6>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <i class="bi bi-credit-card display-5"></i>
+
+                <h6 class="mt-3">
+
+                    Safe Payments
+
+                </h6>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <i class="bi bi-arrow-repeat display-5"></i>
+
+                <h6 class="mt-3">
+
+                    Easy Returns
+
+                </h6>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <i class="bi bi-award display-5"></i>
+
+                <h6 class="mt-3">
+
+                    Premium Quality
+
+                </h6>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+Floating Buttons
+========================================= -->
+
+<a href="#" class="floating-whatsapp">
+
+    <i class="bi bi-whatsapp"></i>
+
+</a>
+
+<button id="backToTop" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+
+    <i class="bi bi-chevron-up"></i>
+
+</button>
+
+<!-- =========================================
+JavaScript
+========================================= -->
+
+<script>
+
+    function changeImage(element) {
+
+        document.getElementById("mainImage").src = element.src;
+
+        document.querySelectorAll(".gallery-thumb").forEach(function (img) {
+
+            img.classList.remove("active-thumb");
+
+        });
+
+        element.classList.add("active-thumb");
+
+    }
+
+    function increaseQty() {
+
+        let qty = document.getElementById("quantity");
+
+        qty.value = parseInt(qty.value) + 1;
+
+    }
+
+    function decreaseQty() {
+
+        let qty = document.getElementById("quantity");
+
+        if (parseInt(qty.value) > 1) {
+
+            qty.value = parseInt(qty.value) - 1;
+
+        }
+
+    }
+
+    window.addEventListener("scroll", function () {
+
+        let btn = document.getElementById("backToTop");
+
+        if (window.scrollY > 300) {
+
+            btn.style.display = "flex";
+
+        }
+
+        else {
+
+            btn.style.display = "none";
+
+        }
+
+    });
+
+</script>
+
+{% endblock %}

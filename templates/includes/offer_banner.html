@@ -1,0 +1,73 @@
+<section class="offer-section">
+
+    <div class="container">
+
+        <div class="offer-wrapper">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-6">
+
+                    <div class="offer-content">
+
+                        <span class="offer-tag">
+
+                            Limited Time Offer
+
+                        </span>
+
+                        <h2>
+
+                            Premium Crockery Collection
+
+                        </h2>
+
+                        <p>
+
+                            Upgrade your dining experience with our elegant
+                            ceramic and porcelain collections. Beautiful
+                            designs, premium quality and affordable prices.
+
+                        </p>
+
+                        <a href="#" class="offer-btn">
+
+                            Shop Collection
+
+                            <i class="bi bi-arrow-right ms-2"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6">
+
+                    <div class="offer-image">
+
+                        {% if offers.first.image %}
+
+                            <img src="{{ offers.first.image.url }}" alt="Offer">
+
+                        {% else %}
+
+                            <div class="offer-placeholder">
+
+                                <i class="bi bi-gift"></i>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

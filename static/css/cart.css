@@ -1,0 +1,604 @@
+/* =====================================
+   CART PAGE
+===================================== */
+
+.cart-page{
+    background:#f8f9fb;
+    padding:70px 0;
+    min-height:100vh;
+}
+
+.cart-page h1{
+    font-size:42px;
+    font-weight:700;
+    color:#222;
+}
+
+.cart-page p{
+    color:#777;
+}
+
+/* =====================================
+   CART CARD
+===================================== */
+
+.cart-page .card{
+    border:none;
+    border-radius:18px;
+    overflow:hidden;
+    transition:.35s;
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.cart-page .card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 40px rgba(0,0,0,.12);
+}
+
+.cart-page img{
+
+    width:100%;
+    height:230px;
+    object-fit:cover;
+
+}
+
+.card-body{
+
+    padding:25px;
+
+}
+
+.card-body h4{
+
+    font-size:24px;
+    font-weight:700;
+    color:#222;
+
+}
+
+.card-body h5{
+
+    color:#dc3545;
+    font-size:24px;
+    font-weight:700;
+
+}
+
+.card-body p{
+
+    color:#777;
+
+}
+
+/* =====================================
+   QUANTITY
+===================================== */
+
+.cart-page .btn-outline-secondary{
+
+    width:40px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    transition:.3s;
+
+}
+
+.cart-page .btn-outline-secondary:hover{
+
+    background:#dc3545;
+    color:#fff;
+    border-color:#dc3545;
+
+}
+
+.cart-page input{
+
+    height:42px;
+
+    font-weight:600;
+
+}
+
+/* =====================================
+   REMOVE BUTTON
+===================================== */
+
+.btn-outline-danger{
+
+    border-radius:50px;
+
+    padding:10px 22px;
+
+    transition:.3s;
+
+}
+
+.btn-outline-danger:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* =====================================
+   ORDER SUMMARY
+===================================== */
+
+.sticky-top{
+
+    top:100px;
+
+}
+
+.sticky-top .card-body{
+
+    padding:35px;
+
+}
+
+.sticky-top h3{
+
+    font-size:28px;
+
+    font-weight:700;
+
+}
+
+.sticky-top h4{
+
+    font-weight:700;
+
+    color:#dc3545;
+
+}
+
+.sticky-top hr{
+
+    margin:22px 0;
+
+}
+
+/* =====================================
+   BENEFIT CARDS
+===================================== */
+
+.benefit-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    transition:.35s;
+
+    height:100%;
+
+}
+
+.benefit-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 18px 40px rgba(0,0,0,.12);
+
+}
+
+.benefit-card i{
+
+    font-size:55px;
+
+}
+
+.benefit-card h5{
+
+    margin-top:20px;
+
+    font-weight:700;
+
+    color:#222;
+
+}
+
+.benefit-card p{
+
+    color:#777;
+
+    margin-top:12px;
+
+}
+
+/* =====================================
+   PAYMENT SECTION
+===================================== */
+
+.payment-info .card{
+
+    border-radius:18px;
+
+}
+
+.payment-info h3{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    margin-bottom:25px;
+
+}
+
+.payment-info .list-group-item{
+
+    border:none;
+
+    padding:15px 0;
+
+    font-size:17px;
+
+}
+
+.payment-info .alert{
+
+    border:none;
+
+    border-radius:15px;
+
+}
+
+/* =====================================
+   SUPPORT SECTION
+===================================== */
+
+.support-box{
+
+    background:#fff;
+
+    padding:35px;
+
+    border-radius:18px;
+
+    transition:.35s;
+
+    height:100%;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+
+}
+
+.support-box:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 18px 40px rgba(0,0,0,.12);
+
+}
+
+.support-box i{
+
+    font-size:55px;
+
+    color:#dc3545;
+
+}
+
+.support-box h5{
+
+    margin-top:20px;
+
+    font-weight:700;
+
+}
+
+.support-box p{
+
+    color:#777;
+
+}
+
+/* =====================================
+   EMPTY CART
+===================================== */
+
+.cart-page img{
+
+    border-radius:12px;
+
+}
+
+.cart-page h2{
+
+    font-size:36px;
+
+    font-weight:700;
+
+    color:#222;
+
+}
+
+.cart-page .btn-danger{
+
+    border-radius:50px;
+
+    padding:14px 34px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.cart-page .btn-danger:hover{
+
+    transform:translateY(-3px);
+
+}
+
+/* =====================================
+   SECTION SPACING
+===================================== */
+
+.cart-benefits{
+
+    margin-top:70px;
+
+}
+
+.payment-info{
+
+    margin-top:70px;
+
+}
+
+.support-section{
+
+    margin-top:70px;
+
+}
+/* =====================================
+   RECOMMENDED PRODUCTS
+===================================== */
+
+.recommended-products{
+
+    margin-top:80px;
+
+}
+
+.recommended-products .card{
+
+    border:none;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    transition:.35s;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+}
+
+.recommended-products .card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 18px 45px rgba(0,0,0,.14);
+
+}
+
+.recommended-products img{
+
+    height:230px;
+
+    object-fit:cover;
+
+}
+
+.recommended-products h5{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#222;
+
+}
+
+.recommended-products .btn{
+
+    border-radius:40px;
+
+    margin-top:15px;
+
+}
+
+/* =====================================
+   CONTINUE SHOPPING
+===================================== */
+
+.shopping-banner{
+
+    margin-top:80px;
+
+}
+
+.shopping-banner .bg-light{
+
+    background:#fff !important;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
+
+}
+
+.shopping-banner h2{
+
+    font-size:36px;
+
+    font-weight:700;
+
+}
+
+.shopping-banner p{
+
+    font-size:17px;
+
+    color:#777;
+
+}
+
+/* =====================================
+   NEWSLETTER
+===================================== */
+
+.newsletter-section{
+
+    margin-top:80px;
+
+}
+
+.newsletter-section .card{
+
+    border:none;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+.newsletter-section .card-body{
+
+    padding:60px;
+
+}
+
+.newsletter-section h2{
+
+    font-size:36px;
+
+    font-weight:700;
+
+}
+
+.newsletter-section input{
+
+    height:55px;
+
+    border-radius:40px;
+
+    padding-left:20px;
+
+}
+
+.newsletter-section button{
+
+    height:55px;
+
+    border-radius:40px;
+
+    font-weight:600;
+
+}
+
+/* =====================================
+   FLOATING WHATSAPP
+===================================== */
+
+.floating-whatsapp{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:90px;
+
+    width:60px;
+
+    height:60px;
+
+    background:#25D366;
+
+    color:#fff;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:28px;
+
+    text-decoration:none;
+
+    z-index:999;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
+
+    transition:.3s;
+
+}
+
+.floating-whatsapp:hover{
+
+    transform:scale(1.1);
+
+    color:#fff;
+
+}
+
+/* =====================================
+   BACK TO TOP
+===================================== */
+
+.back-to-top{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:20px;
+
+    width:55px;
+
+    height:55px;
+
+    border:none;
+
+    background:#dc3545;
+
+    color:#fff;
+
+    border-radius:50%;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    z-index:999;
+
+    transition:.3s;
+
+}
+
+.back-to-top:hover{
+
+    transform:translateY(-5px);
+
+    background:#b02a37;
+
+}

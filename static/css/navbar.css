@@ -1,0 +1,151 @@
+/* ==========================================
+   NAVBAR
+========================================== */
+
+.custom-navbar{
+    background:var(--white);
+    border-bottom:1px solid var(--border);
+    box-shadow:0 2px 15px rgba(0,0,0,.05);
+    padding:14px 0;
+    z-index:999;
+}
+
+.navbar-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-img{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid var(--primary);
+}
+
+.logo-title{
+    font-size:24px;
+    font-weight:700;
+    color:var(--text);
+    margin:0;
+}
+
+.navbar-nav{
+    margin-left:40px;
+}
+
+.nav-link{
+    font-size:15px;
+    font-weight:600;
+    color:var(--text)!important;
+    transition:var(--transition);
+}
+
+.nav-link:hover{
+    color:var(--primary)!important;
+}
+
+.dropdown-menu{
+    min-width:260px;
+    border:none;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:10px 0;
+}
+
+.dropdown-item{
+    padding:12px 20px;
+    font-size:15px;
+    transition:var(--transition);
+}
+
+.dropdown-item:hover{
+    background:var(--primary);
+    color:var(--white);
+}
+
+.search-box{
+    width:420px;
+    position:relative;
+}
+
+.search-input{
+    width:100%;
+    height:48px;
+    border:1px solid var(--border);
+    border-radius:50px;
+    padding:0 55px 0 20px;
+    outline:none;
+    transition:var(--transition);
+}
+
+.search-input:focus{
+    border-color:var(--primary);
+}
+
+.search-btn{
+    position:absolute;
+    top:5px;
+    right:5px;
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:50%;
+    background:var(--primary);
+    color:var(--white);
+    transition:var(--transition);
+}
+
+.search-btn:hover{
+    background:var(--primary-hover);
+}
+
+.nav-icons{
+    display:flex;
+    align-items:center;
+    gap:24px;
+    margin-left:30px;
+}
+
+.nav-icons a{
+    color:var(--text);
+    font-size:22px;
+    transition:var(--transition);
+    position:relative;
+}
+
+.nav-icons a:hover{
+    color:var(--primary);
+}
+
+.cart-badge{
+    position:absolute;
+    top:-8px;
+    right:-10px;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:var(--danger);
+    color:var(--white);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:11px;
+    font-weight:600;
+}
+
+/* Premium Nav Hover */
+
+.navbar-nav{
+    gap:8px;
+}
+
+.nav-link{
+    padding:10px 14px !important;
+    border-radius:10px;
+}
+
+.nav-link:hover{
+    background:rgba(15,118,110,.08);
+}

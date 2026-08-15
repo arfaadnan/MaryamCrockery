@@ -1,0 +1,249 @@
+/*==========================================
+SHOP PAGE
+==========================================*/
+
+.shop-page{
+
+    padding:70px 0;
+
+}
+
+.shop-sidebar{
+
+    background:#fff;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    position:sticky;
+
+    top:100px;
+
+}
+
+.shop-sidebar h4{
+
+    font-size:24px;
+
+    margin-bottom:20px;
+
+}
+
+.shop-sidebar ul{
+
+    list-style:none;
+
+    padding:0;
+
+}
+
+.shop-sidebar li{
+
+    border-bottom:1px solid #eee;
+
+}
+
+.shop-sidebar li:last-child{
+
+    border:none;
+
+}
+
+.shop-sidebar a{
+
+    display:block;
+
+    padding:14px 0;
+
+    color:#333;
+
+    transition:.3s;
+
+}
+
+.shop-sidebar a:hover{
+
+    color:#0F766E;
+
+    padding-left:8px;
+
+}
+
+@media(max-width:991px){
+
+.shop-sidebar{
+
+margin-bottom:30px;
+
+position:relative;
+
+top:0;
+
+}
+
+}
+
+/*==============================
+FILTER SIDEBAR
+===============================*/
+
+.filter-card{
+
+    background:#fff;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    position:sticky;
+
+    top:110px;
+
+}
+
+.filter-card h4{
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+}
+
+.filter-card h6{
+
+    margin-bottom:15px;
+
+    color:#0F766E;
+
+}
+
+.filter-list{
+
+    list-style:none;
+
+    padding:0;
+
+}
+
+.filter-list li{
+
+    margin-bottom:12px;
+
+}
+
+.filter-card label{
+
+    cursor:pointer;
+
+}
+
+/*==========================================
+SHOP HEADER
+==========================================*/
+
+.shop-top{
+
+    margin-bottom:40px;
+
+}
+
+.shop-title{
+
+    font-size:42px;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.shop-top p{
+
+    color:#777;
+
+    margin-top:8px;
+
+}
+
+.shop-toolbar{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.shop-toolbar span{
+
+    font-weight:600;
+
+    color:#555;
+
+}
+
+.shop-toolbar select{
+
+    width:230px;
+
+    height:50px;
+
+    border-radius:12px;
+
+    border:1px solid #ddd;
+
+    box-shadow:none;
+
+}
+
+.shop-toolbar select:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:none;
+
+}
+
+@media(max-width:991px){
+
+.shop-toolbar{
+
+justify-content:flex-start;
+
+margin-top:20px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.shop-title{
+
+font-size:32px;
+
+}
+
+.shop-toolbar{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.shop-toolbar select{
+
+width:100%;
+
+}
+
+}

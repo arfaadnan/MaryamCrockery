@@ -1,0 +1,22 @@
+.testimonial-card{
+    background:#fff;
+    border:1px solid #eee;
+    border-radius:16px;
+    padding:30px;
+    text-align:center;
+    transition:.3s;
+}
+
+.testimonial-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+}
+
+.testimonial-card p{
+    color:#666;
+}
+
+.testimonial-card h5{
+    margin-top:20px;
+    font-weight:600;
+}

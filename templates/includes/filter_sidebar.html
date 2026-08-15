@@ -1,0 +1,57 @@
+<div class="filter-card">
+
+    <h4>Filter Products</h4>
+
+    <hr>
+
+    <h6>Categories</h6>
+
+    <ul class="filter-list">
+
+        {% for category in categories %}
+
+        <li>
+
+            <label>
+
+                <input type="checkbox">
+
+                {{ category.name }}
+
+            </label>
+
+        </li>
+
+        {% endfor %}
+
+    </ul>
+
+    <hr>
+
+    <h6>Price</h6>
+
+    <input type="range" class="form-range">
+
+    <hr>
+
+    <h6>Availability</h6>
+
+    <label>
+
+        <input type="checkbox">
+
+        In Stock
+
+    </label>
+
+    <br>
+
+    <label>
+
+        <input type="checkbox">
+
+        Out of Stock
+
+    </label>
+
+</div>

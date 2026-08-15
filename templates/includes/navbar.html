@@ -1,0 +1,137 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+
+    <div class="container">
+
+        <!-- Logo -->
+        <a class="navbar-brand" href="{% url 'store:home' %}"></a>
+
+        {% if site_settings.logo %}
+        <img src="{{ site_settings.logo.url }}" class="logo-img" alt="{{ site_settings.store_name }}">
+        {% else %}
+        <img src="{% static 'images/logo.png' %}" class="logo-img" alt="Logo">
+        {% endif %}
+
+        <h5 class="logo-title">
+            {{ site_settings.store_name|default:"Maryam Crockery" }}
+        </h5>
+
+        </a>
+
+        <!-- Mobile Button -->
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+
+            <!-- Categories -->
+
+            <ul class="navbar-nav ms-4 align-items-lg-center">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'store:home' %}">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'store:shop' %}">
+                        Shop
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+
+                        Categories
+
+                    </a>
+
+                    <ul class="dropdown-menu shadow border-0">
+
+                        {% for category in categories %}
+
+                        <li>
+
+                            <a class="dropdown-item" href="#">
+
+                                {{ category.name }}
+
+                            </a>
+
+                        </li>
+
+                        {% empty %}
+
+                        <li>
+
+                            <span class="dropdown-item">
+                                No Categories
+                            </span>
+
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+            <!-- Search -->
+
+            <form class="search-box mx-auto">
+
+                <input type="search" class="search-input" placeholder="Search products...">
+
+                <button class="search-btn">
+
+                    <i class="bi bi-search"></i>
+
+                </button>
+
+            </form>
+
+            <!-- Icons -->
+
+            <div class="nav-icons">
+
+                <a href="#">
+
+                    <i class="bi bi-person"></i>
+
+                </a>
+
+                <a href="#">
+
+                    <i class="bi bi-heart"></i>
+
+                </a>
+
+                <a href="#">
+
+                    <i class="bi bi-cart3"></i>
+
+                    <span class="cart-badge">0</span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>

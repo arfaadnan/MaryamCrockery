@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ site_settings.store_name }}
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+{% include "includes/hero.html" %}
+
+<!-- Categories -->
+{% include "includes/category_section.html" %}
+
+<!-- Offer Banner -->
+{% include "includes/offer_banner.html" %}
+
+<!-- Featured Products -->
+{% include "includes/featured_products.html" %}
+
+<!-- Best Sellers -->
+{% include "includes/best_sellers.html" %}
+
+<!-- Why Choose Us -->
+{% include "includes/features.html" %}
+
+<!-- Testimonials -->
+{% include "includes/testimonials.html" %}
+
+<!-- Newsletter -->
+{% include "includes/newsletter.html" %}
+
+<!-- Instagram -->
+{% include "includes/instagram.html" %}
+
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}
+Shop
+{% endblock %}
+
+{% block content %}
+
+<section class="shop-page py-5">
+
+    <div class="container">
+
+        <!-- Shop Header -->
+        <div class="shop-top mb-5">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-6">
+
+                    <h2 class="shop-title">
+                        Shop Collection
+                    </h2>
+
+                    <p>
+                        Premium Crockery & Kitchen Essentials
+                    </p>
+
+                </div>
+
+                <div class="col-lg-6">
+
+                    <div class="shop-toolbar">
+
+                        <span>{{ products|length }} Products</span>
+
+                        <select class="form-select">
+
+                            <option>Newest</option>
+                            <option>Best Selling</option>
+                            <option>Price Low → High</option>
+                            <option>Price High → Low</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <!-- Sidebar -->
+            <div class="col-lg-3">
+
+                {% include "includes/filter_sidebar.html" %}
+
+            </div>
+
+            <!-- Products -->
+            <div class="col-lg-9">
+
+                <div class="row g-4">
+
+                    {% for product in products %}
+
+                    <div class="col-lg-4 col-md-6">
+
+                        {% include "includes/product_card.html" %}
+
+                    </div>
+
+                    {% empty %}
+
+                    <div class="col-12 text-center py-5">
+
+                        <h3>No Products Found</h3>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <!-- Pagination -->
+                <div class="mt-5">
+
+                    <nav>
+
+                        <ul class="pagination justify-content-center">
+
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li>
+
+                        </ul>
+
+                    </nav>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
