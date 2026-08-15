@@ -19,4 +19,10 @@ urlpatterns = [
     path("login/", views.user_login, name="login"),
     path("signup/", views.user_signup, name="signup"),
     path("logout/", views.user_logout, name="logout"),
+    path("wishlist/", views.wishlist, name="wishlist"),
+    path("wishlist/add/<slug:slug>/", views.add_to_wishlist, name="add_to_wishlist"),
+    path("wishlist/remove/<int:item_id>/", views.remove_wishlist, name="remove_wishlist"),
+    path("my-orders/", views.my_orders, name="my_orders"),
+    path("profile/", views.profile, name="profile"),
+    path("my-orders/<int:order_id>/",views.order_detail,name="order_detail"),
 ]

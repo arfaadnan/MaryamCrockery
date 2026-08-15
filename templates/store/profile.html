@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8">
+
+                <div class="card shadow border-0 rounded-4">
+
+                    <div class="card-body p-5">
+
+                        <h2 class="mb-4 fw-bold">
+
+                            <i class="bi bi-person-circle me-2"></i>
+
+                            My Profile
+
+                        </h2>
+
+                        {% if messages %}
+
+                        {% for message in messages %}
+
+                        <div class="alert alert-success">
+
+                            {{ message }}
+
+                        </div>
+
+                        {% endfor %}
+
+                        {% endif %}
+
+                        <form method="POST" enctype="multipart/form-data">
+
+                            {% csrf_token %}
+
+                            <div class="text-center mb-4">
+
+                                {% if profile.profile_image %}
+
+                                <img src="{{ profile.profile_image.url }}" class="rounded-circle shadow"
+                                    style="width:150px;height:150px;object-fit:cover;">
+
+                                {% else %}
+
+                                <img src="{% static 'images/default-user.png' %}" class="rounded-circle shadow"
+                                    style="width:150px;height:150px;object-fit:cover;">
+
+                                {% endif %}
+
+                            </div>
+
+                            <div class="mb-4">
+
+                                <label class="form-label">
+
+                                    Profile Image
+
+                                </label>
+
+                                <input type="file" name="profile_image" class="form-control">
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+
+                                        First Name
+
+                                    </label>
+
+                                    <input type="text" class="form-control" name="first_name"
+                                        value="{{ user.first_name }}">
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+
+                                        Last Name
+
+                                    </label>
+
+                                    <input type="text" class="form-control" name="last_name"
+                                        value="{{ user.last_name }}">
+
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    Username
+
+                                </label>
+
+                                <input type="text" class="form-control" value="{{ user.username }}" readonly>
+
+                            </div>
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    Email
+
+                                </label>
+
+                                <input type="email" class="form-control" name="email" value="{{ user.email }}">
+
+                            </div>
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    Phone
+
+                                </label>
+
+                                <input type="text" class="form-control" name="phone" value="{{ profile.phone }}">
+
+                            </div>
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    City
+
+                                </label>
+
+                                <input type="text" class="form-control" name="city" value="{{ profile.city }}">
+
+                            </div>
+
+                            <div class="mb-4">
+
+                                <label class="form-label">
+
+                                    Address
+
+                                </label>
+
+                                <textarea class="form-control" rows="3" name="address">{{ profile.address }}</textarea>
+
+                            </div>
+
+                            <div class="d-grid gap-3">
+
+                                <button class="btn btn-danger btn-lg">
+
+                                    Save Changes
+
+                                </button>
+
+                                <a href="{% url 'store:my_orders' %}" class="btn btn-outline-dark">
+
+                                    My Orders
+
+                                </a>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -4,24 +4,32 @@
 
     <div class="container-fluid px-4">
 
-
         <!-- Logo -->
+
         <a class="navbar-brand d-flex align-items-center" href="{% url 'store:home' %}">
 
             {% if site_settings.logo %}
+
             <img src="{{ site_settings.logo.url }}" class="logo-img" alt="{{ site_settings.store_name }}">
+
             {% else %}
+
             <img src="{% static 'images/logo.png' %}" class="logo-img" alt="Logo">
+
             {% endif %}
 
             <span class="logo-title ms-2">
+
                 {{ site_settings.store_name|default:"Maryam Crockery" }}
+
             </span>
 
         </a>
-        <!-- Mobile Button -->
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+        <!-- Mobile Toggle -->
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
 
             <span class="navbar-toggler-icon"></span>
 
@@ -29,25 +37,34 @@
 
         <div class="collapse navbar-collapse" id="mainNavbar">
 
-            <!-- Categories -->
+            <!-- Left Menu -->
 
             <ul class="navbar-nav ms-lg-4 mb-2 mb-lg-0">
 
                 <li class="nav-item">
+
                     <a class="nav-link" href="{% url 'store:home' %}">
+
                         Home
+
                     </a>
+
                 </li>
 
                 <li class="nav-item">
+
                     <a class="nav-link" href="{% url 'store:shop' %}">
+
                         Shop
+
                     </a>
+
                 </li>
 
                 <li class="nav-item dropdown">
 
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
 
                         Categories
 
@@ -72,7 +89,9 @@
                         <li>
 
                             <span class="dropdown-item">
+
                                 No Categories
+
                             </span>
 
                         </li>
@@ -84,15 +103,19 @@
                 </li>
 
                 <li class="nav-item">
+
                     <a class="nav-link" href="{% url 'store:contact' %}">
+
                         Contact
+
                     </a>
+
                 </li>
 
             </ul>
             <!-- Search -->
 
-            <form action="{% url 'store:search' %}" method="GET" class="search-box ms-lg-3">
+            <form action="{% url 'store:search' %}" method="GET" class="search-box ms-auto">
 
                 <input type="search" name="q" value="{{ request.GET.q }}" class="search-input"
                     placeholder="Search products...">
@@ -105,9 +128,7 @@
 
             </form>
 
-
-
-            <!-- Icons -->
+            <!-- Right Icons -->
 
             <div class="nav-icons">
 
@@ -115,35 +136,27 @@
 
                 <div class="dropdown">
 
-                    <a href="#" class="nav-link p-0" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                    <a href="#" class="nav-link p-0" data-bs-toggle="dropdown" aria-expanded="false">
 
                         <i class="bi bi-person-circle"></i>
 
                     </a>
 
-                    <i class="bi bi-person-circle"></i>
-
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                    <ul class="dropdown-menu dropdown-menu-end">
 
                         <li>
 
-                            <span class="dropdown-item-text fw-bold">
+                            <h6 class="dropdown-header">
 
-                                {{ user.username }}
+                                Hello, {{ user.username }}
 
-                            </span>
+                            </h6>
 
                         </li>
 
                         <li>
-                            <hr class="dropdown-divider">
-                        </li>
 
-                        <li>
-
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="{% url 'store:profile' %}">
 
                                 <i class="bi bi-person me-2"></i>
 
@@ -155,14 +168,10 @@
 
                         <li>
 
-                            <a class="dropdown-item" href="#">
-
+                            <a class="dropdown-item" href="{% url 'store:my_orders' %}">
                                 <i class="bi bi-bag me-2"></i>
-
                                 My Orders
-
                             </a>
-
                         </li>
 
                         <li>
@@ -195,24 +204,43 @@
 
                 {% endif %}
 
-                <a href="#" title="Wishlist">
+                <a href="{% url 'store:wishlist' %}" title="Wishlist" class="position-relative">
 
                     <i class="bi bi-heart"></i>
 
-                </a>
+                    {% if wishlist_count > 0 %}
 
+                    <span class="cart-badge">
+
+                        {{ wishlist_count }}
+
+                    </span>
+
+                    {% endif %}
+
+                </a>
                 <a href="{% url 'store:cart' %}" title="Cart">
 
                     <i class="bi bi-cart3"></i>
 
-                    <span class="cart-badge">0</span>
+                    {% if cart_count > 0 %}
+
+                    <span class="cart-badge">
+
+                        {{ cart_count }}
+
+                    </span>
+
+                    {% endif %}
 
                 </a>
 
+                <!-- End Icons -->
+
             </div>
 
-        </div> <!-- collapse navbar-collapse -->
+        </div>
 
-    </div> <!-- container-fluid -->
+    </div>
 
 </nav>

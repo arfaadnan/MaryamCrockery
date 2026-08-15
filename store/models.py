@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -257,6 +258,8 @@ class Order(models.Model):
         ("Bank", "Bank Transfer"),
     )
 
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
     order_number = models.CharField(max_length=30, unique=True)
 
     full_name = models.CharField(max_length=200)
@@ -335,3 +338,74 @@ def product_slug(sender, instance, **kwargs):
 
     if not instance.slug:
         instance.slug = slugify(instance.name)
+
+
+class Wishlist(models.Model):
+
+    session_key = models.CharField(max_length=255, unique=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.session_key
+
+
+class WishlistItem(models.Model):
+
+    wishlist = models.ForeignKey(
+        Wishlist, on_delete=models.CASCADE, related_name="items"
+    )
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+
+        unique_together = ("wishlist", "product")
+
+    def __str__(self):
+
+        return self.product.name
+
+
+# ======================================
+# User Profile
+# ======================================
+
+
+class Profile(models.Model):
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    phone = models.CharField(max_length=20, blank=True)
+
+    city = models.CharField(max_length=100, blank=True)
+
+    address = models.TextField(blank=True)
+
+    profile_image = models.ImageField(upload_to="profiles/", blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
+
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_profile(sender, instance, **kwargs):
+
+    Profile.objects.get_or_create(user=instance)
+
+    instance.profile.save()

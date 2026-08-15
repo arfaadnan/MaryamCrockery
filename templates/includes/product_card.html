@@ -2,25 +2,143 @@
 
 <div class="product-card">
 
-    <div class="product-image">
+
+
+    {% load static %}
+
+    <div class="product-card">
+
+        <div class="product-image">
+
+            <a href="{% url 'store:product_detail' product.slug %}">
+
+                {% if product.main_image %}
+                <img src="{{ product.main_image.url }}" alt="{{ product.name }}">
+                {% else %}
+                <img src="{% static 'images/product-placeholder.jpg' %}" alt="{{ product.name }}">
+                {% endif %}
+
+            </a>
+
+            {% if product.sale_price %}
+            <span class="product-badge">
+                SALE
+            </span>
+            {% endif %}
+
+            <div class="product-icons">
+
+                <a href="{% url 'store:add_to_wishlist' product.slug %}" title="Add to Wishlist">
+
+                    <i class="bi bi-heart"></i>
+
+                </a>
+                <a href="{% url 'store:product_detail' product.slug %}" title="Quick View">
+                    <i class="bi bi-eye"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="product-content">
+
+            <small class="product-category">
+                {{ product.category.name }}
+            </small>
+
+            <h5>
+
+                <a href="{% url 'store:product_detail' product.slug %}">
+                    {{ product.name }}
+                </a>
+
+            </h5>
+
+            <div class="product-price">
+
+                {% if product.sale_price %}
+
+                <span class="new-price">
+                    Rs. {{ product.sale_price }}
+                </span>
+
+                <span class="old-price">
+                    Rs. {{ product.price }}
+                </span>
+
+                {% else %}
+
+                <span class="new-price">
+                    Rs. {{ product.price }}
+                </span>
+
+                {% endif %}
+
+            </div>
+
+            <div class="d-grid gap-2 mt-3">
+
+                <a href="{% url 'store:add_to_cart' product.slug %}" class="btn btn-danger rounded-pill">
+
+                    <i class="bi bi-cart-plus me-2"></i>
+
+                    Add To Cart
+
+                </a>
+
+                <a href="{% url 'store:product_detail' product.slug %}" class="btn btn-outline-dark rounded-pill">
+
+                    View Details
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="product-content">
+
+    <small class="product-category">
+
+        {{ product.category.name }}
+
+    </small>
+
+    <h5>
 
         <a href="{% url 'store:product_detail' product.slug %}">
 
-            {% if product.main_image %}
-                <img src="{{ product.main_image.url }}"
-                     alt="{{ product.name }}">
-            {% else %}
-                <img src="{% static 'images/product-placeholder.jpg' %}"
-                     alt="{{ product.name }}">
-            {% endif %}
+            {{ product.name }}
 
         </a>
 
+    </h5>
+
+    <div class="product-price">
+
         {% if product.sale_price %}
 
-        <span class="product-badge">
+        <span class="new-price">
 
-            SALE
+            Rs. {{ product.sale_price }}
+
+        </span>
+
+        <span class="old-price">
+
+            Rs. {{ product.price }}
+
+        </span>
+
+        {% else %}
+
+        <span class="new-price">
+
+            Rs. {{ product.price }}
 
         </span>
 
@@ -28,63 +146,16 @@
 
     </div>
 
-    <div class="product-content">
+    <div class="d-grid mt-3">
 
-        <small class="product-category">
+        <a href="{% url 'store:product_detail' product.slug %}" class="product-btn">
 
-            {{ product.category.name }}
+            View Details
 
-        </small>
-
-        <h5>
-
-            <a href="{% url 'store:product_detail' product.slug %}">
-
-                {{ product.name }}
-
-            </a>
-
-        </h5>
-
-        <div class="product-price">
-
-            {% if product.sale_price %}
-
-                <span class="new-price">
-
-                    Rs. {{ product.sale_price }}
-
-                </span>
-
-                <span class="old-price">
-
-                    Rs. {{ product.price }}
-
-                </span>
-
-            {% else %}
-
-                <span class="new-price">
-
-                    Rs. {{ product.price }}
-
-                </span>
-
-            {% endif %}
-
-        </div>
-
-        <div class="d-grid mt-3">
-
-            <a href="{% url 'store:product_detail' product.slug %}"
-               class="product-btn">
-
-                View Details
-
-            </a>
-
-        </div>
+        </a>
 
     </div>
+
+</div>
 
 </div>

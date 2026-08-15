@@ -1,6 +1,19 @@
 from django.shortcuts import render, get_object_or_404
 
-from .models import Category, Product, Cart, CartItem, Order, OrderItem, SiteSettings
+from .models import (
+    Product,
+    Category,
+    Cart,
+    CartItem,
+    SiteSettings,
+    Banner,
+    Offer,
+    Wishlist,
+    WishlistItem,
+    Order,
+    OrderItem,
+    Profile,
+)
 from django.shortcuts import redirect
 from .models import Cart, CartItem
 from django.utils import timezone
@@ -10,6 +23,8 @@ from django.core.paginator import Paginator
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
 
 # ===============================
 # HOME
@@ -198,6 +213,7 @@ def checkout(request):
         )
 
         order = Order.objects.create(
+            user=request.user if request.user.is_authenticated else None,
             order_number=order_number,
             full_name=request.POST.get("full_name"),
             phone=request.POST.get("phone"),
@@ -343,8 +359,124 @@ def user_signup(request):
         "store/signup.html",
     )
 
+
 def user_logout(request):
 
     logout(request)
 
     return redirect("store:home")
+
+
+def add_to_wishlist(request, slug):
+
+    product = get_object_or_404(Product, slug=slug, is_active=True)
+
+    if not request.session.session_key:
+        request.session.create()
+
+    session_key = request.session.session_key
+
+    wishlist, created = Wishlist.objects.get_or_create(session_key=session_key)
+
+    WishlistItem.objects.get_or_create(wishlist=wishlist, product=product)
+
+    return redirect(request.META.get("HTTP_REFERER", "store:shop"))
+
+
+def wishlist(request):
+
+    if not request.session.session_key:
+        request.session.create()
+
+    session_key = request.session.session_key
+
+    wishlist, created = Wishlist.objects.get_or_create(session_key=session_key)
+
+    items = wishlist.items.select_related("product")
+
+    context = {
+        "wishlist": wishlist,
+        "items": items,
+    }
+
+    return render(request, "store/wishlist.html", context)
+
+
+def remove_wishlist(request, item_id):
+
+    item = get_object_or_404(WishlistItem, id=item_id)
+
+    item.delete()
+
+    return redirect("store:wishlist")
+
+
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
+def my_orders(request):
+
+    orders = Order.objects.filter(user=request.user).order_by("-created_at")
+
+    context = {
+        "orders": orders,
+    }
+
+    return render(
+        request,
+        "store/my_orders.html",
+        context,
+    )
+
+
+@login_required
+def profile(request):
+
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    if request.method == "POST":
+
+        request.user.first_name = request.POST.get("first_name")
+        request.user.last_name = request.POST.get("last_name")
+        request.user.email = request.POST.get("email")
+
+        profile.phone = request.POST.get("phone")
+        profile.city = request.POST.get("city")
+        profile.address = request.POST.get("address")
+
+        if request.FILES.get("profile_image"):
+            profile.profile_image = request.FILES["profile_image"]
+
+        request.user.save()
+        profile.save()
+
+        messages.success(request, "Profile updated successfully.")
+
+        return redirect("store:profile")
+
+    context = {
+        "profile": profile,
+    }
+
+    return render(
+        request,
+        "store/profile.html",
+        context,
+    )
+
+
+@login_required
+def order_detail(request, order_id):
+
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+
+    context = {
+        "order": order,
+    }
+
+    return render(
+        request,
+        "store/order_detail.html",
+        context,
+    )
