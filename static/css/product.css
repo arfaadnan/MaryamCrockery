@@ -145,3 +145,86 @@
     color:#fff;
 
 }
+
+/*=========================================
+PRODUCT REVIEWS
+=========================================*/
+
+.review-summary{
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.review-summary h3{
+    font-size:40px;
+    font-weight:700;
+    color:#dc3545;
+}
+
+.customer-reviews .card{
+    border:none;
+    border-radius:16px;
+    transition:.3s;
+}
+
+.customer-reviews .card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 35px rgba(0,0,0,.10);
+}
+
+.customer-reviews h5{
+    font-weight:600;
+    margin-bottom:4px;
+}
+
+.customer-reviews .text-warning i{
+    color:#ffc107;
+    margin-right:2px;
+}
+
+.write-review .card{
+    border:none;
+    border-radius:16px;
+}
+
+.write-review .card-header{
+    background:#111827;
+    color:#fff;
+    font-weight:600;
+}
+
+.write-review input,
+.write-review textarea,
+.write-review select{
+    border-radius:12px;
+    padding:12px;
+    border:1px solid #ddd;
+}
+
+.write-review textarea{
+    min-height:140px;
+    resize:none;
+}
+
+.write-review button{
+    border-radius:12px;
+    padding:12px 28px;
+}
+
+.write-review button:hover{
+    transform:translateY(-2px);
+}
+
+@media(max-width:768px){
+
+.review-summary{
+    text-align:center;
+}
+
+.customer-reviews .d-flex{
+    flex-direction:column;
+    gap:10px;
+}
+
+}

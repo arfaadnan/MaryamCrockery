@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 
 
+
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=120, unique=True, blank=True, null=True)
@@ -66,6 +67,8 @@ class Product(models.Model):
     )
 
     stock = models.PositiveIntegerField(default=0)
+    
+    low_stock_limit = models.PositiveIntegerField(default=5)
 
     pieces = models.PositiveIntegerField(blank=True, null=True)
 
@@ -115,7 +118,11 @@ class Product(models.Model):
     @property
     def in_stock(self):
         return self.stock > 0
-
+   
+        
+    @property
+    def low_stock(self):
+        return self.stock <= self.low_stock_limit
 
 class Cart(models.Model):
 
@@ -409,3 +416,49 @@ def save_profile(sender, instance, **kwargs):
     Profile.objects.get_or_create(user=instance)
 
     instance.profile.save()
+
+
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+# ======================================
+# Product Reviews
+# ======================================
+
+
+class Review(models.Model):
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name="product_reviews"
+    )
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    rating = models.PositiveSmallIntegerField(
+        default=5,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(5),
+        ]
+    )
+
+    comment = models.TextField()
+
+    is_approved = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("product", "user")
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.product.name} - {self.user.username}"
+    
+@property
+def low_stock(self):
+    return self.stock <= self.minimum_stock    

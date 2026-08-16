@@ -1,14 +1,12 @@
-from .models import Cart, Wishlist, Category, SiteSettings
+from .models import Cart, Wishlist, SiteSettings
 
 
 def global_data(request):
 
+    site_settings = SiteSettings.objects.first()
+
     return {
-
-        "categories": Category.objects.filter(is_active=True),
-
-        "site_settings": SiteSettings.objects.first(),
-
+        "site_settings": site_settings,
     }
 
 
@@ -16,34 +14,36 @@ def navbar_counts(request):
 
     cart_count = 0
     wishlist_count = 0
+    wishlist_products = []
 
-    if not request.session.session_key:
-        request.session.create()
+    if request.session.session_key:
 
-    session_key = request.session.session_key
+        session_key = request.session.session_key
 
-    try:
+        try:
+            cart = Cart.objects.get(session_key=session_key)
+            cart_count = cart.items.count()
 
-        cart = Cart.objects.get(session_key=session_key)
+        except Cart.DoesNotExist:
+            pass
 
-        cart_count = cart.items.count()
+        try:
+            wishlist = Wishlist.objects.get(session_key=session_key)
 
-    except Cart.DoesNotExist:
-        pass
+            wishlist_count = wishlist.items.count()
 
-    try:
+            wishlist_products = list(
+                wishlist.items.values_list(
+                    "product_id",
+                    flat=True,
+                )
+            )
 
-        wishlist = Wishlist.objects.get(session_key=session_key)
-
-        wishlist_count = wishlist.items.count()
-
-    except Wishlist.DoesNotExist:
-        pass
+        except Wishlist.DoesNotExist:
+            pass
 
     return {
-
         "cart_count": cart_count,
-
         "wishlist_count": wishlist_count,
-
+        "wishlist_products": wishlist_products,
     }

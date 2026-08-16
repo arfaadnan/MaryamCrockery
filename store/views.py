@@ -13,6 +13,7 @@ from .models import (
     Order,
     OrderItem,
     Profile,
+    
 )
 from django.shortcuts import redirect
 from .models import Cart, CartItem
@@ -25,6 +26,10 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from .models import Review
+from .forms import ReviewForm
+from django.contrib import messages
+from django.db.models import Avg
 
 # ===============================
 # HOME
@@ -101,18 +106,92 @@ def shop(request):
 
 def product_detail(request, slug):
 
-    product = get_object_or_404(Product, slug=slug, is_active=True)
+    product = get_object_or_404(
+        Product,
+        slug=slug,
+        is_active=True,
+    )
 
     related_products = Product.objects.filter(
-        category=product.category, is_active=True
+        category=product.category,
+        is_active=True,
     ).exclude(id=product.id)[:8]
+
+    reviews = product.product_reviews.filter(is_approved=True).select_related("user")
+
+    review_form = ReviewForm()
+
+    existing_review = None
+
+    if request.user.is_authenticated:
+
+        existing_review = Review.objects.filter(
+            product=product,
+            user=request.user,
+        ).first()
+
+    if request.method == "POST":
+
+        if not request.user.is_authenticated:
+
+            messages.error(request, "Please login to submit a review.")
+
+            return redirect("store:login")
+
+        review_form = ReviewForm(request.POST)
+
+        if review_form.is_valid():
+
+            if existing_review:
+
+                messages.warning(request, "You have already reviewed this product.")
+
+                return redirect(
+                    "store:product_detail",
+                    slug=product.slug,
+                )
+
+            review = review_form.save(commit=False)
+
+            review.product = product
+
+            review.user = request.user
+
+            review.save()
+
+            avg_rating = (
+                product.product_reviews.filter(is_approved=True).aggregate(
+                    Avg("rating")
+                )["rating__avg"]
+                or 0
+            )
+
+            product.rating = round(avg_rating, 1)
+
+            product.reviews = product.product_reviews.filter(is_approved=True).count()
+
+            product.save()
+
+            messages.success(request, "Your review has been submitted successfully.")
+
+            return redirect(
+                "store:product_detail",
+                slug=product.slug,
+            )
 
     context = {
         "product": product,
         "related_products": related_products,
+        "reviews": reviews,
+        "review_form": review_form,
+        "existing_review": existing_review,
     }
 
-    return render(request, "store/product_detail.html", context)
+    return render(
+        request,
+        "store/product_detail.html",
+        context,
+    )
 
 
 def add_to_cart(request, slug):
@@ -133,6 +212,30 @@ def add_to_cart(request, slug):
         cart_item.save()
 
     return redirect("store:cart")
+
+
+def buy_now(request, slug):
+
+    product = get_object_or_404(Product, slug=slug, is_active=True)
+
+    if not request.session.session_key:
+        request.session.create()
+
+    session_key = request.session.session_key
+
+    cart, created = Cart.objects.get_or_create(session_key=session_key)
+
+    # Purana cart empty kar do
+    cart.items.all().delete()
+
+    # Sirf current product add karo
+    CartItem.objects.create(
+        cart=cart,
+        product=product,
+        quantity=1,
+    )
+
+    return redirect("store:checkout")
 
 
 def cart(request):
@@ -376,9 +479,19 @@ def add_to_wishlist(request, slug):
 
     session_key = request.session.session_key
 
-    wishlist, created = Wishlist.objects.get_or_create(session_key=session_key)
+    wishlist, created = Wishlist.objects.get_or_create(
+        session_key=session_key
+    )
 
-    WishlistItem.objects.get_or_create(wishlist=wishlist, product=product)
+    item, created = WishlistItem.objects.get_or_create(
+        wishlist=wishlist,
+        product=product,
+    )
+
+    if created:
+        messages.success(request, "Product added to wishlist.")
+    else:
+        messages.info(request, "Product is already in your wishlist.")
 
     return redirect(request.META.get("HTTP_REFERER", "store:shop"))
 
@@ -390,7 +503,9 @@ def wishlist(request):
 
     session_key = request.session.session_key
 
-    wishlist, created = Wishlist.objects.get_or_create(session_key=session_key)
+    wishlist, created = Wishlist.objects.get_or_create(
+        session_key=session_key
+    )
 
     items = wishlist.items.select_related("product")
 
@@ -399,17 +514,25 @@ def wishlist(request):
         "items": items,
     }
 
-    return render(request, "store/wishlist.html", context)
+    return render(
+        request,
+        "store/wishlist.html",
+        context,
+    )
 
 
 def remove_wishlist(request, item_id):
 
-    item = get_object_or_404(WishlistItem, id=item_id)
+    item = get_object_or_404(
+        WishlistItem,
+        id=item_id,
+    )
 
     item.delete()
 
-    return redirect("store:wishlist")
+    messages.success(request, "Product removed from wishlist.")
 
+    return redirect("store:wishlist")
 
 from django.contrib.auth.decorators import login_required
 
@@ -480,3 +603,27 @@ def order_detail(request, order_id):
         "store/order_detail.html",
         context,
     )
+
+
+@login_required
+def add_review(request, slug):
+
+    product = get_object_or_404(Product, slug=slug)
+
+    if request.method == "POST":
+
+        rating = request.POST.get("rating")
+        review_text = request.POST.get("review")
+
+        Review.objects.update_or_create(
+            product=product,
+            user=request.user,
+            defaults={
+                "rating": rating,
+                "review": review_text,
+            },
+        )
+
+        messages.success(request, "Your review has been submitted successfully.")
+
+    return redirect("store:product_detail", slug=product.slug)

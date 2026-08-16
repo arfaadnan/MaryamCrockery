@@ -9,12 +9,13 @@ from .models import (
     Banner,
     Offer,
     SiteSettings,
+    Review,
 )
-
 
 # ==========================
 # Category
 # ==========================
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -31,9 +32,7 @@ class CategoryAdmin(admin.ModelAdmin):
         "sort_order",
     )
 
-    search_fields = (
-        "name",
-    )
+    search_fields = ("name",)
 
     ordering = (
         "sort_order",
@@ -46,7 +45,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
             return format_html(
                 '<img src="{}" width="55" height="55" style="border-radius:8px;">',
-                obj.image.url
+                obj.image.url,
             )
 
         return "-"
@@ -54,9 +53,31 @@ class CategoryAdmin(admin.ModelAdmin):
     image_preview.short_description = "Image"
 
 
+def stock_status(self, obj):
+
+    if obj.stock == 0:
+        return format_html(
+            '<span style="color:red;font-weight:bold;">Out of Stock</span>'
+        )
+
+    elif obj.low_stock:
+        return format_html(
+            '<span style="color:orange;font-weight:bold;">Low Stock ({})</span>',
+            obj.stock,
+        )
+
+    return format_html(
+        '<span style="color:green;font-weight:bold;">In Stock ({})</span>',
+        obj.stock,
+    )
+
+
+stock_status.short_description = "Inventory"
+
 # ==========================
 # SubCategory
 # ==========================
+
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(admin.ModelAdmin):
@@ -88,6 +109,7 @@ class SubCategoryAdmin(admin.ModelAdmin):
 # Product Images Inline
 # ==========================
 
+
 class ProductImageInline(admin.TabularInline):
 
     model = ProductImage
@@ -107,7 +129,7 @@ class ProductAdmin(admin.ModelAdmin):
     ]
 
     prepopulated_fields = {
-        "slug": ("name",)
+        "slug": ("name",),
     }
 
     list_display = (
@@ -117,6 +139,7 @@ class ProductAdmin(admin.ModelAdmin):
         "price",
         "sale_price",
         "stock",
+        "stock_status",
         "is_featured",
         "is_best_seller",
         "is_active",
@@ -153,124 +176,120 @@ class ProductAdmin(admin.ModelAdmin):
     )
 
     fieldsets = (
-
-        ("Basic Information", {
-
-            "fields": (
-
-                "category",
-                "subcategory",
-                "name",
-                "slug",
-                "sku",
-                "description",
-
-            )
-
-        }),
-
-        ("Pricing", {
-
-            "fields": (
-
-                "price",
-                "sale_price",
-
-            )
-
-        }),
-
-        ("Inventory", {
-
-            "fields": (
-
-                "stock",
-                "pieces",
-
-            )
-
-        }),
-
-        ("Details", {
-
-            "fields": (
-
-                "material",
-                "size",
-                "color",
-
-            )
-
-        }),
-
-        ("Image", {
-
-            "fields": (
-
-                "main_image",
-
-            )
-
-        }),
-
-        ("Flags", {
-
-            "fields": (
-
-                "is_new",
-                "is_sale",
-                "is_featured",
-                "is_best_seller",
-                "is_active",
-
-            )
-
-        }),
-
-        ("Ratings", {
-
-            "fields": (
-
-                "rating",
-                "reviews",
-
-            )
-
-        }),
-
-        ("Dates", {
-
-            "fields": (
-
-                "created_at",
-                "updated_at",
-
-            )
-
-        }),
-
+        (
+            "Basic Information",
+            {
+                "fields": (
+                    "category",
+                    "subcategory",
+                    "name",
+                    "slug",
+                    "sku",
+                    "description",
+                )
+            },
+        ),
+        (
+            "Pricing",
+            {
+                "fields": (
+                    "price",
+                    "sale_price",
+                )
+            },
+        ),
+        (
+            "Inventory",
+            {
+                "fields": (
+                    "stock",
+                    "pieces",
+                )
+            },
+        ),
+        (
+            "Details",
+            {
+                "fields": (
+                    "material",
+                    "size",
+                    "color",
+                )
+            },
+        ),
+        ("Image", {"fields": ("main_image",)}),
+        (
+            "Flags",
+            {
+                "fields": (
+                    "is_new",
+                    "is_sale",
+                    "is_featured",
+                    "is_best_seller",
+                    "is_active",
+                )
+            },
+        ),
+        (
+            "Ratings",
+            {
+                "fields": (
+                    "rating",
+                    "reviews",
+                )
+            },
+        ),
+        (
+            "Dates",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                )
+            },
+        ),
     )
+
 
     def image_preview(self, obj):
 
         if obj.main_image:
 
             return format_html(
-
                 '<img src="{}" width="60" height="60" style="border-radius:8px;">',
-
-                obj.main_image.url
-
+                obj.main_image.url,
             )
 
         return "-"
 
     image_preview.short_description = "Image"
+    def stock_status(self, obj):
+
+        if obj.stock == 0:
+            return format_html(
+                '<span style="color:red;font-weight:bold;">Out of Stock</span>'
+            )
+
+        elif obj.stock <= 5:
+            return format_html(
+                '<span style="color:orange;font-weight:bold;">Low Stock ({})</span>',
+                obj.stock,
+            )
+
+        return format_html(
+            '<span style="color:green;font-weight:bold;">In Stock ({})</span>',
+            obj.stock,
+        )
+
+    stock_status.short_description = "Inventory" 
+    
+    
 
 
 # ==========================
 # Banner
 # ==========================
+
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
@@ -291,6 +310,7 @@ class BannerAdmin(admin.ModelAdmin):
 # Offer
 # ==========================
 
+
 @admin.register(Offer)
 class OfferAdmin(admin.ModelAdmin):
 
@@ -300,14 +320,13 @@ class OfferAdmin(admin.ModelAdmin):
         "is_active",
     )
 
-    list_editable = (
-        "is_active",
-    )
+    list_editable = ("is_active",)
 
 
 # ==========================
 # Site Settings
 # ==========================
+
 
 @admin.register(SiteSettings)
 class SiteSettingsAdmin(admin.ModelAdmin):
@@ -317,3 +336,37 @@ class SiteSettingsAdmin(admin.ModelAdmin):
         "phone",
         "email",
     )
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "product",
+        "user",
+        "rating",
+        "is_approved",
+        "created_at",
+    )
+
+    list_filter = (
+        "is_approved",
+        "rating",
+    )
+
+    search_fields = (
+        "product__name",
+        "user__username",
+    )
+
+    list_editable = ("is_approved",)
+
+    @admin.action(description="Approve selected reviews")
+    def approve_reviews(self, request, queryset):
+
+        queryset.update(is_approved=True)
+
+    @admin.action(description="Unapprove selected reviews")
+    def unapprove_reviews(self, request, queryset):
+
+        queryset.update(is_approved=False)
