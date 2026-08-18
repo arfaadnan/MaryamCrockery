@@ -6,7 +6,6 @@ Shop
 
 {% block content %}
 
-
 <section class="shop-page py-5">
 
     <div class="container">
@@ -34,14 +33,18 @@ Shop
 
                         <span>{{ products|length }} Products</span>
 
-                        <select class="form-select">
-
-                            <option>Newest</option>
-                            <option>Best Selling</option>
-                            <option>Price Low → High</option>
-                            <option>Price High → Low</option>
-
-                        </select>
+                        <form method="get" id="sort-form">
+                            {% if selected_category %}
+                            <input type="hidden" name="category" value="{{ selected_category }}">
+                            {% endif %}
+                            <select class="form-select" name="sort" onchange="document.getElementById('sort-form').submit();">
+                                <option value="" {% if not selected_sort %}selected{% endif %}>Sort By</option>
+                                <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Newest</option>
+                                <option value="bestselling" {% if selected_sort == 'bestselling' %}selected{% endif %}>Best Selling</option>
+                                <option value="price_low" {% if selected_sort == 'price_low' %}selected{% endif %}>Price Low → High</option>
+                                <option value="price_high" {% if selected_sort == 'price_high' %}selected{% endif %}>Price High → Low</option>
+                            </select>
+                        </form>
 
                     </div>
 
@@ -148,9 +151,11 @@ Shop
 
                 {% endif %}
 
-
-
             </div>
+
+        </div> <!-- Fixed: Missing row closing div -->
+
+    </div> <!-- Fixed: Missing container closing div -->
 
 </section>
 

@@ -1,27 +1,43 @@
-<div class="shop-sidebar">
+<div class="shop-sidebar p-3 border rounded shadow-sm bg-white">
+    <h5 class="fw-bold mb-3 border-bottom pb-2">Categories</h5>
 
-    <h4>
+    <!-- All Products Clear Filter Link -->
+    <div class="mb-3">
+        <a href="{% url 'store:shop' %}"
+            class="text-decoration-none {% if not selected_category and not selected_subcategory %}fw-bold text-primary{% else %}text-dark{% endif %}">
+            <i class="bi bi-grid-fill me-1"></i> All Products
+        </a>
+    </div>
 
-        Categories
-
-    </h4>
-
-    <ul>
-
+    <ul class="list-unstyled mb-0">
         {% for category in categories %}
-
-        <li>
-
-            <a href="#">
-
+        <li class="mb-2">
+            <!-- Parent Category Link -->
+            <a href="?category={{ category.id }}"
+                class="text-decoration-none fw-semibold {% if selected_category|add:0 == category.id %}text-primary fw-bold{% else %}text-dark{% endif %}">
                 {{ category.name }}
-
             </a>
 
+            <!-- Subcategories Rendering -->
+            {% with category.subcategory_set.all as subcats %}
+            {% if category.subcategories.all or subcats %}
+            <ul class="list-unstyled ms-3 mt-1 border-start ps-2">
+                {% for subcategory in category.subcategories.all|default:subcats %}
+                {% if subcategory.is_active %}
+                <li class="my-1">
+                    <a href="?category={{ category.id }}&subcategory={{ subcategory.id }}"
+                        class="text-decoration-none small {% if selected_subcategory|add:0 == subcategory.id %}text-primary fw-bold{% else %}text-muted{% endif %}">
+                        {{ subcategory.name }}
+                    </a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
         </li>
-
+        {% empty %}
+        <li class="text-muted small">No categories available.</li>
         {% endfor %}
-
     </ul>
-
 </div>

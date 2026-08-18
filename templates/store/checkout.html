@@ -1,10 +1,7 @@
-```html
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}
-Checkout
-{% endblock %}
+{% block title %}Checkout{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
@@ -18,19 +15,18 @@ Checkout
 
         <div class="row">
 
-            <!-- LEFT -->
-
+            <!-- Checkout Form -->
             <div class="col-lg-8">
 
                 <h2 class="mb-4">
                     Checkout
                 </h2>
 
-                <form method="POST" id="checkout-form">
+                <form method="POST" action="{% url 'store:checkout' %}" id="checkout-form">
 
                     {% csrf_token %}
 
-                    <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card shadow-sm border-0 rounded-4 mb-4">
 
                         <div class="card-body p-4">
 
@@ -38,9 +34,7 @@ Checkout
 
                                 <div class="col-md-6 mb-3">
 
-                                    <label class="form-label">
-                                        Full Name
-                                    </label>
+                                    <label class="form-label">Full Name</label>
 
                                     <input type="text" name="full_name" class="form-control" required>
 
@@ -48,9 +42,7 @@ Checkout
 
                                 <div class="col-md-6 mb-3">
 
-                                    <label class="form-label">
-                                        Phone
-                                    </label>
+                                    <label class="form-label">Phone</label>
 
                                     <input type="text" name="phone" class="form-control" required>
 
@@ -58,9 +50,7 @@ Checkout
 
                                 <div class="col-md-6 mb-3">
 
-                                    <label class="form-label">
-                                        Email
-                                    </label>
+                                    <label class="form-label">Email</label>
 
                                     <input type="email" name="email" class="form-control">
 
@@ -68,9 +58,7 @@ Checkout
 
                                 <div class="col-md-6 mb-3">
 
-                                    <label class="form-label">
-                                        City
-                                    </label>
+                                    <label class="form-label">City</label>
 
                                     <input type="text" name="city" class="form-control" required>
 
@@ -78,19 +66,15 @@ Checkout
 
                                 <div class="col-12 mb-3">
 
-                                    <label class="form-label">
-                                        Address
-                                    </label>
+                                    <label class="form-label">Address</label>
 
                                     <textarea name="address" rows="3" class="form-control" required></textarea>
 
                                 </div>
 
-                                <div class="col-12 mb-3">
+                                <div class="col-12">
 
-                                    <label class="form-label">
-                                        Order Notes
-                                    </label>
+                                    <label class="form-label">Order Notes</label>
 
                                     <textarea name="notes" rows="3" class="form-control"
                                         placeholder="Optional"></textarea>
@@ -103,7 +87,7 @@ Checkout
 
                     </div>
 
-                    <div class="card shadow-sm border-0 rounded-4 mt-4">
+                    <div class="card shadow-sm border-0 rounded-4">
 
                         <div class="card-body p-4">
 
@@ -111,12 +95,11 @@ Checkout
                                 Payment Method
                             </h4>
 
-                            <div class="form-check mb-3">
+                            <div class="form-check mb-2">
 
-                                <input class="form-check-input" type="radio" name="payment_method" value="COD" id="cod"
-                                    checked>
+                                <input class="form-check-input" type="radio" name="payment_method" value="COD" checked>
 
-                                <label class="form-check-label" for="cod">
+                                <label class="form-check-label">
 
                                     Cash On Delivery
 
@@ -124,12 +107,11 @@ Checkout
 
                             </div>
 
-                            <div class="form-check mb-3">
+                            <div class="form-check mb-2">
 
-                                <input class="form-check-input" type="radio" name="payment_method" value="JazzCash"
-                                    id="jazzcash">
+                                <input class="form-check-input" type="radio" name="payment_method" value="JazzCash">
 
-                                <label class="form-check-label" for="jazzcash">
+                                <label class="form-check-label">
 
                                     JazzCash
 
@@ -137,12 +119,11 @@ Checkout
 
                             </div>
 
-                            <div class="form-check mb-3">
+                            <div class="form-check mb-2">
 
-                                <input class="form-check-input" type="radio" name="payment_method" value="EasyPaisa"
-                                    id="easypaisa">
+                                <input class="form-check-input" type="radio" name="payment_method" value="EasyPaisa">
 
-                                <label class="form-check-label" for="easypaisa">
+                                <label class="form-check-label">
 
                                     EasyPaisa
 
@@ -152,10 +133,9 @@ Checkout
 
                             <div class="form-check">
 
-                                <input class="form-check-input" type="radio" name="payment_method" value="Bank"
-                                    id="bank">
+                                <input class="form-check-input" type="radio" name="payment_method" value="Bank">
 
-                                <label class="form-check-label" for="bank">
+                                <label class="form-check-label">
 
                                     Bank Transfer
 
@@ -171,8 +151,7 @@ Checkout
 
             </div>
 
-            <!-- RIGHT -->
-
+            <!-- Order Summary -->
             <div class="col-lg-4">
 
                 <div class="card shadow-sm border-0 rounded-4 sticky-top">
@@ -191,17 +170,13 @@ Checkout
 
                             <div>
 
-                                <strong>
-
-                                    {{ item.product.name }}
-
-                                </strong>
+                                <strong>{{ item.product.name }}</strong>
 
                                 <br>
 
                                 <small>
 
-                                    Qty: {{ item.quantity }}
+                                    Qty : {{ item.quantity }}
 
                                 </small>
 
@@ -217,11 +192,7 @@ Checkout
 
                         {% empty %}
 
-                        <p>
-
-                            Your cart is empty.
-
-                        </p>
+                        <p>Your cart is empty.</p>
 
                         {% endfor %}
 
@@ -229,11 +200,7 @@ Checkout
 
                         <div class="d-flex justify-content-between mb-4">
 
-                            <strong>
-
-                                Total
-
-                            </strong>
+                            <strong>Total</strong>
 
                             <strong class="text-danger">
 

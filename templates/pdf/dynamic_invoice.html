@@ -1,0 +1,78 @@
+<html>
+<head>
+<style>
+    body { font-family: Helvetica, Arial, sans-serif; font-size: 12px; color: #333; }
+    .header { width: 100%; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 20px; }
+    .store-name { font-size: 20px; font-weight: bold; color: #d9534f; }
+    .table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    .table th, .table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    .table th { background-color: #f8f9fa; }
+    .totals { margin-top: 15px; float: right; font-size: 14px; font-weight: bold; }
+    .bank-info { margin-top: 30px; background: #f1f1f1; padding: 10px; font-size: 11px; }
+</style>
+</head>
+<body>
+    <div class="header">
+        <table width="100%">
+            <tr>
+                <td>
+                    <div class="store-name">{{ settings.store_name }}</div>
+                    <div>{{ settings.tagline }}</div>
+                    <div>Phone: {{ settings.phone }} | Email: {{ settings.email }}</div>
+                </td>
+                <td style="text-align: right;">
+                    <h2 style="margin:0; color:#333;">INVOICE</h2>
+                    <div># {{ order.order_number }}</div>
+                    <div>Date: {{ order.created_at|date:"d M, Y" }}</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <strong>Bill To:</strong><br>
+        Name: {{ order.full_name }}<br>
+        Phone: {{ order.phone }}<br>
+        Address: {{ order.address }}, {{ order.city }}<br>
+        Payment Method: {{ order.get_payment_method_display }}
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product.name|default:"Deleted Product" }}</td>
+                <td>Rs. {{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>Rs. {{ item.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="totals">
+        Grand Total: Rs. {{ order.total }}
+    </div>
+
+    <div style="clear: both;"></div>
+
+    {% if settings.bank_name %}
+    <div class="bank-info">
+        <strong>Bank Details for Direct Transfer:</strong><br>
+        Bank: {{ settings.bank_name }} | Account Title: {{ settings.account_title }} | Account No: {{ settings.account_number }}
+    </div>
+    {% endif %}
+
+    <div style="margin-top: 40px; text-align: center; font-size: 10px; color: #777;">
+        {{ settings.invoice_footer }}
+    </div>
+</body>
+</html>

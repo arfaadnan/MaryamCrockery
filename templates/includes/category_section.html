@@ -28,16 +28,16 @@
 
             <div class="col-lg-3 col-md-4 col-6">
 
-                <a href="#" class="category-card">
+                <a href="{% url 'store:category_products' category.slug %}" class="category-card">
 
                     <div class="category-image">
 
                         {% if category.image %}
-                        <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                            <img src="{{ category.image.url }}" alt="{{ category.name }}">
                         {% else %}
-                        <div class="category-placeholder">
-                            <i class="bi bi-grid"></i>
-                        </div>
+                            <div class="category-placeholder">
+                                <i class="bi bi-grid"></i>
+                            </div>
                         {% endif %}
 
                     </div>

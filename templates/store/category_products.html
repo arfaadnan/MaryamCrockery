@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ category.name }}
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+        <nav class="mb-4">
+            <ol class="breadcrumb">
+
+                <li class="breadcrumb-item">
+                    <a href="{% url 'store:home' %}">
+                        Home
+                    </a>
+                </li>
+
+                <li class="breadcrumb-item active">
+                    {{ category.name }}
+                </li>
+
+            </ol>
+        </nav>
+
+        <h2 class="mb-4">
+            {{ category.name }}
+        </h2>
+
+        <div class="row g-4">
+
+            {% for subcategory in subcategories %}
+
+            <div class="col-lg-3 col-md-4 col-6">
+
+                <a href="{% url 'store:subcategory_products' subcategory.slug %}" class="category-card">
+
+                    <div class="category-image">
+
+                        {% if subcategory.image %}
+                        <img src="{{ subcategory.image.url }}" alt="{{ subcategory.name }}">
+                        {% else %}
+                        <img src="{% static 'images/product-placeholder.jpg' %}" alt="">
+                        {% endif %}
+
+                    </div>
+
+                    <div class="category-body">
+
+                        <h5>
+                            {{ subcategory.name }}
+                        </h5>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            {% empty %}
+
+            <div class="col-12">
+
+                <h4>No Sub Categories Found</h4>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

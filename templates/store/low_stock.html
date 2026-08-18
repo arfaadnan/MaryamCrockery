@@ -1,0 +1,73 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="mb-4">
+        Low Stock Products
+    </h2>
+
+    <table class="table table-bordered">
+
+        <thead>
+
+            <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Stock</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for product in products %}
+
+            <tr>
+
+                <td>{{ product.name }}</td>
+
+                <td>{{ product.category.name }}</td>
+
+                <td>
+
+                    {% if product.stock == 0 %}
+
+                        <span class="badge bg-danger">
+                            Out Of Stock
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-warning text-dark">
+                            {{ product.stock }}
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+        {% empty %}
+
+            <tr>
+
+                <td colspan="3">
+
+                    No Low Stock Products
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,22 +1,21 @@
-```html
-<div class="filter-card">
+<div class="filter-card shadow-sm p-3 rounded">
 
-    <h4>
+    <h4 class="mb-3">
         Filter Products
     </h4>
 
-    <hr>
-
+    <!-- ========================= -->
     <!-- Categories -->
+    <!-- ========================= -->
 
-    <h6>
+    <h6 class="fw-bold">
         Categories
     </h6>
 
     <div class="list-group mb-4">
 
         <a href="{% url 'store:shop' %}"
-            class="list-group-item list-group-item-action {% if not selected_category %}active{% endif %}">
+           class="list-group-item list-group-item-action {% if not selected_category %}active{% endif %}">
 
             All Products
 
@@ -25,7 +24,7 @@
         {% for category in categories %}
 
         <a href="{% url 'store:shop' %}?category={{ category.id }}"
-            class="list-group-item list-group-item-action {% if selected_category == category.id|stringformat:'s' %}active{% endif %}">
+           class="list-group-item list-group-item-action {% if selected_category == category.id|stringformat:'s' %}active{% endif %}">
 
             {{ category.name }}
 
@@ -37,25 +36,79 @@
 
     <hr>
 
-    <!-- Sort -->
+    <!-- ========================= -->
+    <!-- Sub Categories -->
+    <!-- ========================= -->
 
-    <h6>
+    <h6 class="fw-bold">
+        Sub Categories
+    </h6>
+
+    <div class="list-group mb-4">
+
+        <a href="{% url 'store:shop' %}"
+           class="list-group-item list-group-item-action {% if not selected_subcategory %}active{% endif %}">
+
+            All Sub Categories
+
+        </a>
+
+        {% for sub in subcategories %}
+
+        <a href="{% url 'store:shop' %}?subcategory={{ sub.id }}"
+           class="list-group-item list-group-item-action {% if selected_subcategory == sub.id|stringformat:'s' %}active{% endif %}">
+
+            {{ sub.name }}
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+    <hr>
+
+    <!-- ========================= -->
+    <!-- Sort -->
+    <!-- ========================= -->
+
+    <h6 class="fw-bold">
         Sort By
     </h6>
 
     <form method="GET">
 
         {% if selected_category %}
-        <input type="hidden" name="category" value="{{ selected_category }}">
+            <input type="hidden" name="category" value="{{ selected_category }}">
         {% endif %}
 
-        <select name="sort" class="form-select" onchange="this.form.submit()">
+        {% if selected_subcategory %}
+            <input type="hidden" name="subcategory" value="{{ selected_subcategory }}">
+        {% endif %}
 
-            <option value="low" {% if selected_sort == "low" %}selected{% endif %}>
+        <select name="sort"
+                class="form-select"
+                onchange="this.form.submit()">
+
+            <option value="">Default</option>
+
+            <option value="newest"
+            {% if selected_sort == "newest" %}selected{% endif %}>
+                Newest
+            </option>
+
+            <option value="bestselling"
+            {% if selected_sort == "bestselling" %}selected{% endif %}>
+                Best Selling
+            </option>
+
+            <option value="price_low"
+            {% if selected_sort == "price_low" %}selected{% endif %}>
                 Price Low → High
             </option>
 
-            <option value="high" {% if selected_sort == "high" %}selected{% endif %}>
+            <option value="price_high"
+            {% if selected_sort == "price_high" %}selected{% endif %}>
                 Price High → Low
             </option>
 

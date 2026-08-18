@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body style="font-family:Arial,sans-serif;background:#f8f9fa;padding:30px;">
+
+    <table align="center" width="600" cellpadding="0" cellspacing="0"
+        style="background:#ffffff;border-radius:10px;padding:30px;">
+
+        <tr>
+            <td align="center">
+
+                <h1 style="color:#c0392b;">
+                    Maryam Crockery
+                </h1>
+
+                <p style="font-size:20px;color:#333;">
+                    Thank You For Your Order ❤️
+                </p>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+
+                <p>
+                    Dear <strong>{{ order.full_name }}</strong>,
+                </p>
+
+                <p>
+                    Your order has been placed successfully.
+                </p>
+
+                <hr>
+
+                <h3>Order Details</h3>
+
+                <p>
+                    <strong>Order Number:</strong>
+                    {{ order.order_number }}
+                </p>
+
+                <p>
+                    <strong>Total:</strong>
+                    Rs. {{ order.total }}
+                </p>
+
+                <p>
+                    <strong>Payment:</strong>
+                    {{ order.payment_method }}
+                </p>
+
+                <p>
+                    <strong>City:</strong>
+                    {{ order.city }}
+                </p>
+
+                <hr>
+
+                <h3>Products</h3>
+
+                <table width="100%" cellpadding="8">
+
+                    <tr style="background:#eee;">
+                        <th align="left">Product</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+
+                    {% for item in items %}
+
+                    <tr>
+
+                        <td>{{ item.product.name }}</td>
+
+                        <td align="center">
+                            {{ item.quantity }}
+                        </td>
+
+                        <td align="right">
+                            Rs. {{ item.subtotal }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+                <hr>
+
+                <p>
+
+                    We will contact you soon regarding your delivery.
+
+                </p>
+
+                <p>
+
+                    Thank you for shopping with Maryam Crockery.
+
+                </p>
+
+            </td>
+        </tr>
+
+        <tr>
+
+            <td align="center" style="padding-top:20px;">
+
+                <small>
+
+                    © Maryam Crockery
+
+                </small>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+</body>
+
+</html>

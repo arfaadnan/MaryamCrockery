@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ subcategory.name }}
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <h2 class="mb-4">
+            {{ subcategory.name }}
+        </h2>
+
+        <div class="row g-4">
+
+            {% for product in products %}
+
+            <div class="col-lg-3 col-md-4 col-6">
+
+                {% include "includes/product_card.html" %}
+
+            </div>
+
+            {% empty %}
+
+            <div class="col-12 text-center">
+
+                <h4>No Products Found</h4>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

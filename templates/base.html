@@ -3,70 +3,68 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta name="description"
-          content="Premium Crockery & Household Items">
-
-    <meta name="keywords"
-          content="Crockery, Kitchen, Household, Plastic, Pakistan">
-
-    <meta name="author"
-          content="Maryam Crockery">
+    <meta name="description" content="Premium Crockery & Household Items">
+    <meta name="keywords" content="Crockery, Kitchen, Household, Plastic, Pakistan">
+    <meta name="author" content="Maryam Crockery">
 
     <title>
         {% block title %}
-            {{ site_settings.store_name }}
+            {{ site_settings.store_name|default:"Maryam Crockery" }}
         {% endblock %}
     </title>
 
     <!-- Google Font -->
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-          rel="stylesheet">
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Main CSS -->
-    <link rel="stylesheet"
-          href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     {% block extra_css %}
     {% endblock %}
-
 </head>
 
 <body>
 
-    <!-- Navbar -->
+    <!-- Navbar Include -->
     {% include "includes/navbar.html" %}
 
-    <!-- Main Content -->
-    <main>
+    <!-- Global Toast Alerts (Django Messages) -->
+    {% if messages %}
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1090;">
+        {% for message in messages %}
+        <div class="toast show align-items-center text-white bg-{{ message.tags|default:'dark' }} border-0 shadow-lg mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="bi bi-info-circle-fill me-2"></i> {{ message }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Content Block -->
+    <main class="main-content min-vh-100">
         {% block content %}
         {% endblock %}
     </main>
 
-    <!-- Footer -->
+    <!-- Footer Include -->
     {% include "includes/footer.html" %}
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Main JS -->
     <script src="{% static 'js/main.js' %}"></script>
