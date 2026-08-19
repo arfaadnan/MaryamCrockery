@@ -1,0 +1,189 @@
+/* ==========================================
+   CONTACT PAGE
+========================================== */
+
+.contact-page {
+
+    padding: 60px 0;
+    background: var(--bg, #F9F8F6);
+
+}
+
+
+/* ==========================================
+   CONTACT HEADER
+========================================== */
+
+.contact-page-header {
+
+    text-align:center;
+    margin-bottom:45px;
+
+}
+
+
+.contact-page-header h1 {
+
+    font-family:'Fraunces', serif;
+    font-size:42px;
+    font-weight:700;
+    color:var(--ink, #2C2420);
+
+}
+
+
+.contact-page-header p {
+
+    color:var(--muted, #666);
+
+}
+
+
+
+/* ==========================================
+   CONTACT CARDS
+========================================== */
+
+.contact-page .card {
+
+    background:var(--paper, #fff);
+    border:1px solid var(--line, #E7E3DC);
+    border-radius:18px !important;
+    box-shadow:var(--shadow-sm);
+    height:100%;
+
+}
+
+
+.contact-page .card-body {
+
+    padding:35px !important;
+
+}
+
+
+.contact-page h3 {
+
+    font-family:'Fraunces', serif;
+    font-size:26px;
+    color:var(--ink, #2C2420);
+    margin-bottom:25px;
+
+}
+
+
+
+/* ==========================================
+   CONTACT DETAILS
+========================================== */
+
+.contact-page p {
+
+    color:var(--muted, #666);
+    line-height:1.8;
+    font-size:15px;
+
+}
+
+
+.contact-page strong {
+
+    color:var(--ink, #2C2420);
+
+}
+
+
+
+/* ==========================================
+   FORM
+========================================== */
+
+.contact-page .form-control {
+
+    height:50px;
+    border-radius:10px;
+    border:1px solid var(--line, #E7E3DC);
+    background:#fff;
+    padding:0 15px;
+
+}
+
+
+.contact-page textarea.form-control {
+
+    height:auto;
+    padding-top:15px;
+
+}
+
+
+.contact-page .form-control:focus {
+
+    border-color:#A9682E;
+    box-shadow:0 0 0 .15rem rgba(169,104,46,.15);
+
+}
+
+
+
+/* ==========================================
+   CONTACT BUTTON
+========================================== */
+
+.contact-btn {
+
+    background:#A9682E;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:12px 28px;
+    font-weight:600;
+    transition:.3s;
+    cursor:pointer;
+
+}
+
+
+.contact-btn:hover {
+
+    background:#2C2420;
+    color:#fff;
+
+}
+
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:768px){
+
+    .contact-page {
+
+        padding:35px 0;
+
+    }
+
+
+    .contact-page-header h1 {
+
+        font-size:30px;
+
+    }
+
+
+    .contact-page .card-body {
+
+        padding:22px !important;
+
+    }
+
+
+    .contact-btn {
+
+        width:100%;
+
+    }
+
+}

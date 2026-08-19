@@ -1,0 +1,164 @@
+/* ==========================================
+   WISHLIST PAGE
+========================================== */
+
+.wishlist-page{
+
+    padding:60px 0;
+    background:var(--bg, #F9F8F6);
+
+}
+
+
+/* Heading */
+
+.wishlist-page h2{
+
+    font-family:'Fraunces', serif;
+    color:var(--ink, #2C2420);
+    font-size:36px;
+
+}
+
+
+.wishlist-page h2 i{
+
+    color:#A9682E !important;
+
+}
+
+
+
+/* Product Card */
+
+.wishlist-page .card{
+
+    background:var(--paper, #fff);
+    border:1px solid var(--line, #E7E3DC) !important;
+    border-radius:18px !important;
+    overflow:hidden;
+    transition:.3s;
+
+}
+
+
+.wishlist-page .card:hover{
+
+    transform:translateY(-5px);
+    box-shadow:var(--shadow);
+
+}
+
+
+
+.wishlist-page .card-img-top{
+
+    height:260px;
+    object-fit:cover;
+
+}
+
+
+.wishlist-page .card-body{
+
+    padding:22px;
+
+}
+
+
+.wishlist-page h5{
+
+    font-family:'Fraunces', serif;
+    color:var(--ink, #2C2420);
+
+}
+
+
+.wishlist-page .text-muted{
+
+    color:var(--muted) !important;
+
+}
+
+
+/* Price */
+
+.wishlist-page .text-danger{
+
+    color:#A9682E !important;
+
+}
+
+
+
+/* Add Cart Button */
+
+.wishlist-page .btn-danger{
+
+    background:#A9682E !important;
+    border-color:#A9682E !important;
+    color:#fff !important;
+
+}
+
+
+.wishlist-page .btn-danger:hover{
+
+    background:#2C2420 !important;
+    border-color:#2C2420 !important;
+
+}
+
+
+/* Remove Button */
+
+.wishlist-page .btn-outline-dark{
+
+    border-color:var(--line);
+    color:var(--ink);
+
+}
+
+
+.wishlist-page .btn-outline-dark:hover{
+
+    background:var(--ink);
+    color:#fff;
+
+}
+
+
+/* Empty Wishlist */
+
+.wishlist-page .display-1{
+
+    color:#A9682E !important;
+
+}
+
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .wishlist-page{
+
+        padding:35px 0;
+
+    }
+
+
+    .wishlist-page h2{
+
+        font-size:30px;
+
+    }
+
+
+    .wishlist-page .card-img-top{
+
+        height:220px;
+
+    }
+
+}

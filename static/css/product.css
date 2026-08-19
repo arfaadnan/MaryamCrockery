@@ -1,230 +1,273 @@
-.product-card{
-
-    background:#fff;
-
-    border-radius:18px;
-
-    overflow:hidden;
-
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-
-    transition:.35s;
-
-    height:100%;
-
+/* ==========================================
+   PRODUCT CARDS (Featured & Best Sellers)
+========================================== */
+.product-card {
+    background: var(--paper, #fff);
+    border-radius: var(--radius-lg, 14px);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    height: 100%;
+    border: 1px solid var(--line, #E7E3DC);
+    display: flex;
+    flex-direction: column;
 }
 
-.product-card:hover{
 
-    transform:translateY(-8px);
-
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow);
+    border-color: transparent;
 }
 
-.product-image{
-
-    position:relative;
-
-    height:260px;
-
-    overflow:hidden;
-
+.product-image {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+    background: var(--surface, #F3F1EC);
 }
 
-.product-image img{
-
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
-    transition:.5s;
-
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(.4,0,.2,1);
 }
 
-.product-card:hover img{
-
-    transform:scale(1.08);
-
+.product-card:hover .product-image img {
+    transform: scale(1.06);
 }
 
-.product-badge{
-
-    position:absolute;
-
-    top:15px;
-
-    left:15px;
-
-    background:#C9A227;
-
-    color:#fff;
-
-    padding:6px 14px;
-
-    border-radius:30px;
-
-    font-size:12px;
-
+.product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--ink);
+    color: var(--white);
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
-.product-content{
-
-    padding:22px;
-
+.product-content {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
-.product-category{
-
-    color:#888;
-
+.product-category {
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
 }
 
-.product-content h5{
-
-    margin:12px 0;
-
-    font-size:20px;
-
-    font-weight:600;
-
+.product-content h5 {
+    margin: 6px 0 12px 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
 }
 
-.product-price{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin-bottom:20px;
-
+.product-price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    margin-bottom: 16px;
 }
 
-.new-price{
-
-    color:#0F766E;
-
-    font-weight:700;
-
-    font-size:22px;
-
+.new-price {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 18px;
 }
 
-.old-price{
-
-    color:#999;
-
-    text-decoration:line-through;
-
+.old-price {
+    color: var(--muted);
+    font-size: 14px;
+    text-decoration: line-through;
 }
 
-.product-btn{
-
-    display:block;
-
-    text-align:center;
-
-    background:#0F766E;
-
-    color:#fff;
-
-    padding:12px;
-
-    border-radius:12px;
-
-    transition:.3s;
-
+.product-btn {
+    display: block;
+    text-align: center;
+    background: var(--surface);
+    color: var(--ink);
+    padding: 10px;
+    border-radius: var(--radius-sm, 6px);
+    font-weight: 600;
+    font-size: 13px;
+    transition: var(--transition);
+    border: 1px solid var(--line);
 }
 
-.product-btn:hover{
-
-    background:#C9A227;
-
-    color:#fff;
-
+.product-btn:hover {
+    background: var(--accent);
+    color: var(--white);
+    border-color: var(--accent);
 }
 
-/*=========================================
-PRODUCT REVIEWS
-=========================================*/
-
-.review-summary{
-    background:#fff;
-    border-radius:16px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+/* ==========================================
+   PRODUCT REVIEWS & DETAILS
+========================================== */
+.review-summary {
+    background: var(--paper);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--line);
+    padding: 24px;
 }
 
-.review-summary h3{
-    font-size:40px;
-    font-weight:700;
-    color:#dc3545;
+.review-summary h3 {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
 }
 
-.customer-reviews .card{
-    border:none;
-    border-radius:16px;
-    transition:.3s;
+.customer-reviews .card {
+    background: var(--paper);
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius-lg);
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
 }
 
-.customer-reviews .card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 15px 35px rgba(0,0,0,.10);
+.customer-reviews .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
 }
 
-.customer-reviews h5{
-    font-weight:600;
-    margin-bottom:4px;
+.customer-reviews h5 {
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
 }
 
-.customer-reviews .text-warning i{
-    color:#ffc107;
-    margin-right:2px;
+.customer-reviews .text-warning i {
+    color: #E6B800;
+    margin-right: 2px;
 }
 
-.write-review .card{
-    border:none;
-    border-radius:16px;
+.write-review .card {
+    background: var(--paper);
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
 }
 
-.write-review .card-header{
-    background:#111827;
-    color:#fff;
-    font-weight:600;
+.write-review .card-header {
+    background: var(--ink) !important;
+    color: var(--white);
+    font-weight: 600;
+    border-top-left-radius: var(--radius-lg) !important;
+    border-top-right-radius: var(--radius-lg) !important;
+    padding: 14px 20px;
 }
 
 .write-review input,
 .write-review textarea,
-.write-review select{
-    border-radius:12px;
-    padding:12px;
-    border:1px solid #ddd;
+.write-review select {
+    border-radius: var(--radius-sm) !important;
+    padding: 10px 14px;
+    border: 1px solid var(--line) !important;
+    background: var(--bg) !important;
+    color: var(--ink) !important;
 }
 
-.write-review textarea{
-    min-height:140px;
-    resize:none;
+.write-review input:focus,
+.write-review textarea:focus,
+.write-review select:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px var(--accent-tint) !important;
 }
 
-.write-review button{
-    border-radius:12px;
-    padding:12px 28px;
+.write-review textarea {
+    min-height: 120px;
+    resize: none;
 }
 
-.write-review button:hover{
+.write-review button {
+    border-radius: var(--radius-sm);
+    padding: 10px 24px;
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.write-review button:hover {
+    background: var(--accent-dark);
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   RESPONSIVE PRODUCT STYLES
+========================================== */
+@media(max-width: 768px) {
+    .product-image {
+        height: 190px;
+    }
+    
+    .product-content {
+        padding: 14px;
+    }
+
+    .review-summary {
+        text-align: center;
+    }
+
+    .customer-reviews .d-flex {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* ==========================================
+   PREMIUM PRODUCT BUTTON
+========================================== */
+
+.product-card .btn,
+.product-card button,
+.product-card .add-cart-btn{
+
+    background:var(--accent, #A9682E);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    height:45px;
+    padding:0 22px;
+    font-size:14px;
+    font-weight:600;
+    transition:var(--transition);
+}
+
+
+.product-card .btn:hover,
+.product-card button:hover,
+.product-card .add-cart-btn:hover{
+
+    background:var(--ink, #2C2420);
+    color:#fff;
     transform:translateY(-2px);
+
 }
 
 @media(max-width:768px){
 
-.review-summary{
-    text-align:center;
-}
+    .product-card .btn,
+    .product-card button,
+    .product-card .add-cart-btn{
 
-.customer-reviews .d-flex{
-    flex-direction:column;
-    gap:10px;
-}
+        width:100%;
+
+    }
 
 }

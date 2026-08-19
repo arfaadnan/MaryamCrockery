@@ -1,142 +1,153 @@
 /* ==========================================
-   INSTAGRAM
+   INSTAGRAM SECTION
 ========================================== */
 
-/* .instagram-section{
-
-    padding:90px 0;
-
+.instagram-section {
+    background: var(--paper, #fff);
 }
 
-.instagram-card{
-
-    position:relative;
-
-    overflow:hidden;
-
-    border-radius:18px;
-
-    cursor:pointer;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-
-}
-
-.instagram-card img{
-
-    width:100%;
-
-    height:220px;
-
-    object-fit:cover;
-
-    transition:.4s;
-
-}
-
-.instagram-card:hover img{
-
-    transform:scale(1.08);
-
-}
-
-.instagram-overlay{
-
-    position:absolute;
-
-    inset:0;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:rgba(15,118,110,.75);
-
-    opacity:0;
-
-    transition:.35s;
-
-}
-
-.instagram-card:hover .instagram-overlay{
-
-    opacity:1;
-
-}
-
-.instagram-overlay i{
-
-    color:#fff;
-
-    font-size:42px;
-
-}
-
-@media(max-width:768px){
-
-.instagram-card img{
-
-height:160px;
-
-}
-
-} */
-
-/* ==========================================
-    INSTAGRAM SECTION (Optimized Spacing)
-========================================== */
-
-.instagram-section{
-    padding: 40px 0; /* Extra vertical space kam kar di gayi hai */
-}
-
-.instagram-card{
+.instagram-card {
     position: relative;
     overflow: hidden;
-    border-radius: 14px; /* Corners ko thora aur refined kiya hai */
+    border-radius: var(--radius-lg, 14px);
     cursor: pointer;
-    box-shadow: 0 6px 18px rgba(0,0,0,.06);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--line, #E7E3DC);
+    transition: var(--transition);
 }
 
-.instagram-card img{
+.instagram-card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-4px);
+    border-color: transparent;
+}
+
+.instagram-card img {
     width: 100%;
-    height: 180px; /* Height ko thora compact kiya hai taake grid clean lage */
+    height: 180px;
     object-fit: cover;
-    transition: .4s;
+    background: var(--surface, #F3F1EC);
+    transition: transform 0.6s cubic-bezier(.4,0,.2,1);
 }
 
-.instagram-card:hover img{
+.instagram-card:hover img {
     transform: scale(1.06);
 }
 
-.instagram-overlay{
+.instagram-overlay {
     position: absolute;
     inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(15,118,110,.75);
+    background: rgba(44, 36, 32, 0.75); /* Warm dark overlay using ink tone */
     opacity: 0;
-    transition: .35s;
+    transition: var(--transition);
 }
 
-.instagram-card:hover .instagram-overlay{
+.instagram-card:hover .instagram-overlay {
     opacity: 1;
 }
 
-.instagram-overlay i{
-    color: #fff;
-    font-size: 36px;
+.instagram-overlay i {
+    color: var(--white, #fff);
+    font-size: 32px;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.instagram-card:hover .instagram-overlay i {
+    transform: scale(1);
+}
+
+/* ==========================================
+   RESPONSIVE INSTAGRAM STYLES
+========================================== */
+@media (max-width: 768px) {
+    .instagram-card img {
+        height: 140px;
+    }
+}
+
+/* ==========================================
+   INSTAGRAM SECTION SPACING
+========================================== */
+
+.instagram-section{
+
+    padding-top:30px;
+
+    padding-bottom:20px;
+
+}
+
+
+.instagram-section .section-header{
+
+    margin-bottom:35px;
+
+}
+
+
+/* Tablet */
+
+@media(max-width:991px){
+
+    .instagram-section{
+
+        padding-top:25px;
+
+        padding-bottom:20px;
+
+    }
+
+}
+
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .instagram-section{
+
+        padding-top:20px;
+
+        padding-bottom:10px;
+
+    }
+
+
+    .instagram-section .section-header{
+
+        margin-bottom:25px;
+
+    }
+
+}
+
+.instagram-section{
+    padding-bottom:25px !important;
+    margin-bottom:0 !important;
+}
+@media(max-width:768px){
+
+    .instagram-section{
+        padding-bottom:0 !important;
+    }
+
 }
 
 @media(max-width:768px){
-    .instagram-section{
-        padding: 30px 0;
+
+    .instagram-section .row{
+        margin-bottom:0 !important;
     }
 
-    .instagram-card img{
-        height: 140px;
+}
+@media(max-width:768px){
+
+    .instagram-section{
+        padding-bottom:15px !important;
     }
+
 }

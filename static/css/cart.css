@@ -1,188 +1,185 @@
 /* =====================================
-   CART PAGE
+   CART PAGE STYLES
 ===================================== */
 
 .cart-page {
-    background: #f8f9fb;
-    padding: 70px 0;
-    min-height: 100vh;
+    background: var(--bg);
+    padding: 60px 0;
+    min-height: calc(100vh - 200px);
 }
 
 .cart-page h1 {
-    font-size: 42px;
+    font-size: 38px;
     font-weight: 700;
-    color: #222;
+    color: var(--ink);
+    font-family: 'Fraunces', serif;
 }
 
 .cart-page p {
-    color: #777;
+    color: var(--muted);
 }
 
 /* =====================================
-   CART CARD
+   CART CARDS & ITEMS
 ===================================== */
 
 .cart-page .card {
-    border: none;
-    border-radius: 18px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg, 14px);
     overflow: hidden;
-    transition: .35s;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, .06);
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+    animation: fadeUp .4s ease;
 }
 
 .cart-page .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, .12);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    border-color: transparent;
 }
 
 .cart-page img {
     width: 100%;
-    height: 230px;
+    height: 220px;
     object-fit: cover;
+    background: var(--surface);
 }
 
 .cart-page .card-body {
-    padding: 25px;
+    padding: 22px;
 }
 
 .cart-page .card-body h4 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
-    color: #222;
+    color: var(--ink);
+    margin-bottom: 6px;
 }
 
 .cart-page .card-body h5 {
-    color: #dc3545;
-    font-size: 24px;
+    color: var(--accent);
+    font-size: 20px;
     font-weight: 700;
 }
 
-.cart-page .card-body p {
-    color: #777;
-}
-
 /* =====================================
-   QUANTITY
+   QUANTITY & BUTTONS
 ===================================== */
 
 .cart-page .btn-outline-secondary {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    transition: .3s;
+    border-color: var(--line);
+    color: var(--ink);
+    transition: var(--transition);
 }
 
 .cart-page .btn-outline-secondary:hover {
-    background: #dc3545;
-    color: #fff;
-    border-color: #dc3545;
+    background: var(--accent);
+    color: var(--white);
+    border-color: var(--accent);
 }
 
 .cart-page input {
-    height: 42px;
+    height: 38px;
     font-weight: 600;
+    border-color: var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    background: var(--bg);
 }
 
-/* =====================================
-   REMOVE BUTTON
-===================================== */
-
 .cart-page .btn-outline-danger {
-    border-radius: 50px;
-    padding: 10px 22px;
-    transition: .3s;
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-size: 13px;
+    border-color: #e0b4b4;
+    color: var(--danger);
+    transition: var(--transition);
 }
 
 .cart-page .btn-outline-danger:hover {
+    background: var(--danger);
+    color: var(--white);
+    border-color: var(--danger);
     transform: translateY(-2px);
 }
+
 /* =====================================
    ORDER SUMMARY
 ===================================== */
 
 .cart-page .sticky-top {
-
-    top: 100px;
-
+    top: 90px;
 }
 
 .cart-page .sticky-top .card-body {
-
-    padding: 35px;
-
+    padding: 30px;
 }
 
 .cart-page .sticky-top h3 {
-
-    font-size: 28px;
-
+    font-size: 24px;
     font-weight: 700;
-
+    color: var(--ink);
 }
 
 .cart-page .sticky-top h4 {
-
     font-weight: 700;
-
-    color: #dc3545;
-
+    color: var(--accent);
 }
 
 .cart-page .sticky-top hr {
-
-    margin: 22px 0;
-
+    margin: 18px 0;
+    border-color: var(--line);
 }
 
 /* =====================================
-   BENEFIT CARDS
+   BENEFIT & SUPPORT CARDS
 ===================================== */
 
-.cart-page .benefit-card {
-
-    background: #fff;
-
-    border-radius: 18px;
-
-    transition: .35s;
-
+.cart-page .benefit-card,
+.cart-page .support-box {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 30px 24px;
+    transition: var(--transition);
     height: 100%;
-
+    box-shadow: var(--shadow-sm);
 }
 
-.cart-page .benefit-card:hover {
-
-    transform: translateY(-8px);
-
-    box-shadow: 0 18px 40px rgba(0, 0, 0, .12);
-
+.cart-page .benefit-card:hover,
+.cart-page .support-box:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+    border-color: transparent;
 }
 
-.cart-page .benefit-card i {
-
-    font-size: 55px;
-
+.cart-page .benefit-card i,
+.cart-page .support-box i {
+    font-size: 44px;
+    color: var(--accent);
+    margin-bottom: 12px;
 }
 
-.cart-page .benefit-card h5 {
-
-    margin-top: 20px;
-
+.cart-page .benefit-card h5,
+.cart-page .support-box h5 {
+    margin-top: 10px;
     font-weight: 700;
-
-    color: #222;
-
+    color: var(--ink);
+    font-size: 17px;
 }
 
-.cart-page .benefit-card p {
-
-    color: #777;
-
-    margin-top: 12px;
-
+.cart-page .benefit-card p,
+.cart-page .support-box p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 6px;
 }
 
 /* =====================================
@@ -190,600 +187,209 @@
 ===================================== */
 
 .cart-page .payment-info .card {
-
-    border-radius: 18px;
-
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line);
 }
 
 .cart-page .payment-info h3 {
-
-    font-size: 28px;
-
+    font-size: 24px;
     font-weight: 700;
-
-    margin-bottom: 25px;
-
+    margin-bottom: 20px;
+    color: var(--ink);
 }
 
 .cart-page .payment-info .list-group-item {
-
     border: none;
-
-    padding: 15px 0;
-
-    font-size: 17px;
-
+    background: transparent;
+    padding: 12px 0;
+    font-size: 15px;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--line);
 }
 
 .cart-page .payment-info .alert {
-
     border: none;
-
-    border-radius: 15px;
-
-}
-/* =====================================
-   SUPPORT SECTION
-===================================== */
-
-.cart-page .support-box {
-
-    background: #fff;
-
-    padding: 35px;
-
-    border-radius: 18px;
-
-    transition: .35s;
-
-    height: 100%;
-
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .05);
-
-}
-
-.cart-page .support-box:hover {
-
-    transform: translateY(-8px);
-
-    box-shadow: 0 18px 40px rgba(0, 0, 0, .12);
-
-}
-
-.cart-page .support-box i {
-
-    font-size: 55px;
-
-    color: #dc3545;
-
-}
-
-.cart-page .support-box h5 {
-
-    margin-top: 20px;
-
-    font-weight: 700;
-
-}
-
-.cart-page .support-box p {
-
-    color: #777;
-
+    border-radius: var(--radius);
+    background: var(--accent-tint);
+    color: var(--accent-dark);
 }
 
 /* =====================================
-   EMPTY CART
+   EMPTY CART & SECTIONS SPACING
 ===================================== */
-
-.cart-page img {
-
-    border-radius: 12px;
-
-}
 
 .cart-page h2 {
-
-    font-size: 36px;
-
+    font-size: 32px;
     font-weight: 700;
-
-    color: #222;
-
+    color: var(--ink);
 }
 
-.cart-page .btn-danger {
-
-    border-radius: 50px;
-
-    padding: 14px 34px;
-
-    font-weight: 600;
-
-    transition: .3s;
-
-}
-
-.cart-page .btn-danger:hover {
-
-    transform: translateY(-3px);
-
-}
-
-/* =====================================
-   SECTION SPACING
-===================================== */
-
-.cart-page .cart-benefits {
-
-    margin-top: 70px;
-
-}
-
-.cart-page .payment-info {
-
-    margin-top: 70px;
-
-}
-
-.cart-page .support-section {
-
-    margin-top: 70px;
-
+.cart-page .cart-benefits,
+.cart-page .payment-info,
+.cart-page .support-section,
+.cart-page .recommended-products,
+.cart-page .shopping-banner,
+.cart-page .newsletter-section {
+    margin-top: 60px;
 }
 
 /* =====================================
    RECOMMENDED PRODUCTS
 ===================================== */
 
-.cart-page .recommended-products {
-
-    margin-top: 80px;
-
-}
-
-.cart-page .recommended-products .card {
-
-    border: none;
-
-    border-radius: 18px;
-
-    overflow: hidden;
-
-    transition: .35s;
-
-    box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
-
-}
-
-.cart-page .recommended-products .card:hover {
-
-    transform: translateY(-8px);
-
-    box-shadow: 0 18px 45px rgba(0, 0, 0, .14);
-
-}
-
 .cart-page .recommended-products img {
-
-    height: 230px;
-
-    object-fit: cover;
-
+    height: 200px;
 }
 
 .cart-page .recommended-products h5 {
-
-    font-size: 20px;
-
+    font-size: 18px;
     font-weight: 700;
-
-    color: #222;
-
+    color: var(--ink);
 }
 
 .cart-page .recommended-products .btn {
+    border-radius: var(--radius-sm);
+    margin-top: 12px;
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    font-weight: 600;
+    font-size: 13px;
+}
 
-    border-radius: 40px;
-
-    margin-top: 15px;
-
+.cart-page .recommended-products .btn:hover {
+    background: var(--accent);
+    color: var(--white);
+    border-color: var(--accent);
 }
 
 /* =====================================
-   CONTINUE SHOPPING
+   CONTINUE SHOPPING BANNER
 ===================================== */
 
-.cart-page .shopping-banner {
-
-    margin-top: 80px;
-
-}
-
 .cart-page .shopping-banner .bg-light {
-
-    background: #fff !important;
-
-    border-radius: 20px;
-
-    box-shadow: 0 10px 35px rgba(0, 0, 0, .08);
-
+    background: var(--paper) !important;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 40px;
 }
 
 .cart-page .shopping-banner h2 {
-
-    font-size: 36px;
-
-    font-weight: 700;
-
+    font-size: 30px;
 }
 
-.cart-page .shopping-banner p {
-
-    font-size: 17px;
-
-    color: #777;
-
-}
 /* =====================================
    NEWSLETTER
 ===================================== */
 
-.cart-page .newsletter-section {
-
-    margin-top: 80px;
-
-}
-
 .cart-page .newsletter-section .card {
-
-    border: none;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--paper);
 }
 
 .cart-page .newsletter-section .card-body {
-
-    padding: 60px;
-
+    padding: 50px;
 }
 
 .cart-page .newsletter-section h2 {
-
-    font-size: 36px;
-
-    font-weight: 700;
-
+    font-size: 30px;
 }
 
 .cart-page .newsletter-section input {
-
-    height: 55px;
-
-    border-radius: 40px;
-
-    padding-left: 20px;
-
+    height: 48px;
+    border-radius: var(--radius-sm);
+    padding-left: 16px;
+    background: var(--bg);
 }
 
 .cart-page .newsletter-section button {
-
-    height: 55px;
-
-    border-radius: 40px;
-
+    height: 48px;
+    border-radius: var(--radius-sm);
     font-weight: 600;
-
-}
-
-/* =====================================
-   FLOATING WHATSAPP
-===================================== */
-
-.cart-page .floating-whatsapp {
-
-    position: fixed;
-
-    right: 25px;
-
-    bottom: 90px;
-
-    width: 60px;
-
-    height: 60px;
-
-    background: #25D366;
-
-    color: #fff;
-
-    border-radius: 50%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 28px;
-
-    text-decoration: none;
-
-    z-index: 999;
-
-    box-shadow: 0 8px 25px rgba(0, 0, 0, .25);
-
-    transition: .3s;
-
-}
-
-.cart-page .floating-whatsapp:hover {
-
-    transform: scale(1.1);
-
-    color: #fff;
-
-}
-
-/* =====================================
-   BACK TO TOP
-===================================== */
-
-.cart-page .back-to-top {
-
-    position: fixed;
-
-    right: 25px;
-
-    bottom: 20px;
-
-    width: 55px;
-
-    height: 55px;
-
+    background: var(--accent);
+    color: var(--white);
     border: none;
-
-    background: #dc3545;
-
-    color: #fff;
-
-    border-radius: 50%;
-
-    display: none;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 22px;
-
-    cursor: pointer;
-
-    z-index: 999;
-
-    transition: .3s;
-
 }
 
-.cart-page .back-to-top:hover {
-
-    transform: translateY(-5px);
-
-    background: #b02a37;
-
+.cart-page .newsletter-section button:hover {
+    background: var(--accent-dark);
 }
+
 /* =====================================
-   BUTTONS
+   GLOBAL BUTTONS & ANIMATIONS
 ===================================== */
 
 .cart-page .btn-danger {
-
-    background: #dc3545;
-
+    background: var(--accent);
     border: none;
-
-    transition: .3s;
-
+    border-radius: var(--radius-sm);
+    padding: 10px 24px;
+    font-weight: 600;
+    transition: var(--transition);
 }
 
 .cart-page .btn-danger:hover {
-
-    background: #bb2d3b;
-
-    transform: translateY(-3px);
-
+    background: var(--accent-dark);
+    transform: translateY(-2px);
 }
 
 .cart-page .btn-outline-dark {
-
-    border-radius: 40px;
-
-    transition: .3s;
-
+    border-radius: var(--radius-sm);
+    border-color: var(--line);
+    color: var(--ink);
+    padding: 10px 24px;
+    font-weight: 600;
+    transition: var(--transition);
 }
 
 .cart-page .btn-outline-dark:hover {
-
-    transform: translateY(-3px);
-
-}
-
-/* =====================================
-   CARD ANIMATION
-===================================== */
-
-.cart-page .card {
-
-    animation: fadeUp .5s ease;
-
+    background: var(--surface);
+    border-color: var(--ink);
+    transform: translateY(-2px);
 }
 
 @keyframes fadeUp {
-
     from {
-
         opacity: 0;
-        transform: translateY(20px);
-
+        transform: translateY(15px);
     }
-
     to {
-
         opacity: 1;
         transform: translateY(0);
-
     }
-
 }
 
 /* =====================================
-   CUSTOM SCROLLBAR
+   RESPONSIVE CART STYLES
 ===================================== */
 
-::-webkit-scrollbar {
-
-    width: 10px;
-
-}
-
-::-webkit-scrollbar-track {
-
-    background: #f3f3f3;
-
-}
-
-::-webkit-scrollbar-thumb {
-
-    background: #dc3545;
-
-    border-radius: 20px;
-
-}
-
-::-webkit-scrollbar-thumb:hover {
-
-    background: #bb2d3b;
-
-}
-
-/* =====================================
-   RESPONSIVE
-===================================== */
-
-@media(max-width:991px) {
-
+@media(max-width: 991px) {
     .cart-page .sticky-top {
-
         position: relative !important;
-
         top: 0;
-
-        margin-top: 40px;
-
+        margin-top: 30px;
     }
-
     .cart-page .shopping-banner h2 {
-
-        font-size: 30px;
-
+        font-size: 26px;
     }
-
-    .cart-page .newsletter-section .card-body {
-
-        padding: 35px;
-
-    }
-
 }
 
-@media(max-width:768px) {
-
+@media(max-width: 768px) {
     .cart-page {
-
         padding: 40px 0;
-
     }
-
     .cart-page h1 {
-
-        font-size: 30px;
-
+        font-size: 26px;
     }
-
     .cart-page .card-body {
-
-        padding: 18px;
-
+        padding: 16px;
     }
-
-    .cart-page .card-body h4 {
-
-        font-size: 20px;
-
-    }
-
-    .cart-page .card-body h5 {
-
-        font-size: 22px;
-
-    }
-
     .cart-page .recommended-products img {
-
-        height: 180px;
-
+        height: 160px;
     }
-
-    .cart-page .shopping-banner {
-
-        padding: 10px;
-
+    .cart-page .newsletter-section .card-body {
+        padding: 30px 20px;
     }
-
-    .cart-page .newsletter-section h2 {
-
-        font-size: 28px;
-
-    }
-
-    .cart-page .newsletter-section input {
-
-        margin-bottom: 15px;
-
-    }
-
-}
-
-@media(max-width:576px) {
-
-    .cart-page img {
-
-        height: 180px;
-
-    }
-
-    .cart-page .floating-whatsapp {
-
-        width: 50px;
-
-        height: 50px;
-
-        font-size: 22px;
-
-        right: 15px;
-
-    }
-
-    .cart-page .back-to-top {
-
-        width: 45px;
-
-        height: 45px;
-
-        right: 15px;
-
-    }
-
 }

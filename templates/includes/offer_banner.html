@@ -8,20 +8,15 @@
 
                 <div class="col-lg-6">
 
-                    <div class="offer-content">
-
-                        <span class="offer-tag">
-
-                            Limited Time Offer
-
-                        </span>
+                    <div class="section-header">
 
                         <h2>
-
-                            Premium Crockery Collection
-
+                            LIMITED TIME OFFER
                         </h2>
 
+                        <h3 class="offer-subtitle">
+                            Premium Collection Sale
+                        </h3>
                         <p>
 
                             Upgrade your dining experience with our elegant
@@ -48,15 +43,15 @@
 
                         {% if offers.first.image %}
 
-                            <img src="{{ offers.first.image.url }}" alt="Offer">
+                        <img src="{{ offers.first.image.url }}" alt="Offer">
 
                         {% else %}
 
-                            <div class="offer-placeholder">
+                        <div class="offer-placeholder">
 
-                                <i class="bi bi-gift"></i>
+                            <i class="bi bi-gift"></i>
 
-                            </div>
+                        </div>
 
                         {% endif %}
 

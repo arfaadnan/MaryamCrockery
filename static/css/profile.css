@@ -1,0 +1,231 @@
+/* =====================================
+   PROFILE PAGE
+===================================== */
+
+.profile-page {
+
+    background: var(--bg);
+
+    min-height: calc(100vh - 200px);
+
+}
+
+
+
+/* =====================================
+   CARD
+===================================== */
+
+.profile-page .card {
+
+    background: var(--paper);
+
+    border-radius: 20px;
+
+    border: none;
+
+    box-shadow: var(--shadow-sm);
+
+}
+
+
+.profile-page .card-body {
+
+    padding: 40px;
+
+}
+
+
+
+/* =====================================
+   HEADING
+===================================== */
+
+.profile-page h2 {
+
+    font-family: 'Fraunces', serif;
+
+    color: var(--ink);
+
+    font-weight: 700;
+
+}
+
+
+
+/* =====================================
+   PROFILE IMAGE
+===================================== */
+
+.profile-page img {
+
+    border: 5px solid var(--paper);
+
+}
+
+
+
+/* =====================================
+   LABELS
+===================================== */
+
+.profile-page .form-label {
+
+    font-weight: 600;
+
+    color: var(--ink);
+
+    font-size: 14px;
+
+}
+
+
+
+/* =====================================
+   INPUTS
+===================================== */
+
+.profile-page .form-control {
+
+    height: 48px;
+
+    border-radius: 12px;
+
+    border: 1px solid var(--line);
+
+    background: var(--bg);
+
+    color: var(--ink);
+
+}
+
+
+.profile-page textarea.form-control {
+
+    height: auto;
+
+    resize: none;
+
+}
+
+
+
+.profile-page .form-control:focus {
+
+    border-color: var(--accent);
+
+    box-shadow: 0 0 0 3px var(--accent-tint);
+
+}
+
+
+
+/* =====================================
+   SAVE BUTTON
+===================================== */
+
+.profile-save-btn {
+
+    background: var(--accent);
+
+    color: white;
+
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    font-weight: 600;
+
+    width: 100%;
+
+    transition: .3s;
+
+}
+
+
+.profile-save-btn:hover {
+
+    background: var(--accent-dark);
+
+    transform: translateY(-2px);
+
+}
+
+
+
+/* =====================================
+   MY ORDERS BUTTON
+===================================== */
+
+.profile-orders-btn {
+
+    display: block;
+
+    width: 100%;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    color: var(--ink);
+
+    border: 1px solid var(--line);
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+
+
+.profile-orders-btn:hover {
+
+    background: var(--ink);
+
+    color: white;
+
+}
+
+
+
+/* =====================================
+   ALERT
+===================================== */
+
+.profile-page .alert {
+
+    border-radius: 12px;
+
+}
+
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media(max-width:768px){
+
+
+    .profile-page .card-body {
+
+        padding: 25px;
+
+    }
+
+
+    .profile-page h2 {
+
+        font-size: 26px;
+
+    }
+
+
+}

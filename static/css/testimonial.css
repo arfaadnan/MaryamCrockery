@@ -1,66 +1,104 @@
-/* .testimonial-card{
-    background:#fff;
-    border:1px solid #eee;
-    border-radius:16px;
-    padding:30px;
-    text-align:center;
-    transition:.3s;
-}
-
-.testimonial-card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 15px 35px rgba(0,0,0,.08);
-}
-
-.testimonial-card p{
-    color:#666;
-}
-
-.testimonial-card h5{
-    margin-top:20px;
-    font-weight:600;
-} */
-
 /* ==========================================
-    TESTIMONIAL SECTION (Optimized Spacing)
+   TESTIMONIAL SECTION
 ========================================== */
 
 .testimonial-section{
-    padding: 40px 0; /* Sections ke darmiyan lamba gap khatam karne ke liye */
+    background: var(--bg);
+    padding-top:35px;
+    padding-bottom:20px;
 }
 
-.testimonial-card{
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 14px;
-    padding: 24px 20px; /* Cards ke andar ki extra padding kam kar di hai */
+
+.testimonial-section .section-heading{
+    margin-bottom:35px;
+}
+.testimonial-card {
+    background: var(--paper, #fff);
+    border: 1px solid var(--line, #E7E3DC);
+    border-radius: var(--radius-lg, 14px);
+    padding: 28px 22px;
     text-align: center;
-    transition: .3s;
+    transition: var(--transition);
     height: 100%;
+    box-shadow: var(--shadow-sm);
 }
 
-.testimonial-card:hover{
+.testimonial-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+    box-shadow: var(--shadow);
+    border-color: transparent;
 }
 
-.testimonial-card p{
-    color: #666;
+.testimonial-card p {
+    color: var(--muted, #666);
     font-size: 14px;
     line-height: 1.6;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
+    font-style: italic;
 }
 
-.testimonial-card h5{
-    margin-top: 0;
-    margin-bottom: 0;
+.testimonial-card h5 {
+    margin: 0;
     font-size: 16px;
-    font-weight: 600;
-    color: #222;
+    font-weight: 700;
+    color: var(--ink, #2C2420);
 }
 
-@media(max-width: 768px){
-    .testimonial-section{
-        padding: 30px 0;
-    }
+/* Star ratings if included inside testimonials */
+.testimonial-card .text-warning,
+.testimonial-card i.fa-star {
+    color: #E6B800;
+    margin-bottom: 12px;
+    font-size: 14px;
 }
+
+
+/* ==========================================
+   RESPONSIVE TESTIMONIAL SECTION
+========================================== */
+
+@media(max-width:768px){
+
+    .testimonial-section{
+        padding-top:25px;
+        padding-bottom:5px;
+    }
+
+
+    .testimonial-section .section-heading{
+        margin-bottom:25px;
+    }
+
+}
+
+@media(max-width:991px){
+
+    .testimonial-section{
+        padding-top:30px;
+        padding-bottom:40px;
+    }
+
+}
+
+    .testimonial-card {
+
+        padding:20px 16px;
+
+    }
+@media(max-width:768px){
+
+    .section-padding{
+        padding-bottom:0 !important;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .testimonial-section{
+        padding-bottom:10px !important;
+        margin-bottom:0 !important;
+    }
+
+}
+

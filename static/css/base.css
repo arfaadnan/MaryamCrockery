@@ -1,0 +1,207 @@
+/* ==========================================
+   GLOBAL RESET & TYPOGRAPHY
+========================================== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+.container {
+    width: min(1280px, 92%);
+    margin-inline: auto;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color .3s ease,
+        background-color .3s ease,
+        transform .3s ease;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: var(--transition);
+}
+
+::selection {
+    background: var(--accent);
+    color: var(--white);
+}
+
+/* Editorial display font for big headings */
+h1,
+h2.display,
+.hero-content h1,
+.offer-content h2,
+.newsletter-box h2 {
+    font-family: 'Fraunces', serif;
+}
+
+/* ==========================================
+   UNIFORM SECTION SYSTEM (No overlapping gaps)
+========================================== */
+section,
+.section {
+    padding: 100px 0;
+}
+
+section:first-of-type {
+    padding-top: 20px;
+}
+
+section:last-child {
+    padding-bottom: 80px;
+}
+
+.section-header {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 50px auto;
+}
+
+.section-tag {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 30px;
+    background: var(--accent-tint);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.section-header h2,
+section h2 {
+    font-size: 42px;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+    line-height: 1.2;
+}
+
+.section-header p {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ==========================================
+   GLOBAL UTILITY COMPONENTS
+========================================== */
+.whatsapp-float {
+    position: fixed;
+    width: 62px;
+    height: 62px;
+    backdrop-filter: blur(10px);
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--whatsapp-bg);
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 32px;
+    box-shadow: var(--shadow);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.whatsapp-float:hover {
+    background-color: var(--whatsapp-hover);
+    transform: translateY(-5px) scale(1.05);
+}
+
+.btn-view-summary {
+    display: inline-block;
+    background-color: var(--accent);
+    color: var(--white);
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    transition: var(--transition);
+    border: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-view-summary:hover {
+    background-color: var(--accent-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* ==========================================
+   RESPONSIVE BASE FIXES
+========================================== */
+@media (max-width: 768px) {
+
+    section,
+    .section {
+        padding: 65px 0;
+    }
+
+    .section-header {
+        margin-bottom: 35px;
+    }
+
+    .section-header h2,
+    section h2 {
+        font-size: 28px;
+    }
+
+    .section-header p {
+        font-size: 14px;
+    }
+}
+
+*{
+    transition:
+        background-color .3s ease,
+        color .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+}

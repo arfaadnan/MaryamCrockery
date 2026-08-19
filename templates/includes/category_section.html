@@ -4,22 +4,17 @@
 
         <div class="section-header">
 
-            <div>
+            <h2>
+                Shop By Category
+            </h2>
 
-                <h2>
-                    Find Your Perfect Collection
-                </h2>
+            <p class="category-subtitle">
+                Find Your Perfect Collection
+            </p>
 
-                <p>
-                    Explore our premium crockery and kitchen essentials.
-                </p>
-                <span class="section-tag">
-                    Shop By Category
-                </span>
-
-
-
-            </div>
+            <span class="category-description">
+                Explore our premium crockery and kitchen essentials.
+            </span>
 
         </div>
 
@@ -34,14 +29,15 @@
                     <div class="category-image">
 
                         {% if category.image %}
-                            <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                        <img src="{{ category.image.url }}" alt="{{ category.name }}">
                         {% else %}
-                            <div class="category-placeholder">
-                                <i class="bi bi-grid"></i>
-                            </div>
+                        <div class="category-placeholder">
+                            <i class="bi bi-grid"></i>
+                        </div>
                         {% endif %}
 
                     </div>
+
 
                     <div class="category-body">
 

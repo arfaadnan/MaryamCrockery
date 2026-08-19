@@ -9,938 +9,306 @@ Shopping Cart
 <link rel="stylesheet" href="{% static 'css/cart.css' %}">
 {% endblock %}
 
+
 {% block content %}
 
 <section class="cart-page py-5">
 
-    <div class="container">
+<div class="container">
 
-        <div class="text-center mb-5">
 
-            <h1 class="fw-bold">
-                Shopping Cart
-            </h1>
+<div class="text-center mb-5">
 
-            <p class="text-muted">
-                Review your selected products before checkout.
-            </p>
+<h1 class="fw-bold">
+Shopping Cart
+</h1>
 
-        </div>
+<p class="text-muted">
+Review your selected products before checkout.
+</p>
 
-        {% if items %}
+</div>
 
-        <div class="row">
 
-            <!-- LEFT SIDE -->
 
-            <div class="col-lg-8">
+{% if items %}
 
-                {% for item in items %}
 
-                <div class="card shadow-sm border-0 mb-4">
+<div class="row g-4">
 
-                    <div class="row g-0 align-items-center">
 
-                        <!-- IMAGE -->
+<!-- PRODUCTS -->
 
-                        <div class="col-md-3">
+<div class="col-lg-8">
 
-                            {% if item.product.main_image %}
 
-                            <img src="{{ item.product.main_image.url }}" class="img-fluid rounded-start"
-                                alt="{{ item.product.name }}">
+{% for item in items %}
 
-                            {% else %}
 
-                            <img src="{% static 'images/product-placeholder.jpg' %}" class="img-fluid rounded-start"
-                                alt="Product">
+<div class="card shadow-sm border-0 rounded-4 mb-4">
 
-                            {% endif %}
 
-                        </div>
+<div class="row g-0 align-items-center">
 
-                        <!-- DETAILS -->
 
-                        <div class="col-md-9">
+<div class="col-md-4">
 
-                            <div class="card-body">
 
-                                <h4>
+{% if item.product.main_image %}
 
-                                    {{ item.product.name }}
+<img src="{{ item.product.main_image.url }}"
+class="img-fluid rounded-start">
 
-                                </h4>
+{% else %}
 
-                                <p class="text-muted">
-
-                                    {{ item.product.category.name }}
-
-                                </p>
-
-                                <h5 class="text-danger">
-
-                                    Rs. {{ item.product.final_price }}
-
-                                </h5>
-
-                                <!-- Quantity -->
-
-                                <div class="d-flex align-items-center mt-3">
-
-                                    <span class="me-3 fw-bold">
-
-                                        Quantity
-
-                                    </span>
-
-                                    <a href="{% url 'store:decrease_cart' item.id %}"
-                                        class="btn btn-outline-secondary btn-sm">
-
-                                        <i class="bi bi-dash"></i>
-
-                                    </a>
-
-                                    <input type="text" class="form-control text-center mx-2" value="{{ item.quantity }}"
-                                        readonly style="width:70px;">
-
-                                    <a href="{% url 'store:increase_cart' item.id %}"
-                                        class="btn btn-outline-secondary btn-sm">
-
-                                        <i class="bi bi-plus"></i>
-
-                                    </a>
-
-                                </div>
-                                <!-- Subtotal -->
-
-                                <div class="mt-3">
-
-                                    <strong>
-
-                                        Subtotal:
-
-                                    </strong>
-
-                                    <span class="text-success fw-bold">
-
-                                        Rs. {{ item.subtotal }}
-
-                                    </span>
-
-                                </div>
-
-                                <!-- Remove Button -->
-
-                                <div class="mt-4">
-
-                                    <a href="{% url 'store:remove_cart' item.id %}" class="btn btn-outline-danger">
-
-                                        <i class="bi bi-trash"></i>
-
-                                        Remove
-
-                                    </a>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                {% endfor %}
-
-            </div>
-
-            <!-- RIGHT SIDE -->
-
-            <div class="col-lg-4">
-
-                <div class="card shadow border-0 sticky-top">
-
-                    <div class="card-body">
-
-                        <h3 class="mb-4">
-
-                            Order Summary
-
-                        </h3>
-
-                        <div class="d-flex justify-content-between mb-3">
-
-                            <span>
-
-                                Items
-
-                            </span>
-
-                            <strong>
-
-                                {{ items|length }}
-
-                            </strong>
-
-                        </div>
-
-                        <div class="d-flex justify-content-between mb-3">
-
-                            <span>
-
-                                Shipping
-
-                            </span>
-
-                            <strong class="text-success">
-
-                                Free
-
-                            </strong>
-
-                        </div>
-
-                        <div class="d-flex justify-content-between mb-3">
-
-                            <span>
-
-                                Tax
-
-                            </span>
-
-                            <strong>
-
-                                Rs. 0
-
-                            </strong>
-
-                        </div>
-
-                        <hr>
-
-                        <div class="d-flex justify-content-between">
-
-                            <h5>
-
-                                Total
-
-                            </h5>
-
-                            <h4 class="text-danger">
-
-                                Rs. {{ total }}
-
-                            </h4>
-
-                        </div>
-
-                        <div class="d-grid gap-3 mt-4">
-
-                            <a href="{% url 'store:checkout' %}" class="btn btn-danger btn-lg">
-                                Proceed To Checkout
-                            </a>
-                            <a href="{% url 'store:shop' %}" class="btn btn-outline-dark">
-
-                                Continue Shopping
-
-                            </a>
-
-                        </div>
-
-                        <hr>
-
-                        <h5>
-
-                            We Accept
-
-                        </h5>
-
-                        <div class="mt-3 d-flex gap-3 fs-2">
-
-                            <i class="bi bi-credit-card"></i>
-
-                            <i class="bi bi-wallet2"></i>
-
-                            <i class="bi bi-bank"></i>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        {% else %}
-
-        <!-- EMPTY CART -->
-
-
-
-        <div class="text-center py-5">
-
-            <img src="{% static 'images/empty-cart.png' %}" alt="Empty Cart" class="img-fluid mb-4"
-                style="max-width:280px;">
-
-            <h2 class="fw-bold">
-
-                Your Cart is Empty
-
-            </h2>
-
-            <p class="text-muted mt-3">
-
-                Looks like you haven't added any products yet.
-
-            </p>
-
-            <a href="{% url 'store:shop' %}" class="btn btn-danger btn-lg mt-4">
-
-                Continue Shopping
-
-            </a>
-
-        </div>
-
-        {% endif %}
-
-    </div>
-
-</section>
-
-<!-- ======================================
-BENEFITS
-======================================= -->
-
-<section class="cart-benefits py-5 bg-light">
-
-    <div class="container">
-
-        <div class="row g-4">
-
-            <div class="col-md-4">
-
-                <div class="benefit-card text-center p-4">
-
-                    <i class="bi bi-truck text-danger"></i>
-
-                    <h5>
-
-                        Fast Delivery
-
-                    </h5>
-
-                    <p>
-
-                        Fast delivery across Pakistan.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-4">
-
-                <div class="benefit-card text-center p-4">
-
-                    <i class="bi bi-shield-check text-success"></i>
-
-                    <h5>
-
-                        Secure Payment
-
-                    </h5>
-
-                    <p>
-
-                        Safe and trusted payment methods.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-4">
-
-                <div class="benefit-card text-center p-4">
-
-                    <i class="bi bi-arrow-repeat text-primary"></i>
-
-                    <h5>
-
-                        Easy Returns
-
-                    </h5>
-
-                    <p>
-
-                        Hassle-free replacement policy.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ======================================
-PAYMENT INFORMATION
-====================================== -->
-
-<section class="payment-info py-5">
-
-    <div class="container">
-
-        <div class="row">
-
-            <div class="col-lg-8">
-
-                <div class="card shadow-sm border-0">
-
-                    <div class="card-body">
-
-                        <h3>
-
-                            Payment Methods
-
-                        </h3>
-
-                        <ul class="list-group list-group-flush">
-
-                            <li class="list-group-item">
-
-                                💵 Cash On Delivery (COD)
-
-                            </li>
-
-                            <li class="list-group-item">
-
-                                📱 JazzCash
-
-                            </li>
-
-                            <li class="list-group-item">
-
-                                💳 EasyPaisa
-
-                            </li>
-
-                            <li class="list-group-item">
-
-                                🏦 Bank Transfer
-
-                            </li>
-
-                        </ul>
-
-                        <div class="alert alert-info mt-4">
-
-                            After placing your order, our team will contact
-                            you to confirm your order.
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-4">
-
-                <div class="card shadow-sm border-0 h-100">
-
-                    <div class="card-body text-center">
-
-                        <i class="bi bi-headset display-3 text-danger"></i>
-
-                        <h4 class="mt-3">
-
-                            Need Help?
-
-                        </h4>
-
-                        <p class="text-muted">
-
-                            Contact our support team for any questions
-                            regarding your order.
-
-                        </p>
-
-                        {% if site_settings.phone %}
-
-                        <h5>
-
-                            {{ site_settings.phone }}
-
-                        </h5>
-
-                        {% endif %}
-
-                        {% if site_settings.email %}
-
-                        <p>
-
-                            {{ site_settings.email }}
-
-                        </p>
-
-                        {% endif %}
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ======================================
-SUPPORT FEATURES
-====================================== -->
-
-<section class="support-section py-5 bg-light">
-
-    <div class="container">
-
-        <div class="row g-4">
-
-            <div class="col-md-4">
-
-                <div class="support-box text-center">
-
-                    <i class="bi bi-award"></i>
-
-                    <h5>
-
-                        Premium Quality
-
-                    </h5>
-
-                    <p>
-
-                        We provide premium quality crockery and household products.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-4">
-
-                <div class="support-box text-center">
-
-                    <i class="bi bi-box-seam"></i>
-
-                    <h5>
-
-                        Safe Packaging
-
-                    </h5>
-
-                    <p>
-
-                        Every order is packed carefully to avoid damage.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-4">
-
-                <div class="support-box text-center">
-
-                    <i class="bi bi-patch-check"></i>
-
-                    <h5>
-
-                        Trusted Store
-
-                    </h5>
-
-                    <p>
-
-                        Thousands of happy customers trust our products.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ======================================
-CONTINUE SHOPPING BANNER
-====================================== -->
-
-<section class="shopping-banner py-5">
-
-    <div class="container">
-
-        <div class="bg-light rounded-4 shadow-sm p-5 text-center">
-
-            <h2 class="fw-bold">
-
-                Continue Shopping
-
-            </h2>
-
-            <p class="text-muted mt-3">
-
-                Discover our latest crockery and household collections.
-
-            </p>
-
-            <a href="{% url 'store:shop' %}" class="btn btn-danger btn-lg mt-3">
-
-                Continue Shopping
-
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ======================================
-RECOMMENDED PRODUCTS
-====================================== -->
-
-{% if featured_products %}
-
-<section class="recommended-products py-5">
-
-    <div class="container">
-
-        <div class="text-center mb-5">
-
-            <h2 class="fw-bold">
-
-                You May Also Like
-
-            </h2>
-
-            <p class="text-muted">
-
-                Featured products selected for you.
-
-            </p>
-
-        </div>
-
-        <div class="row g-4">
-
-            {% for product in featured_products %}
-
-            <div class="col-lg-3 col-md-6">
-
-                <div class="card h-100 shadow-sm">
-
-                    {% if product.main_image %}
-
-                    <img src="{{ product.main_image.url }}" class="card-img-top" alt="{{ product.name }}">
-
-                    {% else %}
-
-                    <img src="{% static 'images/product-placeholder.jpg' %}" class="card-img-top" alt="Product">
-
-                    {% endif %}
-
-                    <div class="card-body text-center">
-
-                        <h5>
-
-                            {{ product.name }}
-
-                        </h5>
-
-                        <p class="text-danger fw-bold">
-
-                            Rs. {{ product.final_price }}
-
-                        </p>
-
-                        <a href="{{ product.get_absolute_url }}" class="btn btn-outline-dark">
-
-                            View Product
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            {% endfor %}
-
-        </div>
-
-    </div>
-
-</section>
+<img src="{% static 'images/product-placeholder.jpg' %}"
+class="img-fluid rounded-start">
 
 {% endif %}
 
-<!-- ======================================
-NEWSLETTER
-====================================== -->
 
-<section class="newsletter-section py-5 bg-light">
+</div>
 
-    <div class="container">
 
-        <div class="card border-0 shadow">
 
-            <div class="card-body text-center p-5">
+<div class="col-md-8">
 
-                <h2 class="fw-bold">
 
-                    Subscribe To Our Newsletter
+<div class="card-body">
 
-                </h2>
 
-                <p class="text-muted mt-3">
+<h4 class="fw-bold">
+{{ item.product.name }}
+</h4>
 
-                    Get updates about new arrivals, special offers,
-                    discounts and premium crockery collections.
 
-                </p>
+<p class="text-muted">
+{{ item.product.category.name }}
+</p>
 
-                <form class="row justify-content-center mt-4">
 
-                    <div class="col-lg-6 col-md-8 mb-3">
+<h5 class="text-danger">
+Rs. {{ item.product.final_price }}
+</h5>
 
-                        <input type="email" class="form-control form-control-lg" placeholder="Enter your email address">
 
-                    </div>
 
-                    <div class="col-lg-2 col-md-4">
+<div class="d-flex align-items-center mt-3">
 
-                        <button type="submit" class="btn btn-danger btn-lg w-100">
 
-                            Subscribe
+<a href="{% url 'store:decrease_cart' item.id %}"
+class="btn btn-outline-secondary btn-sm">
+-
+</a>
 
-                        </button>
 
-                    </div>
+<input type="text"
+value="{{ item.quantity }}"
+readonly
+class="form-control text-center mx-2"
+style="width:70px;">
 
-                </form>
 
-            </div>
+<a href="{% url 'store:increase_cart' item.id %}"
+class="btn btn-outline-secondary btn-sm">
++
+</a>
 
-        </div>
 
-    </div>
+</div>
 
-</section>
 
-<!-- ======================================
-STORE FEATURES
-====================================== -->
 
-<section class="py-5">
+<div class="mt-3">
 
-    <div class="container">
+<strong>
+Subtotal:
+</strong>
 
-        <div class="row text-center g-4">
+<span class="text-success fw-bold">
+Rs. {{ item.subtotal }}
+</span>
 
-            <div class="col-lg-3 col-md-6">
+</div>
 
-                <div class="support-box">
 
-                    <i class="bi bi-truck text-danger display-5"></i>
 
-                    <h5 class="mt-3">
+<a href="{% url 'store:remove_cart' item.id %}"
+class="btn btn-outline-danger mt-3">
 
-                        Fast Delivery
-
-                    </h5>
-
-                    <p class="text-muted">
-
-                        Delivery available all over Pakistan.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-
-                <div class="support-box">
-
-                    <i class="bi bi-credit-card text-primary display-5"></i>
-
-                    <h5 class="mt-3">
-
-                        Secure Payments
-
-                    </h5>
-
-                    <p class="text-muted">
-
-                        Safe and secure payment options.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-
-                <div class="support-box">
-
-                    <i class="bi bi-arrow-repeat text-success display-5"></i>
-
-                    <h5 class="mt-3">
-
-                        Easy Returns
-
-                    </h5>
-
-                    <p class="text-muted">
-
-                        Easy replacement on damaged products.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-
-                <div class="support-box">
-
-                    <i class="bi bi-headset text-warning display-5"></i>
-
-                    <h5 class="mt-3">
-
-                        24/7 Support
-
-                    </h5>
-
-                    <p class="text-muted">
-
-                        We're always here to help you.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ======================================
-FLOATING BUTTONS
-====================================== -->
-
-{% if site_settings.whatsapp %}
-
-<a href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank" class="floating-whatsapp">
-
-    <i class="bi bi-whatsapp"></i>
+<i class="bi bi-trash"></i>
+Remove
 
 </a>
 
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+{% endfor %}
+
+
+</div>
+
+
+
+
+
+<!-- SUMMARY -->
+
+<div class="col-lg-4">
+
+
+<div class="card shadow border-0 rounded-4 sticky-top"
+style="top:100px;">
+
+
+<div class="card-body p-4">
+
+
+<h3 class="mb-4">
+Order Summary
+</h3>
+
+
+
+<div class="d-flex justify-content-between mb-3">
+
+<span>
+Items
+</span>
+
+<strong>
+{{ items|length }}
+</strong>
+
+</div>
+
+
+
+
+<div class="d-flex justify-content-between mb-3">
+
+<span>
+Shipping
+</span>
+
+<strong class="text-success">
+Free
+</strong>
+
+</div>
+
+
+
+
+<hr>
+
+
+
+<div class="d-flex justify-content-between">
+
+
+<h5>
+Total
+</h5>
+
+
+<h4 class="text-danger">
+Rs. {{ total }}
+</h4>
+
+
+</div>
+
+
+
+
+<a href="{% url 'store:checkout' %}"
+class="btn btn-danger btn-lg w-100 mt-4">
+
+Proceed To Checkout
+
+</a>
+
+
+
+<a href="{% url 'store:shop' %}"
+class="btn btn-outline-dark w-100 mt-3">
+
+Continue Shopping
+
+</a>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+{% else %}
+
+
+
+<div class="text-center py-5">
+
+
+<img src="{% static 'images/empty-cart.png' %}"
+class="img-fluid mb-4"
+style="max-width:250px;">
+
+
+
+<h2>
+Your Cart is Empty
+</h2>
+
+
+<p class="text-muted">
+Looks like you haven't added any products yet.
+</p>
+
+
+
+<a href="{% url 'store:shop' %}"
+class="btn btn-danger mt-3">
+
+Continue Shopping
+
+</a>
+
+
+</div>
+
+
+
 {% endif %}
 
-<button id="backToTop" class="back-to-top">
 
-    <i class="bi bi-chevron-up"></i>
 
-</button>
-
-<!-- ======================================
-FOOTER MESSAGE
-====================================== -->
-
-<section class="py-5 bg-white border-top">
-
-    <div class="container">
-
-        <div class="text-center">
-
-            <h4 class="fw-bold">
-
-                Thank You For Shopping With Us ❤️
-
-            </h4>
-
-            <p class="text-muted mt-3">
-
-                Maryam Crockery Store is committed to providing
-                premium quality crockery and household products
-                with excellent customer service.
-
-            </p>
-
-        </div>
-
-    </div>
+</div>
 
 </section>
-<script>
 
-    const backToTop = document.getElementById("backToTop");
-
-    window.addEventListener("scroll", function () {
-
-        if (window.pageYOffset > 300) {
-
-            backToTop.style.display = "flex";
-
-        } else {
-
-            backToTop.style.display = "none";
-
-        }
-
-    });
-
-    backToTop.addEventListener("click", function () {
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-    });
-
-</script>
 
 {% endblock %}

@@ -1,101 +1,236 @@
 /* ==========================================
-   FEATURES
+   FEATURES SECTION (Why Choose Us)
 ========================================== */
 
-/* .features-section{
-    padding:80px 0;
-    background:#fff;
-}
 
-.feature-card{
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:35px 25px;
-    text-align:center;
-    transition:.35s;
-    height:100%;
-}
-
-.feature-card:hover{
-    transform:translateY(-8px);
-    box-shadow:var(--shadow);
-}
-
-.feature-card i{
-    width:75px;
-    height:75px;
-    margin:auto;
-    margin-bottom:20px;
-    border-radius:50%;
-    background:#eef8f7;
-    color:var(--primary);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:34px;
-}
-
-.feature-card h5{
-    font-weight:600;
-    margin-bottom:12px;
-}
-
-.feature-card p{
-    color:var(--text-light);
-    margin:0;
-    font-size:15px;
-    line-height:1.7;
-} */
-
-
-/* ==========================================
-    FEATURES (Optimized for Clean Spacing)
-========================================== */
-
-.features-section{
-    padding: 40px 0; /* Upar aur niche ki extra space adhi kar di gayi hai */
-    background: #fff;
-}
-
-.feature-card{
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px 20px; /* Cards ke andar ka gap/padding kam kar diya hai */
+.feature-card {
+    background: var(--paper, #fff);
+    border: 1px solid var(--line, #E7E3DC);
+    border-radius: var(--radius-lg, 14px);
+    padding: 28px 22px;
     text-align: center;
-    transition: .35s;
+    transition: var(--transition);
     height: 100%;
+    box-shadow: var(--shadow-sm);
 }
 
-.feature-card:hover{
+.feature-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow);
+    border-color: transparent;
 }
 
-.feature-card i{
-    width: 60px; /* Icon ka size thora compact kiya hai */
+.feature-card i {
+    width: 60px;
     height: 60px;
-    margin: auto;
-    margin-bottom: 15px; /* Icon ke niche ka space kam kiya hai */
+    margin: 0 auto 16px auto;
     border-radius: 50%;
-    background: #eef8f7;
-    color: var(--primary);
+    background: var(--accent-tint, #F5EBDF);
+    color: var(--accent, #A9682E);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: 24px;
+    transition: var(--transition);
 }
 
-.feature-card h5{
-    font-weight: 600;
+.feature-card:hover i {
+    background: var(--accent);
+    color: var(--white);
+    transform: scale(1.05);
+}
+
+.feature-card h5 {
+    font-weight: 700;
     font-size: 17px;
-    margin-bottom: 8px; /* Heading aur paragraph ke darmiyan gap kam */
+    color: var(--ink);
+    margin-bottom: 8px;
 }
 
-.feature-card p{
-    color: var(--text-light);
+.feature-card p {
+    color: var(--muted);
     margin: 0;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.6;
+}
+
+/* ==========================================
+   RESPONSIVE FEATURES STYLES
+========================================== */
+@media (max-width: 768px) {
+    .feature-card {
+        padding: 20px 16px;
+    }
+    
+    .feature-card i {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    .feature-card h5 {
+        font-size: 15px;
+    }
+}
+
+/* ==========================================
+   FEATURED PRODUCTS SPACING
+========================================== */
+
+.featured-section{
+    padding-top:20px;
+    padding-bottom:70px;
+}
+
+
+.featured-section .section-header{
+    margin-bottom:35px;
+}
+
+
+@media(max-width:991px){
+
+    .featured-section{
+        padding-top:20px;
+        padding-bottom:50px;
+    }
+
+}
+
+
+@media(max-width:768px){
+
+    .featured-section{
+        padding-top:10px;
+        padding-bottom:40px;
+    }
+
+
+    .featured-section .section-header{
+        margin-bottom:25px;
+    }
+
+}
+
+/* ==========================================
+   FEATURES SECTION SPACING
+========================================== */
+
+.features-section{
+
+    padding-top:20px;
+
+    padding-bottom:30px;
+
+}
+
+
+.features-section .section-header{
+
+    margin-bottom:35px;
+
+}
+
+
+/* Tablet */
+
+@media(max-width:991px){
+
+    .features-section{
+
+        padding-top:15px;
+
+        padding-bottom:25px;
+
+    }
+
+}
+
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .features-section{
+
+        padding-top:10px;
+
+        padding-bottom:20px;
+
+    }
+
+
+    .features-section .section-header{
+
+        margin-bottom:25px;
+
+    }
+
+}
+
+/* Reduce gap before customer section */
+
+.features-section{
+
+    padding-top:0 !important;
+
+    padding-bottom:0 !important;
+
+}
+
+
+.features-section .section-header{
+
+    margin-bottom:20px !important;
+
+}
+
+/* ==========================================
+   FEATURES SECTION SPACING
+========================================== */
+
+.features-section{
+    padding-top:15px;
+    padding-bottom:15px;
+}
+
+.features-section .section-header{
+    margin-bottom:25px;
+}
+
+.features-section .row{
+    margin-bottom:0;
+}
+
+
+/* Tablet */
+
+@media(max-width:991px){
+
+    .features-section{
+        padding-top:10px;
+        padding-bottom:10px;
+    }
+
+    .features-section .section-header{
+        margin-bottom:20px;
+    }
+
+}
+
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .features-section{
+        padding-top:5px;
+        padding-bottom:5px;
+    }
+
+    .features-section .section-header{
+        margin-bottom:18px;
+    }
+
 }

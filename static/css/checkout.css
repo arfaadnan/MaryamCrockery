@@ -4,111 +4,151 @@
 
 .checkout-page{
 
-    background:#f8f9fa;
-
-    padding:80px 0;
-
-    min-height:100vh;
+    background:var(--bg, #F9F8F6);
+    padding:60px 0;
+    min-height:80vh;
 
 }
+
 
 .checkout-page h2{
 
-    font-size:40px;
-
+    font-size:34px;
     font-weight:700;
-
-    color:#222;
-
-    margin-bottom:30px;
+    color:var(--ink, #2C2420);
+    font-family:'Fraunces', serif;
 
 }
+
+
 
 /* ==========================================
    CARDS
 ========================================== */
 
+
 .checkout-page .card{
 
-    border:none;
-
+    background:var(--paper, #fff);
+    border:1px solid var(--line, #E7E3DC);
     border-radius:18px;
-
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    box-shadow:var(--shadow-sm);
 
 }
+
 
 .checkout-page .card-body{
 
-    padding:35px;
+    padding:28px;
 
 }
+
+
+
 
 /* ==========================================
    FORM
 ========================================== */
 
+
 .checkout-page .form-label{
 
+    font-size:14px;
     font-weight:600;
-
-    color:#333;
+    color:var(--ink);
 
 }
+
+
 
 .checkout-page .form-control{
 
-    height:50px;
-
+    height:48px;
     border-radius:12px;
-
-    border:1px solid #ddd;
+    border:1px solid var(--line);
+    background:#fff;
 
 }
+
+
 
 .checkout-page textarea.form-control{
 
     height:auto;
+    min-height:110px;
+    resize:none;
 
 }
+
+
 
 .checkout-page .form-control:focus{
 
-    border-color:#dc3545;
-
-    box-shadow:0 0 0 .2rem rgba(220,53,69,.15);
-
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px var(--accent-tint);
 }
+
+
+
 
 /* ==========================================
    PAYMENT
 ========================================== */
 
+
 .checkout-page .form-check{
 
-    padding:14px 0;
-
-    border-bottom:1px solid #eee;
+    padding:14px;
+    border-bottom:1px solid var(--line);
 
 }
+
 
 .checkout-page .form-check:last-child{
 
-    border-bottom:none;
+    border:none;
 
 }
+
+
 
 .checkout-page .form-check-input:checked{
 
-    background-color:#dc3545;
-
-    border-color:#dc3545;
+    background-color:var(--accent);
+    border-color:var(--accent);
 
 }
 
+
+
+.checkout-page .form-check-label{
+
+    font-weight:500;
+    color:var(--ink);
+
+}
+
+
+
+
+/* BANK DETAILS */
+
+#bankDetailsBox{
+
+    background:#F9F8F6 !important;
+    border:1px solid var(--line) !important;
+    color:var(--ink);
+
+}
+
+
+
+
+
 /* ==========================================
-   ORDER SUMMARY
+   SUMMARY
 ========================================== */
+
 
 .checkout-page .sticky-top{
 
@@ -116,50 +156,222 @@
 
 }
 
-.checkout-page .text-danger{
 
+
+.checkout-page .sticky-top h4{
+
+    font-family:'Fraunces', serif;
     font-weight:700;
 
 }
+
+
+
+.checkout-page .text-danger{
+
+    color:var(--accent) !important;
+
+}
+
+
+
+
 
 /* ==========================================
    BUTTON
 ========================================== */
 
+
 .checkout-page .btn-danger{
 
+    background:#A9682E;
+    border-color:#A9682E;
     border-radius:50px;
-
-    padding:14px;
-
-    font-size:18px;
-
-    font-weight:600;
-
+    padding:13px 25px;
+    font-weight:700;
     transition:.3s;
 
 }
 
+
+
 .checkout-page .btn-danger:hover{
 
-    transform:translateY(-3px);
+    background:#2C2420;
+    border-color:#2C2420;
+    transform:translateY(-2px);
 
 }
+
+
+
+
 
 /* ==========================================
    RESPONSIVE
 ========================================== */
 
+
 @media(max-width:991px){
 
     .checkout-page .sticky-top{
 
-        position:relative!important;
-
+        position:relative !important;
         top:0;
+        margin-top:25px;
 
-        margin-top:30px;
+    }
 
+}
+
+
+
+@media(max-width:768px){
+
+
+    .checkout-page{
+
+        padding:35px 0;
+
+    }
+
+
+    .checkout-page h2{
+
+        font-size:28px;
+
+    }
+
+
+    .checkout-page .card-body{
+
+        padding:20px;
+
+    }
+
+
+}
+
+.checkout-page .row{
+    display:flex;
+    align-items:flex-start;
+}
+
+@media (min-width:992px){
+
+    .checkout-page .col-lg-8{
+        flex:0 0 66.666%;
+        max-width:66.666%;
+    }
+
+
+    .checkout-page .col-lg-4{
+        flex:0 0 33.333%;
+        max-width:33.333%;
+    }
+
+}
+.checkout-page > .container > .row{
+    display:flex;
+    flex-wrap:wrap;
+}
+
+
+.checkout-page .col-lg-8{
+    flex:0 0 66.666%;
+    max-width:66.666%;
+}
+
+
+.checkout-page .col-lg-4{
+    flex:0 0 33.333%;
+    max-width:33.333%;
+}
+
+
+@media(max-width:991px){
+
+.checkout-page .col-lg-8,
+.checkout-page .col-lg-4{
+
+    flex:0 0 100%;
+    max-width:100%;
+
+}
+
+}
+
+.checkout-page .row.g-4{
+    display:flex;
+    align-items:flex-start;
+}
+
+
+@media(min-width:992px){
+
+    .checkout-page .col-lg-8{
+        width:66.666%;
+        flex:0 0 66.666%;
+    }
+
+    .checkout-page .col-lg-4{
+        width:33.333%;
+        flex:0 0 33.333%;
+    }
+
+}
+
+/* FIX CHECKOUT COLUMN LAYOUT */
+
+.checkout-page .row.g-4 {
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+
+.checkout-page .col-lg-8 {
+    flex: 0 0 66.666% !important;
+    max-width: 66.666% !important;
+}
+
+
+.checkout-page .col-lg-4 {
+    flex: 0 0 33.333% !important;
+    max-width: 33.333% !important;
+}
+
+
+
+@media(max-width:991px){
+
+    .checkout-page .col-lg-8,
+    .checkout-page .col-lg-4 {
+
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+
+    }
+
+}
+
+/* ORDER SUMMARY FIX */
+
+.order-summary-card {
+    position: relative;
+    z-index: 1;
+}
+
+
+.checkout-page .col-lg-4 {
+    position: relative;
+}
+
+
+/* mobile fix */
+@media(max-width:991px){
+
+    .order-summary-card {
+        margin-top: 20px;
     }
 
 }

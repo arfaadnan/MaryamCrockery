@@ -5,192 +5,277 @@
 My Profile
 {% endblock %}
 
+
 {% block content %}
 
 <section class="py-5">
 
-    <div class="container">
+<div class="container">
 
-        <div class="row justify-content-center">
 
-            <div class="col-lg-8">
+<div class="row justify-content-center">
 
-                <div class="card shadow border-0 rounded-4">
 
-                    <div class="card-body p-5">
+<div class="col-lg-8">
 
-                        <h2 class="mb-4 fw-bold">
 
-                            <i class="bi bi-person-circle me-2"></i>
+<div class="card shadow border-0 rounded-4">
 
-                            My Profile
 
-                        </h2>
+<div class="card-body p-5">
 
-                        {% if messages %}
 
-                        {% for message in messages %}
+<h2 class="fw-bold mb-4">
 
-                        <div class="alert alert-success">
+<i class="bi bi-person-circle me-2"></i>
 
-                            {{ message }}
+My Profile
 
-                        </div>
+</h2>
 
-                        {% endfor %}
 
-                        {% endif %}
 
-                        <form method="POST" enctype="multipart/form-data">
+{% if messages %}
 
-                            {% csrf_token %}
+{% for message in messages %}
 
-                            <div class="text-center mb-4">
+<div class="alert alert-success">
 
-                                {% if profile.profile_image %}
+{{ message }}
 
-                                <img src="{{ profile.profile_image.url }}" class="rounded-circle shadow"
-                                    style="width:150px;height:150px;object-fit:cover;">
+</div>
 
-                                {% else %}
+{% endfor %}
 
-                                <img src="{% static 'images/default-user.png' %}" class="rounded-circle shadow"
-                                    style="width:150px;height:150px;object-fit:cover;">
+{% endif %}
 
-                                {% endif %}
 
-                            </div>
 
-                            <div class="mb-4">
 
-                                <label class="form-label">
 
-                                    Profile Image
+<form method="POST" enctype="multipart/form-data">
 
-                                </label>
+{% csrf_token %}
 
-                                <input type="file" name="profile_image" class="form-control">
 
-                            </div>
 
-                            <div class="row">
+<div class="text-center mb-4">
 
-                                <div class="col-md-6 mb-3">
 
-                                    <label class="form-label">
+{% if profile.profile_image %}
 
-                                        First Name
+<img src="{{ profile.profile_image.url }}"
+class="rounded-circle shadow"
+style="width:130px;height:130px;object-fit:cover;">
 
-                                    </label>
 
-                                    <input type="text" class="form-control" name="first_name"
-                                        value="{{ user.first_name }}">
+{% else %}
 
-                                </div>
+<img src="{% static 'images/default-user.png' %}"
+class="rounded-circle shadow"
+style="width:130px;height:130px;object-fit:cover;">
 
-                                <div class="col-md-6 mb-3">
 
-                                    <label class="form-label">
+{% endif %}
 
-                                        Last Name
 
-                                    </label>
 
-                                    <input type="text" class="form-control" name="last_name"
-                                        value="{{ user.last_name }}">
+</div>
 
-                                </div>
 
-                            </div>
 
-                            <div class="mb-3">
 
-                                <label class="form-label">
+<div class="mb-3">
 
-                                    Username
+<label class="form-label fw-bold">
+Profile Image
+</label>
 
-                                </label>
+<input type="file"
+name="profile_image"
+class="form-control">
 
-                                <input type="text" class="form-control" value="{{ user.username }}" readonly>
+</div>
 
-                            </div>
 
-                            <div class="mb-3">
 
-                                <label class="form-label">
 
-                                    Email
 
-                                </label>
+<div class="row">
 
-                                <input type="email" class="form-control" name="email" value="{{ user.email }}">
 
-                            </div>
+<div class="col-md-6 mb-3">
 
-                            <div class="mb-3">
+<label class="form-label">
+First Name
+</label>
 
-                                <label class="form-label">
+<input type="text"
+name="first_name"
+class="form-control"
+value="{{ user.first_name }}">
 
-                                    Phone
+</div>
 
-                                </label>
 
-                                <input type="text" class="form-control" name="phone" value="{{ profile.phone }}">
 
-                            </div>
+<div class="col-md-6 mb-3">
 
-                            <div class="mb-3">
+<label class="form-label">
+Last Name
+</label>
 
-                                <label class="form-label">
+<input type="text"
+name="last_name"
+class="form-control"
+value="{{ user.last_name }}">
 
-                                    City
+</div>
 
-                                </label>
 
-                                <input type="text" class="form-control" name="city" value="{{ profile.city }}">
 
-                            </div>
+</div>
 
-                            <div class="mb-4">
 
-                                <label class="form-label">
 
-                                    Address
 
-                                </label>
 
-                                <textarea class="form-control" rows="3" name="address">{{ profile.address }}</textarea>
+<div class="mb-3">
 
-                            </div>
+<label class="form-label">
+Username
+</label>
 
-                            <div class="d-grid gap-3">
+<input type="text"
+class="form-control"
+value="{{ user.username }}"
+readonly>
 
-                                <button class="btn btn-danger btn-lg">
+</div>
 
-                                    Save Changes
 
-                                </button>
 
-                                <a href="{% url 'store:my_orders' %}" class="btn btn-outline-dark">
 
-                                    My Orders
 
-                                </a>
+<div class="mb-3">
 
-                            </div>
+<label class="form-label">
+Email
+</label>
 
-                        </form>
+<input type="email"
+name="email"
+class="form-control"
+value="{{ user.email }}">
 
-                    </div>
+</div>
 
-                </div>
 
-            </div>
 
-        </div>
 
-    </div>
+
+<div class="mb-3">
+
+<label class="form-label">
+Phone
+</label>
+
+<input type="text"
+name="phone"
+class="form-control"
+value="{{ profile.phone }}">
+
+</div>
+
+
+
+
+
+<div class="mb-3">
+
+<label class="form-label">
+City
+</label>
+
+<input type="text"
+name="city"
+class="form-control"
+value="{{ profile.city }}">
+
+</div>
+
+
+
+
+
+<div class="mb-4">
+
+<label class="form-label">
+Complete Address
+</label>
+
+<textarea name="address"
+class="form-control"
+rows="3">{{ profile.address }}</textarea>
+
+</div>
+
+
+
+
+
+<div class="d-grid gap-3">
+
+
+<button class="profile-save-btn">
+    Save Changes
+</button>
+
+
+<a href="{% url 'store:my_orders' %}"
+class="btn btn-outline-dark">
+
+<i class="bi bi-bag-check me-2"></i>
+
+My Orders
+
+</a>
+
+
+
+<a href="{% url 'store:wishlist' %}"
+class="btn btn-outline-danger">
+
+<i class="bi bi-heart me-2"></i>
+
+My Wishlist
+
+</a>
+
+
+
+</div>
+
+
+
+</form>
+
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
 
 </section>
+
 
 {% endblock %}
