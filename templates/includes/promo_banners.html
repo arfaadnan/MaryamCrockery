@@ -1,0 +1,35 @@
+{% load static %}
+
+<section class="promo-banners-section">
+    <div class="container-fluid px-4">
+        <div class="row g-3">
+
+            {% for offer in offers|slice:":3" %}
+            <div class="col-lg-4 col-md-6">
+                <div class="promo-card" {% if offer.image %}style="background-image:url('{{ offer.image.url }}')"{% endif %}>
+                    <div class="promo-card-overlay"></div>
+                    <div class="promo-card-content">
+                        <span class="promo-tag">On Sale This Week</span>
+                        <h5>{{ offer.title }}</h5>
+                        <a href="{% url 'store:shop' %}" class="promo-link">Shop Now <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            {% for category in categories|slice:":3" %}
+            <div class="col-lg-4 col-md-6">
+                <div class="promo-card" {% if category.image %}style="background-image:url('{{ category.image.url }}')"{% endif %}>
+                    <div class="promo-card-overlay"></div>
+                    <div class="promo-card-content">
+                        <span class="promo-tag">On Sale This Week</span>
+                        <h5>{{ category.name }}</h5>
+                        <a href="{% url 'store:category_products' category.slug %}" class="promo-link">Shop Now <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+
+        </div>
+    </div>
+</section>

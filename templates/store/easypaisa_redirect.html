@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <p>Aapko EasyPaisa pe bheja ja raha hai, please wait...</p>
+    <form id="easypaisa-form" method="POST" action="{{ post_url }}">
+        {% for key, value in payload.items %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}">
+        {% endfor %}
+    </form>
+    <script>document.getElementById('easypaisa-form').submit();</script>
+</body>
+</html>

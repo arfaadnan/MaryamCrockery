@@ -1,0 +1,37 @@
+{% load static %}
+
+<section class="section deals-section bg-light">
+    <div class="container-fluid px-4">
+
+        <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+            <div>
+                <span class="section-tag">Don't Miss Deals</span>
+                <h2 class="mb-0">Latest Deals For This Week</h2>
+            </div>
+
+            <div class="deal-countdown" id="dealCountdown" data-end="{{ deal_end_time|default:'' }}">
+                <div class="countdown-box"><span id="cd-days">02</span><small>Days</small></div>
+                <div class="countdown-box"><span id="cd-hours">04</span><small>Hours</small></div>
+                <div class="countdown-box"><span id="cd-mins">48</span><small>Mins</small></div>
+                <div class="countdown-box"><span id="cd-secs">00</span><small>Secs</small></div>
+            </div>
+
+            <a href="{% url 'store:shop' %}" class="view-all-link">View All <i class="bi bi-arrow-right"></i></a>
+        </div>
+
+        <div class="row g-4">
+            {% for product in deal_products %}
+            <div class="col-lg-3 col-md-6">
+                {% include "includes/product_card.html" %}
+            </div>
+            {% empty %}
+            {% for product in best_sellers|slice:":4" %}
+            <div class="col-lg-3 col-md-6">
+                {% include "includes/product_card.html" %}
+            </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+
+    </div>
+</section>

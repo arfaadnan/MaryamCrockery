@@ -48,16 +48,17 @@
 
 .hero-tag{
     display:inline-block;
-    padding:8px 18px;
-    background:var(--secondary);
+    padding:0;
+    background:transparent;
     color:#fff;
-    border-radius:40px;
-    font-size:13px;
-    font-weight:600;
-    letter-spacing:.5px;
-    margin-bottom:18px;
+    border-radius:0;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:20px;
+    opacity:1;
 }
-
 .hero-content h1{
     font-size:48px;
     font-weight:700;
@@ -201,10 +202,9 @@
         max-width:100%;
     }
 
-    .hero-tag{
-        font-size:11px;
-        padding:6px 14px;
-        margin-bottom:12px;
+        .hero-tag{
+        font-size:12px;
+        margin-bottom:14px;
     }
 
     .hero-content h1{

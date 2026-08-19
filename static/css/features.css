@@ -2,7 +2,7 @@
    FEATURES
 ========================================== */
 
-.features-section{
+/* .features-section{
     padding:80px 0;
     background:#fff;
 }
@@ -46,4 +46,56 @@
     margin:0;
     font-size:15px;
     line-height:1.7;
+} */
+
+
+/* ==========================================
+    FEATURES (Optimized for Clean Spacing)
+========================================== */
+
+.features-section{
+    padding: 40px 0; /* Upar aur niche ki extra space adhi kar di gayi hai */
+    background: #fff;
+}
+
+.feature-card{
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 20px; /* Cards ke andar ka gap/padding kam kar diya hai */
+    text-align: center;
+    transition: .35s;
+    height: 100%;
+}
+
+.feature-card:hover{
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.feature-card i{
+    width: 60px; /* Icon ka size thora compact kiya hai */
+    height: 60px;
+    margin: auto;
+    margin-bottom: 15px; /* Icon ke niche ka space kam kiya hai */
+    border-radius: 50%;
+    background: #eef8f7;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+}
+
+.feature-card h5{
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 8px; /* Heading aur paragraph ke darmiyan gap kam */
+}
+
+.feature-card p{
+    color: var(--text-light);
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
 }

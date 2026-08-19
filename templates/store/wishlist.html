@@ -77,21 +77,20 @@ Wishlist
 
                         <div class="d-grid gap-2 mt-4">
 
-                            <a href="{% url 'store:add_to_cart' item.product.slug %}"
-                                class="btn btn-danger rounded-pill">
+                            <form method="POST" action="{% url 'store:add_to_cart' item.product.slug %}" class="m-0">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger rounded-pill w-100">
+                                    <i class="bi bi-cart-plus me-2"></i>
+                                    Add To Cart
+                                </button>
+                            </form>
 
-                                <i class="bi bi-cart-plus me-2"></i>
-
-                                Add To Cart
-
-                            </a>
-
-                            <a href="{% url 'store:remove_wishlist' item.id %}"
-                                class="btn btn-outline-dark rounded-pill">
-
-                                Remove
-
-                            </a>
+                            <form method="POST" action="{% url 'store:remove_wishlist' item.id %}" class="m-0">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-dark rounded-pill w-100">
+                                    Remove
+                                </button>
+                            </form>
 
                         </div>
 

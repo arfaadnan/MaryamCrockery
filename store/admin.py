@@ -440,17 +440,21 @@ class OrderItemInline(admin.TabularInline):
     extra = 0
     # Ye fields Order ke andar table ki shakal mein show hongi
     readonly_fields = ('product', 'price', 'quantity', 'subtotal')
-
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     # Aapke models ki exact fields yahan use ki gayi hain
-    list_display = ('order_number', 'full_name', 'phone', 'city', 'payment_method', 'total', 'status', 'created_at')
-    list_filter = ('status', 'payment_method', 'city', 'created_at')
-    search_fields = ('order_number', 'full_name', 'phone', 'email')
+    list_display = ('order_number', 'full_name', 'phone', 'city', 'payment_method', 'payment_status', 'view_proof', 'total', 'status', 'created_at')
+    list_filter = ('status', 'payment_status', 'payment_method', 'city', 'created_at')
+    search_fields = ('order_number', 'full_name', 'phone', 'email', 'transaction_id')
     inlines = [OrderItemInline]
-    
-    # Admin panel se status change karne ka direct option
+
     list_editable = ('status',)
+
+    def view_proof(self, obj):
+        if obj.payment_proof:
+            return format_html('<a href="{}" target="_blank">Receipt Dekhein</a>', obj.payment_proof.url)
+        return "—"
+    view_proof.short_description = "Payment Proof"
     #####3invoice
 @admin.register(StoreSetting)
 class StoreSettingAdmin(admin.ModelAdmin):

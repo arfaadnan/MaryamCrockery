@@ -181,6 +181,10 @@ class SiteSettings(models.Model):
     phone_number = models.CharField(max_length=20, default="+92 322 3489220")
     whatsapp = models.CharField(max_length=30, blank=True)
     whatsapp_number = models.CharField(max_length=20, default="923223489220")
+    bank_name = models.CharField(max_length=100, blank=True, default="")
+    bank_account_title = models.CharField(max_length=150, blank=True, default="")
+    bank_account_number = models.CharField(max_length=50, blank=True, default="")
+    bank_iban = models.CharField(max_length=50, blank=True, default="")
     email = models.EmailField(blank=True)
     address = models.TextField(blank=True)
     announcement_text = models.CharField(max_length=255, default="Fast Delivery All Across Pakistan!")
@@ -256,8 +260,21 @@ class Order(models.Model):
         max_length=30, choices=PAYMENT_CHOICES, default="COD"
     )
     total = models.DecimalField(max_digits=12, decimal_places=2)
+    PAYMENT_STATUS_CHOICES = (
+        ("Pending", "Pending"),
+        ("Paid", "Paid"),
+        ("Failed", "Failed"),
+    )
+
+    payment_status = models.CharField(
+        max_length=20, choices=PAYMENT_STATUS_CHOICES, default="Pending", db_index=True
+    )
+    transaction_id = models.CharField(max_length=100, blank=True, null=True)
+    gateway_response = models.TextField(blank=True) 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending", db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    payment_proof = models.ImageField(upload_to="payment_proofs/", blank=True, null=True)
 
     def __str__(self):
         return self.order_number

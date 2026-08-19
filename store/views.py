@@ -17,6 +17,7 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.html import strip_tags
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -44,6 +45,10 @@ from .models import (
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from xhtml2pdf import pisa
+from .payment import (
+    build_jazzcash_payload, verify_jazzcash_response,
+    build_easypaisa_payload, verify_easypaisa_response,
+)
 
 
 def download_invoice(request, order_id):
@@ -302,7 +307,7 @@ def checkout(request):
                 messages.error(request, error_msg)
                 return redirect("store:cart")
 
-            order = Order.objects.create(
+                order = Order.objects.create(
                 user=request.user if request.user.is_authenticated else None,
                 order_number=order_number,
                 full_name=request.POST.get("full_name"),
@@ -313,6 +318,8 @@ def checkout(request):
                 notes=request.POST.get("notes"),
                 payment_method=request.POST.get("payment_method"),
                 total=total,
+                payment_status="Paid" if request.POST.get("payment_method") == "COD" else "Pending",
+                payment_proof=request.FILES.get("payment_proof"),
             )
 
             for item in items:
@@ -338,22 +345,48 @@ def checkout(request):
 
             cart.items.all().delete()
 
+        # ---- Notifications (order commit hone ke baad) ----
+        site = SiteSettings.objects.first()
+        admin_email = site.email if site and site.email else settings.DEFAULT_FROM_EMAIL
+
+        # EMAIL: Customer
         if order.email:
             html_message = render_to_string(
                 "emails/order_confirmation.html",
                 {"order": order, "items": items},
             )
             plain_message = strip_tags(html_message)
-            email = EmailMultiAlternatives(
+            customer_email = EmailMultiAlternatives(
                 subject=f"Order Confirmation - {order.order_number}",
                 body=plain_message,
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 to=[order.email],
             )
-            email.attach_alternative(html_message, "text/html")
-            email.send(fail_silently=True)
+            customer_email.attach_alternative(html_message, "text/html")
+            customer_email.send(fail_silently=True)
 
-        message = f"""🛍️ New Order Received
+        # EMAIL: Admin
+        admin_subject = f"New Order Received - {order.order_number}"
+        admin_body = (
+            f"New order placed.\n\n"
+            f"Order: {order.order_number}\n"
+            f"Customer: {order.full_name}\n"
+            f"Phone: {order.phone}\n"
+            f"Email: {order.email}\n"
+            f"City: {order.city}\n"
+            f"Address: {order.address}\n"
+            f"Payment: {order.payment_method}\n"
+            f"Total: Rs. {order.total}"
+        )
+        EmailMultiAlternatives(
+            subject=admin_subject,
+            body=admin_body,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[admin_email],
+        ).send(fail_silently=True)
+
+        # WhatsApp: Admin notification link
+        wa_message = f"""🛍️ New Order Received
 
 Order: {order.order_number}
 Customer: {order.full_name}
@@ -363,11 +396,77 @@ Total: Rs. {order.total}
 
 Thank you for shopping with Maryam Crockery ❤️"""
 
-        whatsapp_number = "923223489220"
-        url = f"https://wa.me/{whatsapp_number}?text={quote(message)}"
-        return redirect(url)
+        admin_whatsapp = site.whatsapp_number if site and site.whatsapp_number else "923223489220"
+        request.session["order_whatsapp_link"] = f"https://wa.me/{admin_whatsapp}?text={quote(wa_message)}"
 
-    return render(request, "store/checkout.html", {"items": items, "total": total})
+        if order.payment_method == "JazzCash":
+            return redirect("store:jazzcash_start", order_id=order.id)
+        elif order.payment_method == "EasyPaisa":
+            return redirect("store:easypaisa_start", order_id=order.id)
+
+        return redirect("store:order_success", order_id=order.id)
+
+    return render(request, "store/checkout.html", {"items": items, "total": total, "site": SiteSettings.objects.first()})
+
+
+# ===============================
+# PAYMENT GATEWAY VIEWS
+# ===============================
+
+def start_jazzcash_payment(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    payload = build_jazzcash_payload(order)
+    return render(request, "store/jazzcash_redirect.html", {
+        "payload": payload,
+        "post_url": settings.JAZZCASH_POST_URL,
+    })
+
+
+@csrf_exempt
+@require_POST
+def jazzcash_callback(request):
+    post_data = request.POST.dict()
+
+    if verify_jazzcash_response(post_data):
+        order_number = post_data.get("pp_TxnRefNo")
+        order = Order.objects.filter(order_number=order_number).first()
+        if order:
+            order.payment_status = "Paid"
+            order.transaction_id = post_data.get("pp_RetreivalReferenceNo", "")
+            order.gateway_response = str(post_data)
+            order.save()
+            return redirect("store:order_success", order_id=order.id)
+
+    messages.error(request, "Payment verification failed. Please contact support.")
+    return redirect("store:checkout")
+
+
+def start_easypaisa_payment(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    payload = build_easypaisa_payload(order)
+    return render(request, "store/easypaisa_redirect.html", {
+        "payload": payload,
+        "post_url": settings.EASYPAISA_POST_URL,
+    })
+
+
+@csrf_exempt
+@require_POST
+def easypaisa_callback(request):
+    post_data = request.POST.dict()
+
+    if verify_easypaisa_response(post_data):
+        order_number = post_data.get("orderRefNum")
+        order = Order.objects.filter(order_number=order_number).first()
+        if order:
+            order.payment_status = "Paid"
+            order.transaction_id = post_data.get("transactionId", "")
+            order.gateway_response = str(post_data)
+            order.save()
+            return redirect("store:order_success", order_id=order.id)
+
+    messages.error(request, "Payment verification failed. Please contact support.")
+    return redirect("store:checkout")
 
 
 # ===============================
@@ -608,8 +707,10 @@ def contact(request):
     return render(request, "store/contact.html", {"site": SiteSettings.objects.first()})
 
 
-def order_success(request):
-    return render(request, "store/order_success.html")
+def order_success(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    whatsapp_link = request.session.pop("order_whatsapp_link", None)
+    return render(request, "store/order_success.html", {"order": order, "whatsapp_link": whatsapp_link})
 
 
 @staff_member_required
@@ -672,39 +773,3 @@ def invoice_pdf(request, order_id):
 
 def shipping_label_pdf(request, order_id):
     return render_pdf_view(request, order_id, 'store/pdf/shipping_label.html')
-
-            #######invoice
-def download_invoice(request, order_id):
-    order = get_object_or_404(Order, id=order_id)
-    settings = StoreSetting.load() # Admin ki ki gayi settings uthao
-    
-    # HTML template ko data ke sath render karo
-    html_string = render_to_string('store/pdf/dynamic_invoice.html', {
-        'order': order,
-        'settings': settings
-    })
-    
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="Invoice_{order.order_number}.pdf"'
-    
-    pisa_status = pisa.CreatePDF(html_string, dest=response)
-    if pisa_status.err:
-        return HttpResponse('PDF generation error', status=500)
-    return response
-
-def download_shipping_label(request, order_id):
-    order = get_object_or_404(Order, id=order_id)
-    settings = StoreSetting.load()
-    
-    html_string = render_to_string('store/pdf/dynamic_label.html', {
-        'order': order,
-        'settings': settings
-    })
-    
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'filename="Label_{order.order_number}.pdf"'
-    
-    pisa_status = pisa.CreatePDF(html_string, dest=response)
-    if pisa_status.err:
-        return HttpResponse('PDF generation error', status=500)
-    return response

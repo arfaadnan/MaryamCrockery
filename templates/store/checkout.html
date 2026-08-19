@@ -22,64 +22,62 @@
                     Checkout
                 </h2>
 
-                <form method="POST" action="{% url 'store:checkout' %}" id="checkout-form">
+                <form method="POST" action="{% url 'store:checkout' %}" id="checkout-form"
+                    enctype="multipart/form-data"></form>
 
-                    {% csrf_token %}
+                {% csrf_token %}
 
-                    <div class="card shadow-sm border-0 rounded-4 mb-4">
+                <div class="card shadow-sm border-0 rounded-4 mb-4">
 
-                        <div class="card-body p-4">
+                    <div class="card-body p-4">
 
-                            <div class="row">
+                        <div class="row">
 
-                                <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3">
 
-                                    <label class="form-label">Full Name</label>
+                                <label class="form-label">Full Name</label>
 
-                                    <input type="text" name="full_name" class="form-control" required>
+                                <input type="text" name="full_name" class="form-control" required>
 
-                                </div>
+                            </div>
 
-                                <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3">
 
-                                    <label class="form-label">Phone</label>
+                                <label class="form-label">Phone</label>
 
-                                    <input type="text" name="phone" class="form-control" required>
+                                <input type="text" name="phone" class="form-control" required>
 
-                                </div>
+                            </div>
 
-                                <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3">
 
-                                    <label class="form-label">Email</label>
+                                <label class="form-label">Email</label>
 
-                                    <input type="email" name="email" class="form-control">
+                                <input type="email" name="email" class="form-control">
 
-                                </div>
+                            </div>
 
-                                <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3">
 
-                                    <label class="form-label">City</label>
+                                <label class="form-label">City</label>
 
-                                    <input type="text" name="city" class="form-control" required>
+                                <input type="text" name="city" class="form-control" required>
 
-                                </div>
+                            </div>
 
-                                <div class="col-12 mb-3">
+                            <div class="col-12 mb-3">
 
-                                    <label class="form-label">Address</label>
+                                <label class="form-label">Address</label>
 
-                                    <textarea name="address" rows="3" class="form-control" required></textarea>
+                                <textarea name="address" rows="3" class="form-control" required></textarea>
 
-                                </div>
+                            </div>
 
-                                <div class="col-12">
+                            <div class="col-12">
 
-                                    <label class="form-label">Order Notes</label>
+                                <label class="form-label">Order Notes</label>
 
-                                    <textarea name="notes" rows="3" class="form-control"
-                                        placeholder="Optional"></textarea>
-
-                                </div>
+                                <textarea name="notes" rows="3" class="form-control" placeholder="Optional"></textarea>
 
                             </div>
 
@@ -87,59 +85,78 @@
 
                     </div>
 
-                    <div class="card shadow-sm border-0 rounded-4">
+                </div>
 
-                        <div class="card-body p-4">
+                <div class="card shadow-sm border-0 rounded-4">
 
-                            <h4 class="mb-3">
-                                Payment Method
-                            </h4>
+                    <div class="card-body p-4">
+
+                        <h4 class="mb-3">
+                            Payment Method
+                        </h4>
+
+                        <div class="form-check mb-2">
 
                             <div class="form-check mb-2">
 
-                                <input class="form-check-input" type="radio" name="payment_method" value="COD" checked>
+                                <input class="form-check-input" type="radio" name="payment_method" value="COD" checked
+                                    onclick="document.getElementById('bankDetailsBox').classList.add('d-none')">
 
                                 <label class="form-check-label">
-
                                     Cash On Delivery
-
                                 </label>
 
                             </div>
 
                             <div class="form-check mb-2">
 
-                                <input class="form-check-input" type="radio" name="payment_method" value="JazzCash">
+                                <input class="form-check-input" type="radio" name="payment_method" value="JazzCash"
+                                    onclick="document.getElementById('bankDetailsBox').classList.add('d-none')">
 
                                 <label class="form-check-label">
-
                                     JazzCash
-
                                 </label>
 
                             </div>
 
                             <div class="form-check mb-2">
 
-                                <input class="form-check-input" type="radio" name="payment_method" value="EasyPaisa">
+                                <input class="form-check-input" type="radio" name="payment_method" value="EasyPaisa"
+                                    onclick="document.getElementById('bankDetailsBox').classList.add('d-none')">
 
                                 <label class="form-check-label">
-
                                     EasyPaisa
-
                                 </label>
 
                             </div>
 
                             <div class="form-check">
 
-                                <input class="form-check-input" type="radio" name="payment_method" value="Bank">
+                                <input class="form-check-input" type="radio" name="payment_method" value="Bank"
+                                    onclick="document.getElementById('bankDetailsBox').classList.remove('d-none')">
 
                                 <label class="form-check-label">
-
                                     Bank Transfer
-
                                 </label>
+
+                            </div>
+
+                            <!-- Bank Details + Proof Upload (hidden by default) -->
+                            <div id="bankDetailsBox" class="d-none mt-3 p-3 bg-light rounded-3 border">
+
+                                <p class="small text-muted mb-2">
+                                    Neeche diye gaye account mein transfer karein aur receipt/screenshot upload karein.
+                                </p>
+
+                                <p class="mb-1"><strong>Bank:</strong> {{ site.bank_name|default:"—" }}</p>
+                                <p class="mb-1"><strong>Account Title:</strong> {{ site.bank_account_title|default:"—"
+                                    }}</p>
+                                <p class="mb-1"><strong>Account Number:</strong> {{ site.bank_account_number|default:"—"
+                                    }}</p>
+                                <p class="mb-3"><strong>IBAN:</strong> {{ site.bank_iban|default:"—" }}</p>
+
+                                <label class="form-label small fw-bold">Payment Receipt / Screenshot</label>
+                                <input type="file" name="payment_proof" class="form-control" accept="image/*">
 
                             </div>
 
@@ -147,74 +164,76 @@
 
                     </div>
 
-                </form>
+                    </form>
 
-            </div>
+                </div>
 
-            <!-- Order Summary -->
-            <div class="col-lg-4">
+                <!-- Order Summary -->
+                <div class="col-lg-4">
 
-                <div class="card shadow-sm border-0 rounded-4 sticky-top">
+                    <div class="card shadow-sm border-0 rounded-4 sticky-top">
 
-                    <div class="card-body p-4">
+                        <div class="card-body p-4">
 
-                        <h4 class="mb-4">
+                            <h4 class="mb-4">
 
-                            Order Summary
+                                Order Summary
 
-                        </h4>
+                            </h4>
 
-                        {% for item in items %}
+                            {% for item in items %}
 
-                        <div class="d-flex justify-content-between mb-3">
+                            <div class="d-flex justify-content-between mb-3">
 
-                            <div>
+                                <div>
 
-                                <strong>{{ item.product.name }}</strong>
+                                    <strong>{{ item.product.name }}</strong>
 
-                                <br>
+                                    <br>
 
-                                <small>
+                                    <small>
 
-                                    Qty : {{ item.quantity }}
+                                        Qty : {{ item.quantity }}
 
-                                </small>
+                                    </small>
+
+                                </div>
+
+                                <div>
+
+                                    Rs. {{ item.subtotal }}
+
+                                </div>
 
                             </div>
 
-                            <div>
+                            {% empty %}
 
-                                Rs. {{ item.subtotal }}
+                            <p>Your cart is empty.</p>
+
+                            {% endfor %}
+
+                            <hr>
+
+                            <div class="d-flex justify-content-between mb-4">
+
+                                <strong>Total</strong>
+
+                                <strong class="text-danger">
+
+                                    Rs. {{ total }}
+
+                                </strong>
 
                             </div>
 
-                        </div>
+                            <button type="submit" form="checkout-form" class="btn btn-danger w-100 btn-lg">
 
-                        {% empty %}
+                                Place Order
 
-                        <p>Your cart is empty.</p>
-
-                        {% endfor %}
-
-                        <hr>
-
-                        <div class="d-flex justify-content-between mb-4">
-
-                            <strong>Total</strong>
-
-                            <strong class="text-danger">
-
-                                Rs. {{ total }}
-
-                            </strong>
+                            </button>
 
                         </div>
-
-                        <button type="submit" form="checkout-form" class="btn btn-danger w-100 btn-lg">
-
-                            Place Order
-
-                        </button>
 
                     </div>
 
@@ -223,8 +242,6 @@
             </div>
 
         </div>
-
-    </div>
 
 </section>
 

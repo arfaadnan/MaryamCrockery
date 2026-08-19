@@ -1,0 +1,19 @@
+{% comment %}
+Reusable page header with breadcrumb.
+Usage: {% include "includes/page_header.html" with title="Shop" subtitle="Browse our full collection" crumb="Shop" %}
+{% endcomment %}
+<section class="page-header">
+    <div class="container-fluid px-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'store:home' %}">Home</a></li>
+                {% if crumb_parent %}
+                <li class="breadcrumb-item">{{ crumb_parent }}</li>
+                {% endif %}
+                <li class="breadcrumb-item active" aria-current="page">{{ crumb }}</li>
+            </ol>
+        </nav>
+        <h1>{{ title }}</h1>
+        {% if subtitle %}<p>{{ subtitle }}</p>{% endif %}
+    </div>
+</section>

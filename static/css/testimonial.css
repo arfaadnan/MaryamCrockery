@@ -1,4 +1,4 @@
-.testimonial-card{
+/* .testimonial-card{
     background:#fff;
     border:1px solid #eee;
     border-radius:16px;
@@ -19,4 +19,48 @@
 .testimonial-card h5{
     margin-top:20px;
     font-weight:600;
+} */
+
+/* ==========================================
+    TESTIMONIAL SECTION (Optimized Spacing)
+========================================== */
+
+.testimonial-section{
+    padding: 40px 0; /* Sections ke darmiyan lamba gap khatam karne ke liye */
+}
+
+.testimonial-card{
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    padding: 24px 20px; /* Cards ke andar ki extra padding kam kar di hai */
+    text-align: center;
+    transition: .3s;
+    height: 100%;
+}
+
+.testimonial-card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+}
+
+.testimonial-card p{
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.testimonial-card h5{
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+}
+
+@media(max-width: 768px){
+    .testimonial-section{
+        padding: 30px 0;
+    }
 }

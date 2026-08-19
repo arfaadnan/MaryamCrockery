@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config as env_config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -129,10 +130,31 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "arfahanif2812@gmail.com"
+EMAIL_HOST_PASSWORD = "arfam1234567890"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+# ==========================================
+# PAYMENT GATEWAY CREDENTIALS (from .env)
+# ==========================================
 
-MAILERS = {
-    "default": {
-        "BACKEND": "django.core.mail.backends.console.EmailBackend",
-    },
-}
+JAZZCASH_MERCHANT_ID = env_config("JAZZCASH_MERCHANT_ID", default="")
+JAZZCASH_PASSWORD = env_config("JAZZCASH_PASSWORD", default="")
+JAZZCASH_INTEGRITY_SALT = env_config("JAZZCASH_INTEGRITY_SALT", default="")
+JAZZCASH_RETURN_URL = env_config("JAZZCASH_RETURN_URL", default="http://127.0.0.1:8000/payment/jazzcash/callback/")
+JAZZCASH_POST_URL = env_config(
+    "JAZZCASH_POST_URL",
+    default="https://sandbox.jazzcash.com.pk/CustomerPortal/transactionmanagement/merchantform/",
+)
+
+EASYPAISA_STORE_ID = env_config("EASYPAISA_STORE_ID", default="")
+EASYPAISA_HASH_KEY = env_config("EASYPAISA_HASH_KEY", default="")
+EASYPAISA_RETURN_URL = env_config("EASYPAISA_RETURN_URL", default="http://127.0.0.1:8000/payment/easypaisa/callback/")
+EASYPAISA_POST_URL = env_config(
+    "EASYPAISA_POST_URL",
+    default="https://easypaystg.easypaisa.com.pk/easypay/Index.jsf",
+)

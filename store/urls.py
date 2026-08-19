@@ -19,7 +19,7 @@ urlpatterns = [
     path("cart/decrease/<int:item_id>/", views.decrease_cart, name="decrease_cart"),
     path("cart/remove/<int:item_id>/", views.remove_cart, name="remove_cart"),
     path("checkout/", views.checkout, name="checkout"),
-    path("order-success/", views.order_success, name="order_success"),
+    path("order-success/<int:order_id>/", views.order_success, name="order_success"),
     
     # Search & Filters
     path("search/", views.search, name="search"),
@@ -52,4 +52,8 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path("inventory/low-stock/", views.low_stock_products, name="low_stock_products"),
     path("ajax/load-subcategories/", views.load_subcategories, name="load_subcategories"),
+    path("payment/jazzcash/start/<int:order_id>/", views.start_jazzcash_payment, name="jazzcash_start"),
+    path("payment/jazzcash/callback/", views.jazzcash_callback, name="jazzcash_callback"),
+    path("payment/easypaisa/start/<int:order_id>/", views.start_easypaisa_payment, name="easypaisa_start"),
+    path("payment/easypaisa/callback/", views.easypaisa_callback, name="easypaisa_callback"),
 ]

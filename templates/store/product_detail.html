@@ -1900,3 +1900,31 @@ JavaScript
 </script>
 
 {% endblock %}
+
+<!-- Recommended Products Section -->
+<div class="container my-5">
+    <div class="section-header text-center mb-4">
+        <span class="section-tag">Similar Choices</span>
+        <h2>You May Also Like</h2>
+    </div>
+
+    <div class="row">
+        {% for item in recommended_products %}
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card feature-card h-100"> <!-- Aapka apna card design -->
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}"
+                    style="height: 180px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">{{ item.name }}</h5>
+                    <p class="text-muted">Rs. {{ item.price }}</p>
+                    <a href="{% url 'store:product_detail' item.id %}" class="btn-view-summary">View Product</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">No similar products found at the moment.</p>
+        {% endfor %}
+    </div>
+</div>

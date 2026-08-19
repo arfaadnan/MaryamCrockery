@@ -23,29 +23,53 @@ Order Successful
                            style="font-size:80px;"></i>
 
                         <h2 class="mt-4">
-
-                            Thank You!
-
+                            Thank You{% if order %}, {{ order.full_name }}{% endif %}!
                         </h2>
 
                         <p class="text-muted mt-3">
-
                             Your order has been placed successfully.
-
                         </p>
+
+                        {% if order %}
+                        <div class="bg-light rounded-3 p-3 my-4 text-start">
+                            <p class="mb-1"><strong>Order Number:</strong> {{ order.order_number }}</p>
+                            <p class="mb-1"><strong>Total:</strong> Rs. {{ order.total }}</p>
+                            <p class="mb-1"><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+                            <p class="mb-0">
+                                <strong>Payment Status:</strong>
+                                {% if order.payment_status == "Paid" %}
+                                    <span class="text-success fw-bold">Paid</span>
+                                {% else %}
+                                    <span class="text-warning fw-bold">Pending</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        {% endif %}
 
                         <p>
-
                             We will contact you soon to confirm your order.
-
                         </p>
 
-                        <a href="{% url 'store:shop' %}"
-                           class="btn btn-danger mt-4">
+                        <div class="d-grid gap-2 col-md-8 mx-auto mt-4">
 
-                            Continue Shopping
+                            {% if whatsapp_link %}
+                            <a href="{{ whatsapp_link }}" target="_blank" class="btn btn-success">
+                                <i class="bi bi-whatsapp me-2"></i>
+                                Confirm Order On WhatsApp
+                            </a>
+                            {% endif %}
 
-                        </a>
+                            {% if order %}
+                            <a href="{% url 'store:order_detail' order.id %}" class="btn btn-outline-dark">
+                                View Order Details
+                            </a>
+                            {% endif %}
+
+                            <a href="{% url 'store:shop' %}" class="btn btn-danger">
+                                Continue Shopping
+                            </a>
+
+                        </div>
 
                     </div>
 

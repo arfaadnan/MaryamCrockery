@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <p>Aapko JazzCash pe bheja ja raha hai, please wait...</p>
+    <form id="jazzcash-form" method="POST" action="{{ post_url }}">
+        {% for key, value in payload.items %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}">
+        {% endfor %}
+    </form>
+    <script>document.getElementById('jazzcash-form').submit();</script>
+</body>
+</html>
