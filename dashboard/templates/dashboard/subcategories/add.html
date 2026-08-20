@@ -1,0 +1,153 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Add Sub Category
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body p-4">
+
+
+<h3 class="fw-bold mb-4">
+
+Add Sub Category
+
+</h3>
+
+
+
+
+<form method="POST"
+enctype="multipart/form-data">
+
+
+{% csrf_token %}
+
+
+
+
+<div class="mb-3">
+
+
+<label class="form-label">
+
+Select Category
+
+</label>
+
+
+<select 
+name="category"
+class="form-select"
+required>
+
+
+<option value="">
+
+Choose Category
+
+</option>
+
+
+{% for category in categories %}
+
+
+<option value="{{ category.id }}">
+
+{{ category.name }}
+
+</option>
+
+
+{% endfor %}
+
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+<div class="mb-3">
+
+
+<label class="form-label">
+
+Sub Category Name
+
+</label>
+
+
+<input 
+type="text"
+name="name"
+class="form-control"
+required>
+
+
+</div>
+
+
+
+
+
+<div class="mb-3">
+
+
+<label class="form-label">
+
+Image
+
+</label>
+
+
+<input 
+type="file"
+name="image"
+class="form-control">
+
+
+</div>
+
+
+
+
+<button class="btn btn-dark">
+
+Save Sub Category
+
+</button>
+
+
+
+<a href="{% url 'dashboard:subcategories' %}"
+class="btn btn-outline-dark">
+
+Back
+
+</a>
+
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+{% endblock %}

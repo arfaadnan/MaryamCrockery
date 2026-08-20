@@ -1,0 +1,372 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+{% block title %}
+Maryam Manager
+{% endblock %}
+</title>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+
+</head>
+
+
+<body class="bg-light">
+
+
+<div class="d-flex min-vh-100">
+
+
+<!-- SIDEBAR -->
+
+<div class="bg-dark text-white p-3"
+style="width:260px;">
+
+
+<h4 class="mb-4">
+
+<i class="bi bi-shop"></i>
+
+Maryam Manager
+
+</h4>
+
+
+
+<a href="{% url 'dashboard:home' %}"
+class="btn btn-dark text-white w-100 text-start mb-2">
+
+<i class="bi bi-speedometer2"></i>
+
+Dashboard
+
+</a>
+
+
+
+
+<!-- PRODUCTS -->
+
+
+<p class="text-secondary mt-3 mb-1">
+PRODUCTS
+</p>
+
+
+<button class="btn btn-dark text-white w-100 text-start"
+data-bs-toggle="collapse"
+data-bs-target="#productsMenu">
+
+
+<i class="bi bi-box"></i>
+
+Products
+
+<i class="bi bi-chevron-down float-end"></i>
+
+</button>
+
+
+
+<div class="collapse ps-3"
+id="productsMenu">
+
+
+<a href="#"
+class="d-block text-white text-decoration-none py-2">
+
+Add Product
+
+</a>
+
+
+<a href="#"
+class="d-block text-white text-decoration-none py-2">
+
+Product List
+
+</a>
+
+
+</div>
+
+
+
+
+
+<!-- CATEGORY -->
+
+
+<p class="text-secondary mt-3 mb-1">
+CATEGORY
+</p>
+
+
+<button class="btn btn-dark text-white w-100 text-start"
+data-bs-toggle="collapse"
+data-bs-target="#categoryMenu">
+
+
+<i class="bi bi-grid"></i>
+
+Category
+
+<i class="bi bi-chevron-down float-end"></i>
+
+</button>
+
+
+
+<div class="collapse ps-3"
+id="categoryMenu">
+
+
+<a href="#"
+class="d-block text-white text-decoration-none py-2">
+
+Add Category
+
+</a>
+
+
+<a href="#"
+class="d-block text-white text-decoration-none py-2">
+
+Category List
+
+</a>
+
+
+</div>
+
+
+
+
+
+<!-- ORDERS -->
+
+
+<p class="text-secondary mt-3 mb-1">
+ORDERS
+</p>
+
+
+<button class="btn btn-dark text-white w-100 text-start"
+data-bs-toggle="collapse"
+data-bs-target="#orderMenu">
+
+
+<i class="bi bi-cart"></i>
+
+Orders
+
+<i class="bi bi-chevron-down float-end"></i>
+
+</button>
+
+
+<div class="collapse ps-3"
+id="orderMenu">
+
+
+<a href="#"
+class="d-block text-white text-decoration-none py-2">
+
+New Orders
+
+</a>
+
+
+<a href="#"
+class="d-block text-white text-decoration-none py-2">
+
+Dispatch
+
+</a>
+
+
+<a href="#"
+class="d-block text-white text-decoration-none py-2">
+
+Returns
+
+</a>
+
+
+</div>
+
+
+
+
+
+<!-- INVENTORY -->
+
+
+<p class="text-secondary mt-3 mb-1">
+INVENTORY
+</p>
+
+
+<button class="btn btn-dark text-white w-100 text-start"
+data-bs-toggle="collapse"
+data-bs-target="#stockMenu">
+
+
+<i class="bi bi-boxes"></i>
+
+Stock
+
+<i class="bi bi-chevron-down float-end"></i>
+
+</button>
+
+
+
+<div class="collapse ps-3"
+id="stockMenu">
+
+
+<a href="#"
+class="d-block text-white text-decoration-none py-2">
+
+Stock In
+
+</a>
+
+
+<a href="#"
+class="d-block text-white text-decoration-none py-2">
+
+Stock Report
+
+</a>
+
+
+</div>
+
+
+
+
+
+
+<!-- ACCOUNTS -->
+
+
+<p class="text-secondary mt-3 mb-1">
+ACCOUNTS
+</p>
+
+
+<a href="#"
+class="btn btn-dark text-white w-100 text-start mb-2">
+
+<i class="bi bi-cash"></i>
+
+Daily Sale
+
+</a>
+
+
+<a href="#"
+class="btn btn-dark text-white w-100 text-start mb-2">
+
+<i class="bi bi-wallet2"></i>
+
+Cash Report
+
+</a>
+
+
+
+
+<hr>
+
+
+<a href="{% url 'dashboard:logout' %}"
+class="btn btn-danger w-100">
+
+
+<i class="bi bi-box-arrow-right"></i>
+
+Logout
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- MAIN AREA -->
+
+
+<div class="flex-grow-1">
+
+
+<nav class="navbar bg-white shadow-sm px-4">
+
+<span class="fw-bold">
+
+Maryam Crockery Management
+
+</span>
+
+
+<span>
+
+{{ request.user.username }}
+
+</span>
+
+
+</nav>
+
+
+
+
+<div class="p-4">
+
+
+{% block content %}
+
+{% endblock %}
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>

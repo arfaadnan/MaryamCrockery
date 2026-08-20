@@ -1,0 +1,80 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Manager Login
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container mt-5">
+
+<div class="row justify-content-center">
+
+
+<div class="col-md-5">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body p-5">
+
+
+<h2 class="text-center mb-4">
+
+Manager Login
+
+</h2>
+
+
+
+<form method="POST">
+
+{% csrf_token %}
+
+
+<input 
+type="text"
+name="username"
+class="form-control mb-3"
+placeholder="Username"
+required>
+
+
+<input 
+type="password"
+name="password"
+class="form-control mb-3"
+placeholder="Password"
+required>
+
+
+
+<button class="btn btn-dark w-100">
+
+Login
+
+</button>
+
+
+</form>
+
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+{% endblock %}

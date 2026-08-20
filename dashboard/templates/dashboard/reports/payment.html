@@ -1,0 +1,123 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Payment Report
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body p-4">
+
+
+<h3 class="fw-bold mb-4">
+Payment Report
+</h3>
+
+
+
+<div class="table-responsive">
+
+
+<table class="table table-hover">
+
+
+<thead class="table-dark">
+
+
+<tr>
+
+<th>
+Payment Method
+</th>
+
+<th>
+Total Orders
+</th>
+
+<th>
+Total Amount
+</th>
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for payment in payments %}
+
+
+<tr>
+
+
+<td>
+{{ payment.payment_method }}
+</td>
+
+
+<td>
+{{ payment.total_orders }}
+</td>
+
+
+<td>
+Rs {{ payment.total_amount }}
+</td>
+
+
+</tr>
+
+
+{% empty %}
+
+
+<tr>
+
+<td colspan="3" class="text-center">
+
+No Payment Data Found
+
+</td>
+
+</tr>
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+{% endblock %}

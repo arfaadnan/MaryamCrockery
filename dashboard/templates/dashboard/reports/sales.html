@@ -1,0 +1,124 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Sales Report
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+
+<h3 class="fw-bold mb-4">
+Sales Report
+</h3>
+
+
+
+<div class="row g-4">
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4">
+
+<div class="card-body">
+
+<h6>
+Today's Sale
+</h6>
+
+<h3 class="fw-bold">
+Rs {{ today_sale }}
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4">
+
+<div class="card-body">
+
+<h6>
+This Month Sale
+</h6>
+
+<h3 class="fw-bold">
+Rs {{ month_sale }}
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4">
+
+<div class="card-body">
+
+<h6>
+Total Sale
+</h6>
+
+<h3 class="fw-bold">
+Rs {{ total_sale }}
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4">
+
+<div class="card-body">
+
+<h6>
+Pending Payment
+</h6>
+
+<h3 class="fw-bold">
+Rs {{ pending_payment }}
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+{% endblock %}

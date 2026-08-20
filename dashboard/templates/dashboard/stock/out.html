@@ -1,0 +1,123 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Stock Out
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body p-4">
+
+
+<h3 class="fw-bold mb-4">
+Stock Out
+</h3>
+
+
+
+<div class="mb-3">
+
+<label class="form-label">
+Product
+</label>
+
+<input 
+type="text"
+class="form-control"
+value="{{ product.name }}"
+readonly>
+
+</div>
+
+
+
+
+<form method="POST">
+
+{% csrf_token %}
+
+
+
+<div class="mb-3">
+
+<label class="form-label">
+Quantity
+</label>
+
+
+<input 
+type="number"
+name="quantity"
+class="form-control"
+min="1"
+max="{{ product.stock }}"
+required>
+
+
+</div>
+
+
+
+
+<div class="mb-3">
+
+<label class="form-label">
+Reason / Note
+</label>
+
+
+<textarea
+name="note"
+class="form-control"
+rows="3"
+placeholder="Example: Damaged item, Manual sale">
+
+</textarea>
+
+
+</div>
+
+
+
+
+<button class="btn btn-danger">
+
+Remove Stock
+
+</button>
+
+
+<a href="{% url 'dashboard:stock' %}"
+class="btn btn-outline-dark">
+
+Back
+
+</a>
+
+
+
+</form>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+{% endblock %}

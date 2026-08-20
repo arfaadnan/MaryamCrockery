@@ -276,6 +276,22 @@ class Order(models.Model):
     
     payment_proof = models.ImageField(upload_to="payment_proofs/", blank=True, null=True)
 
+    courier_name = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    tracking_number = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    dispatch_date = models.DateTimeField(
+        blank=True,
+        null=True
+    )
     def __str__(self):
         return self.order_number
 
@@ -448,3 +464,39 @@ class StoreSetting(models.Model):
 
     def __str__(self):
         return "Store & Invoice Settings"        
+    
+# ======================================
+# Product Return Management
+# ======================================
+
+class ProductReturn(models.Model):
+
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name="returns"
+    )
+
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE
+    )
+
+
+    quantity = models.PositiveIntegerField()
+
+
+    reason = models.TextField(
+        blank=True
+    )
+
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+
+    def __str__(self):
+
+        return f"{self.order.order_number} - {self.product.name}"

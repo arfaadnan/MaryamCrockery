@@ -1,0 +1,1018 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Manager Dashboard
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="container py-5">
+
+
+<h2 class="fw-bold mb-4">
+
+Welcome {{request.user.username}}
+
+</h2>
+
+
+
+<div class="row g-4">
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4 p-4">
+
+<h5>
+Products
+</h5>
+
+<h2>
+{{total_products}}
+</h2>
+
+<a href="{% url 'dashboard:products' %}" class="btn btn-dark">
+Open
+</a>
+
+</div>
+
+</div>
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4 p-4">
+
+<h5>
+Categories
+</h5>
+
+<h2>
+{{total_categories}}
+</h2>
+
+<a href="{% url 'dashboard:categories' %}" class="btn btn-dark">
+Open
+</a>
+
+</div>
+
+</div>
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4 p-4">
+
+<h5>
+Orders
+</h5>
+
+<h2>
+{{total_orders}}
+</h2>
+
+<a href="{% url 'dashboard:orders' %}" class="btn btn-dark">
+Open
+</a>
+
+</div>
+
+</div>
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4 p-4">
+
+<h5>
+Total Sale
+</h5>
+
+<h2>
+Rs {{total_sale}}
+</h2>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<hr class="my-5">
+
+
+<h3 class="mb-4">
+Management
+</h3>
+
+
+
+<div class="row g-4">
+
+
+<div class="col-md-4">
+
+<div class="card shadow border-0 p-4">
+
+<h4>
+Products
+</h4>
+
+<p>
+Add / Edit / Delete Products
+</p>
+
+<a href="{% url 'dashboard:products' %}" class="btn btn-outline-dark">
+Manage Products
+</a>
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="col-md-4">
+
+<div class="card shadow border-0 p-4">
+
+<h4>
+Stock
+</h4>
+
+<p>
+Stock In / Stock Out
+</p>
+
+<a href="{% url 'dashboard:stock' %}" class="btn btn-outline-dark">
+Manage Stock
+</a>
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="col-md-4">
+
+<div class="card shadow border-0 p-4">
+
+<h4>
+Orders
+</h4>
+
+<p>
+Customer Orders & Dispatch
+</p>
+
+<a href="{% url 'dashboard:orders' %}" class="btn btn-outline-dark">
+View Orders
+</a>
+
+</div>
+
+</div>
+
+
+</div>
+
+<h2 class="fw-bold mb-4">
+
+Dashboard Overview
+
+</h2>
+
+
+
+<div class="row g-4">
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4 p-4">
+
+
+<h6 class="text-muted">
+
+Products
+
+</h6>
+
+
+<h2 class="fw-bold">
+
+{{ total_products }}
+
+</h2>
+
+
+<i class="bi bi-box fs-1 text-primary"></i>
+
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4 p-4">
+
+
+<h6 class="text-muted">
+
+Orders
+
+</h6>
+
+
+<h2 class="fw-bold">
+
+{{ total_orders }}
+
+</h2>
+
+
+<i class="bi bi-cart fs-1 text-success"></i>
+
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4 p-4">
+
+
+<h6 class="text-muted">
+
+Today's Sale
+
+</h6>
+
+
+<h2 class="fw-bold">
+
+Rs. {{ today_sale }}
+
+</h2>
+
+
+<i class="bi bi-cash fs-1 text-warning"></i>
+
+
+</div>
+
+</div>
+
+
+<!-- Order Status Cards -->
+
+<div class="row g-4 mt-2">
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4">
+
+<div class="card-body">
+
+<h6 class="text-muted">
+Pending Orders
+</h6>
+
+<h3 class="fw-bold">
+{{ pending_orders }}
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4">
+
+<div class="card-body">
+
+<h6 class="text-muted">
+Confirmed Orders
+</h6>
+
+<h3 class="fw-bold">
+{{ confirmed_orders }}
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4">
+
+<div class="card-body">
+
+<h6 class="text-muted">
+Shipped Orders
+</h6>
+
+<h3 class="fw-bold">
+{{ shipped_orders }}
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4">
+
+<div class="card-body">
+
+<h6 class="text-muted">
+Delivered Orders
+</h6>
+
+<h3 class="fw-bold">
+{{ delivered_orders }}
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 rounded-4 p-4">
+
+
+<h6 class="text-muted">
+
+Low Stock
+
+</h6>
+
+
+<h2 class="fw-bold">
+
+{{ low_stock }}
+
+</h2>
+
+
+<i class="bi bi-exclamation-triangle fs-1 text-danger"></i>
+
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="row mt-5 g-4">
+
+
+<div class="col-lg-8">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body">
+
+
+<h4 class="mb-4 fw-bold">
+
+Recent Orders
+
+</h4>
+
+
+
+<div class="table-responsive">
+
+
+<table class="table table-hover">
+
+
+<thead class="table-dark">
+
+
+<tr>
+
+
+<th>
+Order
+</th>
+
+
+<th>
+Customer
+</th>
+
+
+<th>
+Amount
+</th>
+
+
+<th>
+Payment
+</th>
+
+
+<th>
+Status
+</th>
+
+
+<th>
+Action
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for order in recent_orders %}
+
+
+<tr>
+
+
+<td>
+
+{{ order.order_number }}
+
+</td>
+
+
+
+<td>
+
+{{ order.full_name }}
+
+</td>
+
+
+
+<td>
+
+Rs. {{ order.total }}
+
+</td>
+
+
+
+<td>
+
+{{ order.payment_method }}
+
+</td>
+
+
+
+<td>
+
+
+{% if order.status == "Delivered" %}
+
+<span class="badge bg-success">
+
+{{ order.status }}
+
+</span>
+
+
+{% elif order.status == "Cancelled" %}
+
+<span class="badge bg-danger">
+
+{{ order.status }}
+
+</span>
+
+
+{% else %}
+
+<span class="badge bg-dark">
+
+{{ order.status }}
+
+</span>
+
+
+{% endif %}
+
+
+</td>
+
+
+
+<td>
+
+
+<a href="{% url 'dashboard:order_detail' order.id %}"
+class="btn btn-sm btn-outline-dark">
+
+View
+
+</a>
+
+
+</td>
+
+
+</tr>
+
+
+{% empty %}
+
+
+<tr>
+
+<td colspan="6" class="text-center">
+
+No Orders
+
+</td>
+
+</tr>
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+<!-- Quick Actions -->
+
+
+<div class="row mt-4 g-4">
+
+
+<div class="col-md-3">
+
+
+<a href="{% url 'dashboard:product_add' %}"
+class="text-decoration-none">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body text-center">
+
+
+<h5 class="fw-bold">
+
+➕ Add Product
+
+</h5>
+
+
+<p class="text-muted mb-0">
+
+New Crockery Item
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</a>
+
+
+</div>
+
+
+
+
+
+<div class="col-md-3">
+
+
+<a href="{% url 'dashboard:orders' %}"
+class="text-decoration-none">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body text-center">
+
+
+<h5 class="fw-bold">
+
+📦 Orders
+
+</h5>
+
+
+<p class="text-muted mb-0">
+
+Manage Orders
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</a>
+
+
+</div>
+
+
+
+
+
+<!-- Quick Actions End -->
+
+</div>
+<!-- row close -->
+
+
+<!-- Stock Alert + Material Stock Row -->
+
+<div class="row mt-4 g-4">
+
+
+<div class="col-lg-4">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body">
+
+
+<h4 class="fw-bold mb-3">
+
+Stock Alert
+
+</h4>
+
+
+<hr>
+
+
+{% for product in low_stock_products %}
+
+
+<div class="d-flex justify-content-between mb-3">
+
+
+<span>
+
+{{ product.name }}
+
+</span>
+
+
+<span class="badge bg-danger">
+
+{{ product.stock }}
+
+</span>
+
+
+</div>
+
+
+{% empty %}
+
+
+<p>
+
+No Low Stock
+
+</p>
+
+
+{% endfor %}
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="col-lg-8">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body">
+
+
+<h4 class="fw-bold mb-3">
+
+Material Wise Stock
+
+</h4>
+
+
+
+<div class="table-responsive">
+
+
+<table class="table table-hover">
+
+
+<thead>
+
+
+<tr>
+
+<th>
+Material
+</th>
+
+
+<th>
+Products
+</th>
+
+
+<th>
+Total Stock
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for item in material_stock %}
+
+
+<tr>
+
+
+<td>
+
+{{ item.material|default:"Other" }}
+
+</td>
+
+
+<td>
+
+{{ item.total_products }}
+
+</td>
+
+
+<td>
+
+{{ item.total_stock }}
+
+</td>
+
+
+</tr>
+
+
+{% empty %}
+
+
+<tr>
+
+
+<td colspan="3" class="text-center">
+
+No Stock Data
+
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+<div class="card shadow border-0 rounded-4 mt-4">
+
+
+<div class="card-body">
+
+
+<h4 class="fw-bold mb-3">
+Cash Report
+</h4>
+
+
+<div class="row g-3">
+
+
+
+<div class="col-md-4">
+
+
+<div class="p-3 bg-light rounded-4">
+
+
+<h6>
+This Month Sale
+</h6>
+
+
+<h3>
+Rs {{ month_sale }}
+</h3>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="col-md-4">
+
+
+<div class="p-3 bg-light rounded-4">
+
+
+<h6>
+COD Sale
+</h6>
+
+
+<h3>
+Rs {{ cod_sale }}
+</h3>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="col-md-4">
+
+
+<div class="p-3 bg-light rounded-4">
+
+
+<h6>
+Online Payment
+</h6>
+
+
+<h3>
+Rs {{ online_sale }}
+</h3>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+{% endblock %}

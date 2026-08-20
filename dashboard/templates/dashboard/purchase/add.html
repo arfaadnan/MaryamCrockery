@@ -1,0 +1,159 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Add Purchase
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body">
+
+
+<h3 class="fw-bold mb-4">
+New Purchase
+</h3>
+
+
+
+<form method="POST">
+
+{% csrf_token %}
+
+
+
+<div class="mb-3">
+
+<label>
+Supplier
+</label>
+
+
+<select name="supplier" class="form-select">
+
+
+{% for supplier in suppliers %}
+
+<option value="{{ supplier.id }}">
+
+{{ supplier.name }}
+
+</option>
+
+
+{% endfor %}
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+<div class="mb-3">
+
+<label>
+Product
+</label>
+
+
+<select name="product" class="form-select">
+
+
+{% for product in products %}
+
+<option value="{{ product.id }}">
+
+{{ product.name }}
+
+</option>
+
+
+{% endfor %}
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+<div class="mb-3">
+
+<label>
+Quantity
+</label>
+
+
+<input 
+type="number"
+name="quantity"
+class="form-control"
+required
+>
+
+
+</div>
+
+
+
+
+
+<div class="mb-3">
+
+<label>
+Purchase Price
+</label>
+
+
+<input 
+type="number"
+name="price"
+class="form-control"
+required
+>
+
+
+</div>
+
+
+
+
+
+<button class="btn btn-dark">
+
+Save Purchase
+
+</button>
+
+
+
+</form>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+{% endblock %}

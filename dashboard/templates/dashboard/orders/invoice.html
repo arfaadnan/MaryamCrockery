@@ -1,0 +1,206 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Invoice
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body p-5" id="printArea">
+
+
+<div class="d-flex justify-content-between">
+
+
+<div>
+
+<h2 class="fw-bold">
+Maryam Crockery Items
+</h2>
+
+<p>
+Invoice
+</p>
+
+</div>
+
+
+
+<div>
+
+<h5>
+Order #{{ order.order_number }}
+</h5>
+
+<p>
+Date:
+{{ order.created_at|date:"d M Y" }}
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<hr>
+
+
+
+<h5 class="fw-bold">
+Customer Information
+</h5>
+
+
+<p>
+Name: {{ order.full_name }}
+</p>
+
+
+<p>
+Phone: {{ order.phone }}
+</p>
+
+
+<p>
+City: {{ order.city }}
+</p>
+
+
+<p>
+Address: {{ order.address }}
+</p>
+
+
+
+<hr>
+
+
+
+<h5 class="fw-bold">
+Order Details
+</h5>
+
+
+
+<table class="table table-bordered">
+
+
+<thead>
+
+<tr>
+
+<th>
+Product
+</th>
+
+<th>
+Quantity
+</th>
+
+<th>
+Price
+</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for item in order.items.all %}
+
+<tr>
+
+<td>
+{{ item.product.name }}
+</td>
+
+
+<td>
+{{ item.quantity }}
+</td>
+
+
+<td>
+{{ item.price }}
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+
+
+
+
+<h4 class="text-end fw-bold">
+
+Total:
+{{ order.total }}
+
+</h4>
+
+
+
+<hr>
+
+
+
+<p>
+Payment Method:
+{{ order.payment_method }}
+</p>
+
+
+<p>
+Payment Status:
+{{ order.payment_status }}
+</p>
+
+
+
+</div>
+
+
+</div>
+
+
+
+<button 
+onclick="window.print()"
+class="btn btn-dark mt-3">
+
+Print Invoice
+
+</button>
+
+
+
+</div>
+
+
+
+{% endblock %}

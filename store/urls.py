@@ -56,4 +56,5 @@ urlpatterns = [
     path("payment/jazzcash/callback/", views.jazzcash_callback, name="jazzcash_callback"),
     path("payment/easypaisa/start/<int:order_id>/", views.start_easypaisa_payment, name="easypaisa_start"),
     path("payment/easypaisa/callback/", views.easypaisa_callback, name="easypaisa_callback"),
+    
 ]

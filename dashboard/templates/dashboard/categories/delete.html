@@ -1,0 +1,57 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Delete Category
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="card shadow border-0 rounded-4 p-4">
+
+
+<h4>
+Delete Category?
+</h4>
+
+
+<p class="text-danger fw-bold">
+
+{{ category.name }}
+
+</p>
+
+
+
+<form method="POST">
+
+{% csrf_token %}
+
+
+<button class="btn btn-danger">
+
+Yes Delete
+
+</button>
+
+
+
+<a href="{% url 'dashboard:categories' %}"
+class="btn btn-dark">
+
+Cancel
+
+</a>
+
+
+
+</form>
+
+
+</div>
+
+
+{% endblock %}

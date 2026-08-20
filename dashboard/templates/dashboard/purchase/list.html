@@ -1,0 +1,234 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Purchase History
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+<div class="container-fluid">
+
+
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+
+<h2 class="fw-bold">
+
+Purchase History
+
+</h2>
+
+
+
+<a href="{% url 'dashboard:purchase_add' %}"
+class="btn btn-dark">
+
+
+<i class="bi bi-plus-circle"></i>
+
+Add Purchase
+
+
+</a>
+
+
+</div>
+
+
+
+
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body">
+
+
+<div class="table-responsive">
+
+
+<table class="table table-hover align-middle">
+
+
+<thead>
+
+
+<tr>
+
+
+<th>
+Invoice
+</th>
+
+
+<th>
+Supplier
+</th>
+
+
+<th>
+Total Amount
+</th>
+
+
+<th>
+Date
+</th>
+
+
+<th>
+Products
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody>
+
+
+
+{% for purchase in purchases %}
+
+
+
+<tr>
+
+
+
+<td>
+
+{{ purchase.invoice_number }}
+
+</td>
+
+
+
+
+<td>
+
+{% if purchase.supplier %}
+
+{{ purchase.supplier.name }}
+
+{% else %}
+
+-
+
+{% endif %}
+
+
+</td>
+
+
+
+
+
+<td>
+
+Rs {{ purchase.total_amount }}
+
+</td>
+
+
+
+
+
+<td>
+
+{{ purchase.created_at|date:"d M Y" }}
+
+</td>
+
+
+
+
+
+<td>
+
+
+{% for item in purchase.items.all %}
+
+
+<div>
+
+{{ item.product.name }}
+
+<br>
+
+Qty: {{ item.quantity }}
+
+</div>
+
+
+{% empty %}
+
+-
+
+{% endfor %}
+
+
+</td>
+
+
+
+</tr>
+
+
+
+{% empty %}
+
+
+<tr>
+
+
+<td colspan="5"
+class="text-center">
+
+
+No Purchase Found
+
+
+</td>
+
+
+</tr>
+
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+{% endblock %}

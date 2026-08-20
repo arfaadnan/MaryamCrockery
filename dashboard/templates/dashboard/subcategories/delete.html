@@ -1,0 +1,63 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Delete Sub Category
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+<div class="card shadow border-0 rounded-4 p-4">
+
+
+<h4>
+
+Delete Sub Category?
+
+</h4>
+
+
+<p class="text-danger fw-bold">
+
+{{ subcategory.name }}
+
+</p>
+
+
+
+
+<form method="POST">
+
+{% csrf_token %}
+
+
+
+<button class="btn btn-danger">
+
+Delete
+
+</button>
+
+
+
+<a href="{% url 'dashboard:subcategories' %}"
+class="btn btn-dark">
+
+Cancel
+
+</a>
+
+
+
+</form>
+
+
+
+</div>
+
+
+{% endblock %}

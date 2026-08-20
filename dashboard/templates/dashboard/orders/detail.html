@@ -1,0 +1,537 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Order Detail
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+
+
+    <div class="card shadow border-0 rounded-4 mb-4">
+
+
+        <div class="card-body">
+
+
+            <h3 class="fw-bold">
+
+                Order {{ order.order_number }}
+
+            </h3>
+
+
+
+            <hr>
+
+
+            <div class="row">
+
+
+                <div class="col-md-6">
+
+
+                    <h5>
+                        Customer Information
+                    </h5>
+
+
+                    <p>
+                        Name:
+                        {{ order.full_name }}
+                    </p>
+
+
+                    <p>
+                        Phone:
+                        {{ order.phone }}
+                    </p>
+
+
+                    <p>
+                        City:
+                        {{ order.city }}
+                    </p>
+
+
+                    <p>
+                        Address:
+                        {{ order.address }}
+                    </p>
+
+
+                </div>
+
+                {% if order.payment_proof %}
+
+                <hr>
+
+                <h5>
+                    Payment Proof
+                </h5>
+
+
+                <img src="{{ order.payment_proof.url }}" width="250" class="rounded shadow">
+
+
+                {% endif %}
+
+
+
+
+
+                <div class="col-md-6">
+
+
+                    <h5>
+                        Payment
+                    </h5>
+
+
+                    <p>
+                        Method:
+                        {{ order.payment_method }}
+                    </p>
+
+
+                    <p>
+                        Status:
+                        {{ order.payment_status }}
+                    </p>
+
+
+                    <p>
+                        Total:
+                        Rs {{ order.total }}
+                    </p>
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    <div class="card shadow border-0 rounded-4">
+
+
+        <div class="card-body">
+
+
+            <h4 class="mb-3">
+
+                Products
+
+            </h4>
+
+
+
+            <table class="table">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <th>
+                            Subtotal
+                        </th>
+
+                    </tr>
+
+
+                </thead>
+
+
+
+
+                <tbody>
+
+
+
+                    {% for item in order.items.all %}
+
+
+
+                    <tr>
+
+
+                        <td>
+
+                            {{ item.product.name }}
+
+                        </td>
+
+
+
+                        <td>
+
+                            {{ item.quantity }}
+
+                        </td>
+
+
+
+                        <td>
+
+                            Rs {{ item.price }}
+
+                        </td>
+
+
+
+                        <td>
+
+                            Rs {{ item.subtotal }}
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% endfor %}
+
+
+
+                </tbody>
+
+
+            </table>
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <div class="card shadow border-0 rounded-4 mt-4">
+
+
+        <div class="card-body">
+
+
+            <h5>
+
+                Update Order Status
+
+            </h5>
+
+            <a href="{% url 'dashboard:order_invoice' order.id %}" class="btn btn-dark">
+
+                Print Invoice
+
+            </a>
+
+
+
+
+            <form method="POST" action="{% url 'dashboard:update_order_status' order.id %}">
+
+
+                {% csrf_token %}
+
+
+
+                <select name="status" class="form-select mb-3">
+
+
+                    <option>
+                        Pending
+                    </option>
+
+
+                    <option>
+                        Confirmed
+                    </option>
+
+
+                    <option>
+                        Shipped
+                    </option>
+
+
+                    <option>
+                        Delivered
+                    </option>
+
+
+                    <option>
+                        Cancelled
+                    </option>
+
+
+
+                </select>
+
+
+
+
+                <button class="btn btn-dark">
+
+                    Update
+
+                </button>
+
+
+
+            </form>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+<!-- Dispatch Section -->
+
+<div class="card shadow border-0 rounded-4 mt-4">
+
+    <div class="card-body">
+
+        <h4 class="fw-bold mb-3">
+            Dispatch Parcel
+        </h4>
+
+
+        {% if order.status != "Shipped" and order.status != "Delivered" and order.status != "Cancelled" %}
+
+
+        <form method="POST" action="{% url 'dashboard:dispatch_order' order.id %}">
+
+            {% csrf_token %}
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Courier Name
+                </label>
+
+                <input type="text" name="courier_name" class="form-control" placeholder="TCS / Leopards / M&P" required>
+
+            </div>
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Tracking Number
+                </label>
+
+
+                <input type="text" name="tracking_number" class="form-control" placeholder="Tracking ID" required>
+
+
+            </div>
+
+
+
+            <button class="btn btn-dark">
+
+                Mark As Dispatched
+
+            </button>
+
+
+        </form>
+
+
+        {% else %}
+
+        {% if order.status == "Cancelled" %}
+
+        <div class="alert alert-danger">
+
+            <strong>
+                Order Cancelled
+            </strong>
+
+            <br>
+
+            This parcel cannot be dispatched.
+
+        </div>
+
+
+        {% else %}
+
+        <div class="alert alert-success">
+
+            <strong>
+                Parcel Dispatched
+            </strong>
+
+            <br>
+
+            Courier:
+            {{ order.courier_name }}
+
+            <br>
+
+            Tracking:
+            {{ order.tracking_number }}
+
+            <br>
+
+            Date:
+            {{ order.dispatch_date|date:"d M Y h:i A" }}
+
+        </div>
+
+        {% endif %}
+
+        {% endif %}
+
+
+
+
+    </div>
+
+</div>
+
+<!-- Return Material Section -->
+
+
+<div class="card shadow border-0 rounded-4 mt-4">
+
+    <div class="card-body">
+
+
+        <h4 class="fw-bold mb-3">
+            Return Material
+        </h4>
+
+
+
+        <form method="POST" action="{% url 'dashboard:add_return' order.id %}">
+
+            {% csrf_token %}
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Select Product
+                </label>
+
+
+                <select name="product" class="form-select" required>
+
+
+                    {% for item in order.items.all %}
+
+
+                    <option value="{{ item.product.id }}">
+
+                        {{ item.product.name }}
+
+                    </option>
+
+
+                    {% endfor %}
+
+
+                </select>
+
+
+            </div>
+
+
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Return Quantity
+                </label>
+
+
+                <input type="number" name="quantity" class="form-control" min="1" required>
+
+
+            </div>
+
+
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Return Reason
+                </label>
+
+
+                <textarea name="reason" class="form-control" placeholder="Broken / Wrong Item / Customer Return">
+</textarea>
+
+
+            </div>
+
+
+
+
+
+            <button class="btn btn-danger">
+
+                Add Return
+
+            </button>
+
+
+
+        </form>
+
+
+
+    </div>
+
+</div>
+
+{% endblock %}

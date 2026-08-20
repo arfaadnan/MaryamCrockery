@@ -1,0 +1,196 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Stock Management
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+
+<h2 class="fw-bold mb-4">
+Stock Management
+</h2>
+
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body">
+
+
+<div class="table-responsive">
+
+
+<table class="table table-hover align-middle">
+
+
+<thead>
+
+<tr>
+
+<th>
+Product
+</th>
+
+
+<th>
+Material
+</th>
+
+
+<th>
+Current Stock
+</th>
+
+
+<th>
+Status
+</th>
+
+
+<th>
+Action
+</th>
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody>
+
+
+
+{% for product in products %}
+
+
+<tr>
+
+
+<td>
+
+{{ product.name }}
+
+</td>
+
+
+
+<td>
+
+{{ product.material|default:"-" }}
+
+</td>
+
+
+
+
+<td>
+
+{{ product.stock }}
+
+</td>
+
+
+
+
+<td>
+
+
+{% if product.low_stock %}
+
+
+<span class="badge bg-danger">
+
+Low Stock
+
+</span>
+
+
+{% else %}
+
+
+<span class="badge bg-success">
+
+Available
+
+</span>
+
+
+{% endif %}
+
+
+
+</td>
+
+
+
+
+<td>
+
+
+<a href="{% url 'dashboard:stock_in' product.id %}"
+
+class="btn btn-sm btn-dark">
+
+
+Stock In
+
+
+</a>
+
+
+</td>
+
+
+</tr>
+
+
+
+{% empty %}
+
+
+<tr>
+
+<td colspan="5" class="text-center">
+
+No Products Found
+
+</td>
+
+</tr>
+
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+{% endblock %}

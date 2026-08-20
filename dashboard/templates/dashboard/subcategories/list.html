@@ -1,0 +1,214 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Sub Categories
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+
+<h2 class="fw-bold">
+Sub Categories
+</h2>
+
+
+<a href="{% url 'dashboard:subcategory_add' %}"
+class="btn btn-dark">
+
+<i class="bi bi-plus-circle"></i>
+
+Add Sub Category
+
+</a>
+
+
+</div>
+
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body">
+
+
+<div class="table-responsive">
+
+
+<table class="table table-hover align-middle">
+
+
+<thead>
+
+<tr>
+
+<th>
+Image
+</th>
+
+<th>
+Category
+</th>
+
+<th>
+Sub Category
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Action
+</th>
+
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+
+{% for sub in subcategories %}
+
+
+<tr>
+
+
+<td>
+
+{% if sub.image %}
+
+<img src="{{ sub.image.url }}"
+width="60"
+height="60"
+class="rounded">
+
+
+{% else %}
+
+No Image
+
+{% endif %}
+
+
+</td>
+
+
+
+<td>
+
+{{ sub.category.name }}
+
+</td>
+
+
+
+<td>
+
+{{ sub.name }}
+
+</td>
+
+
+
+
+<td>
+
+
+{% if sub.is_active %}
+
+<span class="badge bg-success">
+
+Active
+
+</span>
+
+
+{% else %}
+
+<span class="badge bg-secondary">
+
+Inactive
+
+</span>
+
+
+{% endif %}
+
+
+</td>
+
+
+
+<td>
+
+
+<a href="{% url 'dashboard:subcategory_delete' sub.id %}"
+class="btn btn-sm btn-danger">
+
+Delete
+
+</a>
+
+
+</td>
+
+
+</tr>
+
+
+
+
+{% empty %}
+
+
+<tr>
+
+<td colspan="5"
+class="text-center">
+
+No Sub Categories Found
+
+</td>
+
+</tr>
+
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+{% endblock %}
