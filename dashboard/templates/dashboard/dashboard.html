@@ -6,1013 +6,1342 @@ Manager Dashboard
 {% endblock %}
 
 
+
 {% block content %}
 
 
-<div class="container py-5">
+<div class="container-fluid py-4">
 
 
-<h2 class="fw-bold mb-4">
+    <!-- HEADER -->
 
-Welcome {{request.user.username}}
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-</h2>
 
+        <div>
 
+            <h2 class="fw-bold">
+                Welcome {{ request.user.username }}
+            </h2>
 
-<div class="row g-4">
 
+            <p class="text-muted">
+                Manager Dashboard Overview
+            </p>
 
 
-<div class="col-md-3">
+        </div>
 
-<div class="card shadow border-0 rounded-4 p-4">
 
-<h5>
-Products
-</h5>
+    </div>
 
-<h2>
-{{total_products}}
-</h2>
 
-<a href="{% url 'dashboard:products' %}" class="btn btn-dark">
-Open
-</a>
 
-</div>
 
-</div>
 
+    <!-- TOP COLOUR CARDS -->
 
 
+    <div class="row g-4">
 
-<div class="col-md-3">
 
-<div class="card shadow border-0 rounded-4 p-4">
 
-<h5>
-Categories
-</h5>
+        <!-- PRODUCTS -->
 
-<h2>
-{{total_categories}}
-</h2>
 
-<a href="{% url 'dashboard:categories' %}" class="btn btn-dark">
-Open
-</a>
+        <div class="col-xl-3 col-md-6">
 
-</div>
 
-</div>
+            <a href="{% url 'dashboard:products' %}" class="text-decoration-none">
 
 
+                <div class="dashboard-card card-blue shadow">
 
 
-<div class="col-md-3">
+                    <div class="d-flex justify-content-between align-items-center">
 
-<div class="card shadow border-0 rounded-4 p-4">
 
-<h5>
-Orders
-</h5>
+                        <div>
 
-<h2>
-{{total_orders}}
-</h2>
 
-<a href="{% url 'dashboard:orders' %}" class="btn btn-dark">
-Open
-</a>
+                            <h6>
+                                Products
+                            </h6>
 
-</div>
 
-</div>
+                            <h2 class="fw-bold">
+                                {{ total_products }}
+                            </h2>
 
 
+                            <p class="mb-0">
+                                Manage Products
+                            </p>
 
 
-<div class="col-md-3">
+                        </div>
 
-<div class="card shadow border-0 rounded-4 p-4">
 
-<h5>
-Total Sale
-</h5>
+                        <i class="bi bi-box fs-1"></i>
 
-<h2>
-Rs {{total_sale}}
-</h2>
 
-</div>
+                    </div>
 
-</div>
 
+                </div>
 
-</div>
 
+            </a>
 
-<hr class="my-5">
 
+        </div>
 
-<h3 class="mb-4">
-Management
-</h3>
 
 
 
-<div class="row g-4">
 
+        <!-- ORDERS -->
 
-<div class="col-md-4">
 
-<div class="card shadow border-0 p-4">
+        <div class="col-xl-3 col-md-6">
 
-<h4>
-Products
-</h4>
 
-<p>
-Add / Edit / Delete Products
-</p>
+            <a href="{% url 'dashboard:orders' %}" class="text-decoration-none">
 
-<a href="{% url 'dashboard:products' %}" class="btn btn-outline-dark">
-Manage Products
-</a>
 
-</div>
+                <div class="dashboard-card card-yellow shadow">
 
-</div>
 
+                    <div class="d-flex justify-content-between align-items-center">
 
 
+                        <div>
 
 
-<div class="col-md-4">
+                            <h6>
+                                Orders
+                            </h6>
 
-<div class="card shadow border-0 p-4">
 
-<h4>
-Stock
-</h4>
+                            <h2 class="fw-bold">
+                                {{ total_orders }}
+                            </h2>
 
-<p>
-Stock In / Stock Out
-</p>
 
-<a href="{% url 'dashboard:stock' %}" class="btn btn-outline-dark">
-Manage Stock
-</a>
+                            <p class="mb-0">
+                                Customer Orders
+                            </p>
 
-</div>
 
-</div>
+                        </div>
 
 
+                        <i class="bi bi-cart-check fs-1"></i>
 
 
+                    </div>
 
-<div class="col-md-4">
 
-<div class="card shadow border-0 p-4">
+                </div>
 
-<h4>
-Orders
-</h4>
 
-<p>
-Customer Orders & Dispatch
-</p>
+            </a>
 
-<a href="{% url 'dashboard:orders' %}" class="btn btn-outline-dark">
-View Orders
-</a>
 
-</div>
+        </div>
 
-</div>
 
 
-</div>
 
-<h2 class="fw-bold mb-4">
 
-Dashboard Overview
+        <!-- LOW STOCK -->
 
-</h2>
 
+        <div class="col-xl-3 col-md-6">
 
 
-<div class="row g-4">
+            <a href="{% url 'dashboard:stock' %}" class="text-decoration-none">
 
 
+                <div class="dashboard-card card-red shadow">
 
-<div class="col-md-3">
 
-<div class="card shadow border-0 rounded-4 p-4">
+                    <div class="d-flex justify-content-between align-items-center">
 
 
-<h6 class="text-muted">
+                        <div>
 
-Products
 
-</h6>
+                            <h6>
+                                Low Stock
+                            </h6>
 
 
-<h2 class="fw-bold">
+                            <h2 class="fw-bold">
+                                {{ low_stock }}
+                            </h2>
 
-{{ total_products }}
 
-</h2>
+                            <p class="mb-0">
+                                Need Restock
+                            </p>
 
 
-<i class="bi bi-box fs-1 text-primary"></i>
+                        </div>
 
 
-</div>
+                        <i class="bi bi-exclamation-triangle fs-1"></i>
 
-</div>
 
+                    </div>
 
 
+                </div>
 
 
-<div class="col-md-3">
+            </a>
 
-<div class="card shadow border-0 rounded-4 p-4">
 
+        </div>
 
-<h6 class="text-muted">
 
-Orders
 
-</h6>
 
 
-<h2 class="fw-bold">
 
-{{ total_orders }}
+        <!-- TOTAL SALE -->
 
-</h2>
+        <div class="col-xl-3 col-md-6">
 
 
-<i class="bi bi-cart fs-1 text-success"></i>
+            <a href="{% url 'dashboard:sales_report' %}" class="text-decoration-none text-white">
 
 
-</div>
+                <div class="dashboard-card card-green shadow">
 
-</div>
 
+                    <div class="d-flex justify-content-between align-items-center">
 
 
+                        <div>
 
 
-<div class="col-md-3">
+                            <h6>
+                                Total Sale
+                            </h6>
 
-<div class="card shadow border-0 rounded-4 p-4">
 
+                            <h2 class="fw-bold">
+                                Rs {{ total_sale }}
+                            </h2>
 
-<h6 class="text-muted">
 
-Today's Sale
+                            <p class="mb-0">
+                                Business Income
+                            </p>
 
-</h6>
 
+                        </div>
 
-<h2 class="fw-bold">
 
-Rs. {{ today_sale }}
+                        <i class="bi bi-cash-stack fs-1"></i>
 
-</h2>
 
+                    </div>
 
-<i class="bi bi-cash fs-1 text-warning"></i>
 
+                </div>
 
-</div>
 
-</div>
+            </a>
 
 
-<!-- Order Status Cards -->
+        </div>
 
-<div class="row g-4 mt-2">
+        <!-- ORDER STATUS -->
 
 
-<div class="col-md-3">
+        <h3 class="fw-bold mt-5 mb-3">
+            Order Status
+        </h3>
 
-<div class="card shadow border-0 rounded-4">
 
-<div class="card-body">
 
-<h6 class="text-muted">
-Pending Orders
-</h6>
 
-<h3 class="fw-bold">
-{{ pending_orders }}
-</h3>
+        <div class="row g-4">
 
-</div>
 
-</div>
 
-</div>
+            <div class="col-xl-3 col-md-6">
 
 
+                <div class="status-card status-warning">
 
-<div class="col-md-3">
 
-<div class="card shadow border-0 rounded-4">
+                    <i class="bi bi-clock-history"></i>
 
-<div class="card-body">
 
-<h6 class="text-muted">
-Confirmed Orders
-</h6>
+                    <h6>
+                        Pending Orders
+                    </h6>
 
-<h3 class="fw-bold">
-{{ confirmed_orders }}
-</h3>
 
-</div>
+                    <h2>
+                        {{ pending_orders }}
+                    </h2>
 
-</div>
 
-</div>
+                </div>
 
 
+            </div>
 
-<div class="col-md-3">
 
-<div class="card shadow border-0 rounded-4">
 
-<div class="card-body">
 
-<h6 class="text-muted">
-Shipped Orders
-</h6>
 
-<h3 class="fw-bold">
-{{ shipped_orders }}
-</h3>
 
-</div>
+            <div class="col-xl-3 col-md-6">
 
-</div>
 
-</div>
+                <div class="status-card status-primary">
 
 
+                    <i class="bi bi-check-circle"></i>
 
-<div class="col-md-3">
 
-<div class="card shadow border-0 rounded-4">
+                    <h6>
+                        Confirmed Orders
+                    </h6>
 
-<div class="card-body">
 
-<h6 class="text-muted">
-Delivered Orders
-</h6>
+                    <h2>
+                        {{ confirmed_orders }}
+                    </h2>
 
-<h3 class="fw-bold">
-{{ delivered_orders }}
-</h3>
 
-</div>
+                </div>
 
-</div>
 
-</div>
+            </div>
 
 
-</div>
 
 
-<div class="col-md-3">
 
-<div class="card shadow border-0 rounded-4 p-4">
 
+            <div class="col-xl-3 col-md-6">
 
-<h6 class="text-muted">
 
-Low Stock
+                <div class="status-card status-info">
 
-</h6>
 
+                    <i class="bi bi-truck"></i>
 
-<h2 class="fw-bold">
 
-{{ low_stock }}
+                    <h6>
+                        Shipped Orders
+                    </h6>
 
-</h2>
 
+                    <h2>
+                        {{ shipped_orders }}
+                    </h2>
 
-<i class="bi bi-exclamation-triangle fs-1 text-danger"></i>
 
+                </div>
 
-</div>
 
-</div>
+            </div>
 
 
 
-</div>
 
 
 
+            <div class="col-xl-3 col-md-6">
 
 
+                <div class="status-card status-success">
 
 
-<div class="row mt-5 g-4">
+                    <i class="bi bi-bag-check"></i>
 
 
-<div class="col-lg-8">
+                    <h6>
+                        Delivered Orders
+                    </h6>
 
 
-<div class="card shadow border-0 rounded-4">
+                    <h2>
+                        {{ delivered_orders }}
+                    </h2>
 
 
-<div class="card-body">
+                </div>
 
 
-<h4 class="mb-4 fw-bold">
+            </div>
 
-Recent Orders
 
-</h4>
 
+        </div>
 
+        <!-- CHART SECTION -->
 
-<div class="table-responsive">
 
+        <div class="row mt-5 g-4">
 
-<table class="table table-hover">
 
 
-<thead class="table-dark">
+            <div class="col-lg-8">
 
 
-<tr>
+                <div class="card shadow border-0 rounded-4">
 
 
-<th>
-Order
-</th>
+                    <div class="card-body">
 
 
-<th>
-Customer
-</th>
+                        <h4 class="fw-bold mb-3">
 
+                            Monthly Sales
 
-<th>
-Amount
-</th>
+                        </h4>
 
 
-<th>
-Payment
-</th>
+                        <canvas id="salesChart"></canvas>
 
 
-<th>
-Status
-</th>
+                    </div>
 
 
-<th>
-Action
-</th>
+                </div>
 
 
-</tr>
+            </div>
 
 
-</thead>
 
 
 
-<tbody>
+            <div class="col-lg-4">
 
 
-{% for order in recent_orders %}
+                <div class="card shadow border-0 rounded-4">
 
 
-<tr>
+                    <div class="card-body">
 
 
-<td>
+                        <h4 class="fw-bold mb-3">
 
-{{ order.order_number }}
+                            Order Status
 
-</td>
+                        </h4>
 
 
+                        <canvas id="orderChart"></canvas>
 
-<td>
 
-{{ order.full_name }}
+                    </div>
 
-</td>
 
+                </div>
 
 
-<td>
+            </div>
 
-Rs. {{ order.total }}
 
-</td>
 
+        </div>
 
 
-<td>
 
-{{ order.payment_method }}
 
-</td>
 
 
 
-<td>
+        <!-- RECENT ORDERS -->
 
 
-{% if order.status == "Delivered" %}
+        <div class="row mt-5">
 
-<span class="badge bg-success">
 
-{{ order.status }}
+            <div class="col-12">
 
-</span>
 
+                <div class="card shadow border-0 rounded-4">
 
-{% elif order.status == "Cancelled" %}
 
-<span class="badge bg-danger">
+                    <div class="card-body">
 
-{{ order.status }}
 
-</span>
 
+                        <div class="d-flex justify-content-between align-items-center mb-4">
 
-{% else %}
 
-<span class="badge bg-dark">
+                            <h4 class="fw-bold mb-0">
 
-{{ order.status }}
+                                Recent Orders
 
-</span>
+                            </h4>
 
 
-{% endif %}
 
+                            <a href="{% url 'dashboard:orders' %}" class="btn btn-dark btn-sm">
 
-</td>
+                                View All
 
+                            </a>
 
 
-<td>
+                        </div>
 
 
-<a href="{% url 'dashboard:order_detail' order.id %}"
-class="btn btn-sm btn-outline-dark">
 
-View
 
-</a>
 
+                        <div class="table-responsive">
 
-</td>
 
+                            <table class="table align-middle table-hover">
 
-</tr>
 
 
-{% empty %}
+                                <thead class="table-dark">
 
 
-<tr>
+                                    <tr>
 
-<td colspan="6" class="text-center">
 
-No Orders
+                                        <th>
+                                            Order
+                                        </th>
 
-</td>
 
-</tr>
+                                        <th>
+                                            Customer
+                                        </th>
 
 
-{% endfor %}
+                                        <th>
+                                            Amount
+                                        </th>
 
 
+                                        <th>
+                                            Payment
+                                        </th>
 
-</tbody>
 
+                                        <th>
+                                            Status
+                                        </th>
 
-</table>
 
+                                        <th>
+                                            Action
+                                        </th>
 
-</div>
 
+                                    </tr>
 
-</div>
 
+                                </thead>
 
-</div>
 
 
-</div>
 
 
-</div>
+                                <tbody>
 
-<!-- Quick Actions -->
 
+                                    {% for order in recent_orders %}
 
-<div class="row mt-4 g-4">
 
+                                    <tr>
 
-<div class="col-md-3">
 
+                                        <td class="fw-semibold">
 
-<a href="{% url 'dashboard:product_add' %}"
-class="text-decoration-none">
+                                            #{{ order.order_number }}
 
+                                        </td>
 
-<div class="card shadow border-0 rounded-4">
 
 
-<div class="card-body text-center">
+                                        <td>
 
+                                            {{ order.full_name }}
 
-<h5 class="fw-bold">
+                                        </td>
 
-➕ Add Product
 
-</h5>
 
+                                        <td>
 
-<p class="text-muted mb-0">
+                                            Rs {{ order.total }}
 
-New Crockery Item
+                                        </td>
 
-</p>
 
 
-</div>
+                                        <td>
 
+                                            <span class="badge bg-secondary">
 
-</div>
+                                                {{ order.payment_method }}
 
+                                            </span>
 
-</a>
+                                        </td>
 
 
-</div>
 
 
+                                        <td>
 
 
+                                            {% if order.status == "Delivered" %}
 
-<div class="col-md-3">
 
+                                            <span class="badge bg-success">
 
-<a href="{% url 'dashboard:orders' %}"
-class="text-decoration-none">
+                                                {{ order.status }}
 
+                                            </span>
 
-<div class="card shadow border-0 rounded-4">
 
+                                            {% elif order.status == "Cancelled" %}
 
-<div class="card-body text-center">
 
+                                            <span class="badge bg-danger">
 
-<h5 class="fw-bold">
+                                                {{ order.status }}
 
-📦 Orders
+                                            </span>
 
-</h5>
 
+                                            {% elif order.status == "Pending" %}
 
-<p class="text-muted mb-0">
 
-Manage Orders
+                                            <span class="badge bg-warning text-dark">
 
-</p>
+                                                {{ order.status }}
 
+                                            </span>
 
-</div>
 
+                                            {% else %}
 
-</div>
 
+                                            <span class="badge bg-primary">
 
-</a>
+                                                {{ order.status }}
 
+                                            </span>
 
-</div>
 
+                                            {% endif %}
 
 
 
+                                        </td>
 
-<!-- Quick Actions End -->
 
-</div>
-<!-- row close -->
 
 
-<!-- Stock Alert + Material Stock Row -->
+                                        <td>
 
-<div class="row mt-4 g-4">
 
+                                            <a href="{% url 'dashboard:order_detail' order.id %}"
+                                                class="btn btn-outline-dark btn-sm">
 
-<div class="col-lg-4">
+                                                View
 
+                                            </a>
 
-<div class="card shadow border-0 rounded-4">
 
+                                        </td>
 
-<div class="card-body">
 
 
-<h4 class="fw-bold mb-3">
+                                    </tr>
 
-Stock Alert
 
-</h4>
 
+                                    {% empty %}
 
-<hr>
 
 
-{% for product in low_stock_products %}
+                                    <tr>
 
+                                        <td colspan="6" class="text-center text-muted">
 
-<div class="d-flex justify-content-between mb-3">
+                                            No Orders Found
 
+                                        </td>
 
-<span>
+                                    </tr>
 
-{{ product.name }}
 
-</span>
 
+                                    {% endfor %}
 
-<span class="badge bg-danger">
 
-{{ product.stock }}
 
-</span>
+                                </tbody>
 
 
-</div>
+                            </table>
 
 
-{% empty %}
+                        </div>
 
 
-<p>
 
-No Low Stock
 
-</p>
+                    </div>
 
 
-{% endfor %}
+                </div>
 
 
+            </div>
 
-</div>
 
+        </div>
 
-</div>
 
 
-</div>
 
 
 
+        <!-- QUICK ACTIONS -->
 
-<div class="col-lg-8">
 
+        <h3 class="fw-bold mt-5 mb-3">
 
-<div class="card shadow border-0 rounded-4">
+            Quick Actions
 
+        </h3>
 
-<div class="card-body">
 
 
-<h4 class="fw-bold mb-3">
 
-Material Wise Stock
+        <div class="row g-4">
 
-</h4>
 
 
 
-<div class="table-responsive">
 
+            <!-- ADD PRODUCT -->
 
-<table class="table table-hover">
 
+            <div class="col-lg-4">
 
-<thead>
 
+                <a href="{% url 'dashboard:product_add' %}" class="text-decoration-none">
 
-<tr>
 
-<th>
-Material
-</th>
+                    <div class="card shadow border-0 rounded-4">
 
 
-<th>
-Products
-</th>
+                        <div class="card-body text-center">
 
 
-<th>
-Total Stock
-</th>
+                            <i class="bi bi-plus-circle fs-1 text-primary"></i>
 
 
-</tr>
+                            <h4 class="fw-bold mt-3">
 
+                                Add Product
 
-</thead>
+                            </h4>
 
 
+                            <p class="text-muted">
 
-<tbody>
+                                Add new crockery items
 
+                            </p>
 
-{% for item in material_stock %}
 
+                        </div>
 
-<tr>
 
+                    </div>
 
-<td>
 
-{{ item.material|default:"Other" }}
+                </a>
 
-</td>
 
+            </div>
 
-<td>
 
-{{ item.total_products }}
 
-</td>
 
 
-<td>
+            <!-- STOCK -->
 
-{{ item.total_stock }}
 
-</td>
+            <div class="col-lg-4">
 
 
-</tr>
+                <a href="{% url 'dashboard:stock' %}" class="text-decoration-none">
 
 
-{% empty %}
+                    <div class="card shadow border-0 rounded-4">
 
 
-<tr>
+                        <div class="card-body text-center">
 
 
-<td colspan="3" class="text-center">
+                            <i class="bi bi-box-seam fs-1 text-danger"></i>
 
-No Stock Data
 
-</td>
+                            <h4 class="fw-bold mt-3">
 
+                                Manage Stock
 
-</tr>
+                            </h4>
 
 
-{% endfor %}
+                            <p class="text-muted">
 
+                                Stock In / Stock Out
 
-</tbody>
+                            </p>
 
 
-</table>
+                        </div>
 
 
-</div>
+                    </div>
 
 
-</div>
+                </a>
 
 
-</div>
+            </div>
 
 
-</div>
 
 
-</div>
 
-<div class="card shadow border-0 rounded-4 mt-4">
+            <!-- ORDERS -->
 
 
-<div class="card-body">
+            <div class="col-lg-4">
 
 
-<h4 class="fw-bold mb-3">
-Cash Report
-</h4>
+                <a href="{% url 'dashboard:orders' %}" class="text-decoration-none">
 
 
-<div class="row g-3">
+                    <div class="card shadow border-0 rounded-4">
 
 
+                        <div class="card-body text-center">
 
-<div class="col-md-4">
 
+                            <i class="bi bi-cart-check fs-1 text-success"></i>
 
-<div class="p-3 bg-light rounded-4">
 
+                            <h4 class="fw-bold mt-3">
 
-<h6>
-This Month Sale
-</h6>
+                                View Orders
 
+                            </h4>
 
-<h3>
-Rs {{ month_sale }}
-</h3>
 
+                            <p class="text-muted">
 
-</div>
+                                Customer Orders & Dispatch
 
+                            </p>
 
-</div>
 
+                        </div>
 
 
+                    </div>
 
-<div class="col-md-4">
 
+                </a>
 
-<div class="p-3 bg-light rounded-4">
 
+            </div>
 
-<h6>
-COD Sale
-</h6>
 
 
-<h3>
-Rs {{ cod_sale }}
-</h3>
+        </div>
 
 
-</div>
+        <div class="row g-4 mt-4">
 
 
-</div>
+            <div class="col-lg-3">
+                <a href="{% url 'dashboard:banners' %}" class="text-decoration-none">
 
+                    <div class="card shadow border-0 rounded-4">
+                        <div class="card-body text-center">
 
+                            <i class="bi bi-image fs-1 text-primary"></i>
 
+                            <h5 class="fw-bold mt-3">
+                                Banners
+                            </h5>
 
-<div class="col-md-4">
+                            <p class="text-muted">
+                                Manage Homepage Banners
+                            </p>
 
+                        </div>
+                    </div>
 
-<div class="p-3 bg-light rounded-4">
+                </a>
+            </div>
 
 
-<h6>
-Online Payment
-</h6>
 
+            <div class="col-lg-3">
+                <a href="{% url 'dashboard:best_sellers' %}" class="text-decoration-none">
 
-<h3>
-Rs {{ online_sale }}
-</h3>
+                    <div class="card shadow border-0 rounded-4">
+                        <div class="card-body text-center">
 
+                            <i class="bi bi-star fs-1 text-warning"></i>
 
-</div>
+                            <h5 class="fw-bold mt-3">
+                                Best Sellers
+                            </h5>
 
+                            <p class="text-muted">
+                                Featured Products
+                            </p>
 
-</div>
+                        </div>
+                    </div>
 
+                </a>
+            </div>
 
 
-</div>
 
 
-</div>
+            <div class="col-lg-3">
+                <a href="{% url 'dashboard:offers' %}" class="text-decoration-none">
 
+                    <div class="card shadow border-0 rounded-4">
+                        <div class="card-body text-center">
 
-</div>
+                            <i class="bi bi-percent fs-1 text-danger"></i>
 
+                            <h5 class="fw-bold mt-3">
+                                Offers
+                            </h5>
 
+                            <p class="text-muted">
+                                Manage Discounts
+                            </p>
 
+                        </div>
+                    </div>
 
-{% endblock %}
+                </a>
+            </div>
+
+
+
+
+            <div class="col-lg-3">
+                <a href="{% url 'dashboard:instagram' %}" class="text-decoration-none">
+
+                    <div class="card shadow border-0 rounded-4">
+                        <div class="card-body text-center">
+
+                            <i class="bi bi-instagram fs-1 text-success"></i>
+
+                            <h5 class="fw-bold mt-3">
+                                Instagram
+                            </h5>
+
+                            <p class="text-muted">
+                                Social Media Posts
+                            </p>
+
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+
+
+        </div>
+
+
+
+        <!-- STOCK + MATERIAL SECTION -->
+
+
+        <div class="row mt-5 g-4">
+
+
+            <!-- MATERIAL STOCK -->
+
+
+            <div class="col-lg-8">
+
+
+                <div class="card shadow border-0 rounded-4">
+
+
+                    <div class="card-body">
+
+
+                        <h4 class="fw-bold mb-3">
+
+                            Material Wise Stock
+
+                        </h4>
+
+
+
+
+                        <div class="table-responsive">
+
+
+                            <table class="table align-middle table-hover">
+
+
+                                <thead class="table-dark">
+
+
+                                    <tr>
+
+                                        <th>
+                                            Material
+                                        </th>
+
+
+                                        <th>
+                                            Products
+                                        </th>
+
+
+                                        <th>
+                                            Total Stock
+                                        </th>
+
+
+                                    </tr>
+
+
+                                </thead>
+
+
+
+                                <tbody>
+
+
+                                    {% for item in material_stock %}
+
+
+
+                                    <tr>
+
+
+                                        <td class="fw-semibold">
+
+                                            <i class="bi bi-box-seam me-2"></i>
+
+                                            {{ item.material|default:"Other" }}
+
+                                        </td>
+
+
+
+                                        <td>
+
+                                            <span class="badge bg-primary rounded-pill">
+
+                                                {{ item.total_products }}
+
+                                            </span>
+
+                                        </td>
+
+
+
+                                        <td>
+
+                                            <span class="badge bg-success rounded-pill">
+
+                                                {{ item.total_stock }}
+
+                                            </span>
+
+                                        </td>
+
+
+                                    </tr>
+
+
+
+                                    {% empty %}
+
+
+
+                                    <tr>
+
+                                        <td colspan="3" class="text-center text-muted">
+
+                                            No Stock Data Available
+
+                                        </td>
+
+                                    </tr>
+
+
+
+                                    {% endfor %}
+
+
+
+                                </tbody>
+
+
+                            </table>
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+            <!-- CASH REPORT -->
+
+
+            <div class="col-lg-4">
+
+
+                <div class="card shadow border-0 rounded-4">
+
+
+                    <div class="card-body">
+
+
+                        <h4 class="fw-bold mb-4">
+
+                            Cash Report
+
+                        </h4>
+
+
+
+
+                        <div class="mb-3 p-3 bg-light rounded-4">
+
+
+                            <h6 class="text-muted">
+
+                                This Month Sale
+
+                            </h6>
+
+
+                            <h3 class="fw-bold">
+
+                                Rs {{ month_sale }}
+
+                            </h3>
+
+
+                        </div>
+
+
+
+
+
+                        <div class="mb-3 p-3 bg-light rounded-4">
+
+
+                            <h6 class="text-muted">
+
+                                COD Sale
+
+                            </h6>
+
+
+                            <h3 class="fw-bold">
+
+                                Rs {{ cod_sale }}
+
+                            </h3>
+
+
+                        </div>
+
+
+
+
+
+                        <div class="p-3 bg-light rounded-4">
+
+
+                            <h6 class="text-muted">
+
+                                Online Payment
+
+                            </h6>
+
+
+                            <h3 class="fw-bold">
+
+                                Rs {{ online_sale }}
+
+                            </h3>
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <!-- CHART SCRIPT -->
+
+        <script>
+
+            console.log("Chart loading...");
+
+
+            const salesChartElement = document.getElementById("salesChart");
+
+
+            if (salesChartElement) {
+
+
+                new Chart(salesChartElement, {
+
+                    type: "line",
+
+                    data: {
+
+                        labels: [
+                            "Jan",
+                            "Feb",
+                            "Mar",
+                            "Apr",
+                            "May",
+                            "Jun"
+                        ],
+
+                        datasets: [{
+
+                            label: "Sales",
+
+                            data: [
+                                12000,
+                                19000,
+                                15000,
+                                25000,
+                                22000,
+                                30000
+                            ],
+
+                            borderWidth: 3
+
+                        }]
+
+                    },
+
+                    options: {
+                        responsive: true
+                    }
+
+                });
+
+
+            }
+
+
+
+
+            const orderChartElement = document.getElementById("orderChart");
+
+
+            if (orderChartElement) {
+
+
+                new Chart(orderChartElement, {
+
+                    type: "doughnut",
+
+                    data: {
+
+                        labels: [
+                            "Pending",
+                            "Confirmed",
+                            "Shipped",
+                            "Delivered"
+                        ],
+
+                        datasets: [{
+
+                            data: [
+                                Number("{{ pending_orders|default:0 }}"),
+                                Number("{{ confirmed_orders|default:0 }}"),
+                                Number("{{ shipped_orders|default:0 }}"),
+                                Number("{{ delivered_orders|default:0 }}")
+                            ],
+
+                            borderWidth: 1
+
+                        }]
+
+                    },
+
+                    options: {
+                        responsive: true
+                    }
+
+                });
+
+
+            }
+
+
+        </script>
+
+
+        {% endblock %}

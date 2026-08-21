@@ -1,0 +1,785 @@
+/* ============================
+   GENERAL
+============================ */
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    overflow-x: hidden;
+}
+
+
+/* ============================
+   SIDEBAR
+============================ */
+
+.sidebar {
+
+    width:260px;
+    min-height:100vh;
+    transition:0.3s ease;
+    position:relative;
+
+}
+
+
+.sidebar.collapsed {
+
+    width:80px !important;
+
+}
+
+
+
+.sidebar .menu-text,
+.sidebar .brand-text {
+
+    transition:0.2s;
+
+}
+
+
+
+.sidebar.collapsed .menu-text,
+.sidebar.collapsed .brand-text {
+
+    display:none;
+
+}
+
+
+
+.sidebar a {
+
+    color:white !important;
+    padding:12px 15px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    transition:0.3s;
+
+}
+
+
+
+.sidebar a:hover {
+
+    background:rgba(255,255,255,0.15);
+    transform:translateX(5px);
+
+}
+
+
+
+.sidebar i {
+
+    font-size:20px;
+
+}
+
+
+
+
+/* ============================
+   NAVBAR
+============================ */
+
+
+.top-navbar {
+
+    background:white;
+    height:65px;
+    box-shadow:0 3px 15px rgba(0,0,0,0.08);
+
+}
+
+
+
+
+
+/* ============================
+   DASHBOARD CARDS
+============================ */
+
+
+.dashboard-card {
+
+    border-radius:18px;
+    padding:25px;
+    color:white;
+    transition:0.3s;
+
+}
+
+
+.dashboard-card:hover {
+
+    transform:translateY(-8px);
+
+}
+
+
+
+
+.card-blue {
+
+    background:linear-gradient(
+        135deg,
+        #2196f3,
+        #0d47a1
+    );
+
+}
+
+
+
+.card-green {
+
+    background:linear-gradient(
+        135deg,
+        #43a047,
+        #1b5e20
+    );
+
+}
+
+
+
+.card-yellow {
+
+    background:linear-gradient(
+        135deg,
+        #ffca28,
+        #f57f17
+    );
+
+}
+
+
+
+.card-red {
+
+    background:linear-gradient(
+        135deg,
+        #ef5350,
+        #b71c1c
+    );
+
+}
+
+
+/* ============================
+   SIDEBAR DESIGN
+============================ */
+
+
+.sidebar{
+
+    width:260px;
+    min-height:100vh;
+    box-shadow:5px 0 20px rgba(0,0,0,.15);
+    position:sticky;
+    top:0;
+
+}
+
+
+
+.sidebar h4{
+
+    font-size:22px;
+
+}
+
+
+
+.sidebar .nav-link{
+
+    color:#fff !important;
+    padding:12px 15px;
+    border-radius:12px;
+    margin-bottom:8px;
+    transition:.3s;
+
+}
+
+
+
+.sidebar .nav-link:hover{
+
+    background:rgba(255,255,255,.15);
+    transform:translateX(5px);
+
+}
+
+
+
+.sidebar .nav-link i{
+
+    margin-right:10px;
+    font-size:18px;
+
+}
+
+
+
+.sidebar .btn-danger{
+
+    border-radius:12px;
+
+}
+
+
+
+/* ============================
+   NORMAL CARDS
+============================ */
+
+
+.card {
+
+    border-radius:18px !important;
+
+}
+
+
+
+.card:hover {
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.12) !important;
+
+}
+
+
+
+
+
+/* ============================
+   TABLE
+============================ */
+
+
+.table {
+
+    border-radius:15px;
+    overflow:hidden;
+
+}
+
+
+.table thead {
+
+    background:#212529;
+    color:white;
+
+}
+
+
+/* ============================
+   ORDER STATUS CARDS
+============================ */
+
+
+.status-card {
+
+    padding:25px;
+    border-radius:18px;
+    color:white;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+    transition:0.3s;
+
+}
+
+
+
+.status-card:hover {
+
+    transform:translateY(-7px);
+
+}
+
+
+
+.status-card i {
+
+    position:absolute;
+    right:20px;
+    top:20px;
+    font-size:45px;
+    opacity:0.3;
+
+}
+
+
+
+.status-card h6 {
+
+    font-size:16px;
+
+}
+
+
+
+.status-card h2 {
+
+    font-size:35px;
+    font-weight:700;
+
+}
+
+
+
+
+.status-warning {
+
+    background:linear-gradient(
+        135deg,
+        #ffca28,
+        #f57f17
+    );
+
+}
+
+
+
+.status-primary {
+
+    background:linear-gradient(
+        135deg,
+        #2196f3,
+        #0d47a1
+    );
+
+}
+
+
+
+.status-info {
+
+    background:linear-gradient(
+        135deg,
+        #00bcd4,
+        #006064
+    );
+
+}
+
+
+
+.status-success {
+
+    background:linear-gradient(
+        135deg,
+        #43a047,
+        #1b5e20
+    );
+
+}
+
+
+
+/* ============================
+   BUTTONS
+============================ */
+
+
+.btn {
+
+    border-radius:10px;
+
+}
+
+
+
+
+/* ============================
+   MOBILE
+============================ */
+
+
+@media(max-width:768px){
+
+
+.sidebar {
+
+    position:fixed;
+    z-index:1000;
+
+}
+
+
+
+}
+
+/* SIDEBAR PROFESSIONAL STYLE */
+
+.sidebar{
+    background: linear-gradient(180deg,#1f2937,#111827);
+    transition:0.3s;
+}
+
+
+.sidebar .nav-link{
+    color:#fff !important;
+    padding:12px 15px;
+    border-radius:10px;
+    margin-bottom:6px;
+    transition:0.3s;
+}
+
+
+.sidebar .nav-link:hover{
+    background:rgba(255,255,255,0.15);
+    transform:translateX(5px);
+}
+
+
+.sidebar .nav-link i{
+    width:30px;
+    font-size:18px;
+}
+
+
+.sidebar hr{
+    opacity:.2;
+}
+
+
+
+.brand-text{
+    font-size:20px;
+    font-weight:700;
+}
+
+
+
+/* COLLAPSE */
+
+.sidebar.collapsed{
+    width:80px !important;
+}
+
+
+.sidebar.collapsed .menu-text,
+.sidebar.collapsed .brand-text{
+    display:none;
+}
+
+
+.sidebar.collapsed .nav-link{
+    text-align:center;
+}
+
+
+.sidebar.collapsed .nav-link i{
+    width:auto;
+}
+
+/* STOCK TABLE */
+
+.table tbody tr{
+
+transition:.3s;
+
+}
+
+
+.table tbody tr:hover{
+
+background:#f8f9fa;
+transform:scale(1.01);
+
+}
+
+
+.badge{
+
+font-size:14px;
+padding:8px 12px;
+
+}
+
+/* ============================
+   ACTIVE MENU
+============================ */
+
+
+.sidebar .nav-link.active{
+
+    background:linear-gradient(
+        135deg,
+        #2196f3,
+        #0d47a1
+    );
+
+    border-radius:12px;
+
+}
+
+
+
+/* ============================
+   COLLAPSE SIDEBAR
+============================ */
+
+
+.sidebar.collapsed{
+
+    width:80px !important;
+
+}
+
+
+
+.sidebar.collapsed .menu-text,
+.sidebar.collapsed .brand-text{
+
+    display:none;
+
+}
+
+
+
+.sidebar.collapsed .nav-link{
+
+    text-align:center;
+
+}
+
+
+
+.sidebar.collapsed i{
+
+    font-size:22px;
+
+}
+
+/* ============================
+   MOBILE RESPONSIVE SIDEBAR
+============================ */
+
+
+@media(max-width:768px){
+
+
+.sidebar{
+
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:999;
+    transform:translateX(-100%);
+    transition:.3s;
+
+}
+
+
+
+.sidebar.mobile-show{
+
+    transform:translateX(0);
+
+}
+
+
+
+.flex-grow-1{
+
+    width:100%;
+
+}
+
+
+
+.top-navbar{
+
+    position:sticky;
+    top:0;
+    z-index:100;
+
+}
+
+
+
+}
+
+
+/* ============================
+   DASHBOARD CARD EFFECTS
+============================ */
+
+
+.dashboard-card{
+
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    transition:.3s ease;
+
+}
+
+
+
+.dashboard-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,.20);
+
+}
+
+
+
+
+.dashboard-card i{
+
+    opacity:.9;
+    transition:.3s;
+
+}
+
+
+
+.dashboard-card:hover i{
+
+    transform:scale(1.15)
+    rotate(5deg);
+
+}
+
+
+
+/* ICON BACKGROUND */
+
+
+.dashboard-card i{
+
+    background:rgba(255,255,255,.20);
+
+    width:70px;
+    height:70px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+}
+
+/* CHART CARD */
+
+canvas{
+
+    max-height:350px;
+
+}
+
+
+.card canvas{
+
+    padding:10px;
+
+}
+
+/* ============================
+   DASHBOARD POLISH
+============================ */
+
+
+.container-fluid,
+.container{
+
+    max-width:100%;
+
+}
+
+
+
+h2,h3,h4{
+
+    letter-spacing:.3px;
+
+}
+
+
+
+/* ALL CARDS */
+
+.card{
+
+    transition:.3s ease;
+
+}
+
+
+
+.card:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+
+/* BUTTON STYLE */
+
+.btn{
+
+    border-radius:10px;
+
+}
+
+
+
+/* TABLE */
+
+.table{
+
+    margin-bottom:0;
+
+}
+
+
+
+.table thead th{
+
+    padding:15px;
+
+    font-size:14px;
+
+}
+
+
+
+.table tbody td{
+
+    padding:15px;
+
+}
+
+
+
+/* BADGES */
+
+.badge{
+
+    padding:8px 12px;
+
+    font-size:12px;
+
+}
+
+
+
+/* PAGE BACKGROUND */
+
+body{
+
+    background:#f4f6f9 !important;
+
+}
+

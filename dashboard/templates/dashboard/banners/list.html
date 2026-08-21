@@ -1,0 +1,123 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Banners
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="card shadow border-0 rounded-4">
+
+<div class="card-body p-4">
+
+
+<h3 class="fw-bold mb-4">
+Manage Banners
+</h3>
+
+
+<div class="table-responsive">
+
+<table class="table table-hover">
+
+
+<thead class="table-dark">
+
+<tr>
+<th>Image</th>
+<th>Title</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+
+<tbody>
+
+
+{% for banner in banners %}
+
+<tr>
+
+<td>
+<img src="{{ banner.image.url }}"
+width="100"
+class="rounded">
+</td>
+
+
+<td>
+{{ banner.title }}
+</td>
+
+
+<td>
+
+{% if banner.is_active %}
+
+<span class="badge bg-success">
+Active
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+Inactive
+</span>
+
+{% endif %}
+
+</td>
+
+
+<td>
+
+<a href="#"
+class="btn btn-sm btn-danger">
+Delete
+</a>
+
+</td>
+
+
+</tr>
+
+
+{% empty %}
+
+<tr>
+
+<td colspan="4" class="text-center">
+
+No Banner Found
+
+</td>
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+{% endblock %}

@@ -138,6 +138,9 @@ path(
     name="customers"
 ),
 
+
+
+
 path(
     "reports/sales/",
     views.sales_report,
@@ -154,5 +157,45 @@ path(
     "reports/payment/",
     views.payment_report,
     name="payment_report"
+),
+path(
+    "account/",
+    views.account,
+    name="account"
+),
+path(
+    "account/",
+    views.account,
+    name="account"
+),
+
+path(
+    "account/change-password/",
+    views.change_password,
+    name="change_password"
+),
+
+path(
+    "banners/",
+    views.banner_list,
+    name="banners"
+),
+
+path(
+    "best-sellers/",
+    views.best_seller_list,
+    name="best_sellers"
+),
+
+path(
+    "offers/",
+    views.offer_list,
+    name="offers"
+),
+
+path(
+    "instagram/",
+    views.instagram_list,
+    name="instagram"
 ),
 ]

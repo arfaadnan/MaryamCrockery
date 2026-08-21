@@ -1,52 +1,50 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+
+from django.contrib.auth import (
+    authenticate,
+    login,
+    logout,
+    update_session_auth_hash,
+)
+
+from .models import (
+    Banner,
+    Offer,
+    InstagramPost,
+    
+)
+
+from .models import Banner, Offer, InstagramPost
+
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 
-from django.db.models import Count, Sum, Max
-
-from store.models import Product, Order, OrderItem
-
-from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
-
-from django.shortcuts import render, redirect, get_object_or_404
-
-from store.models import Product, InventoryHistory
-
-
-from store.models import Product, Category, SubCategory, ProductImage
-
-
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-
-from store.models import Category, SubCategory
+from django.db import transaction
+from django.db.models import (
+    Count,
+    Sum,
+    F,
+)
 
 from django.http import JsonResponse
 
-
-from django.db import transaction
-from store.models import Order
-from django.utils import timezone
-from store.models import ProductReturn
-
-# ============================
-# ORDER IMPORTS
-# ============================
-
-from store.models import Order
-
-# ============================
-# DASHBOARD IMPORTS
-# ============================
-
-from django.db.models import Sum
 from django.utils import timezone
 
-from store.models import Product, Order
+# STORE MODELS
 
-from django.db.models import Sum, F
-from django.utils import timezone
+from store.models import (
+    Product,
+    Order,
+    OrderItem,
+    InventoryHistory,
+    Category,
+    SubCategory,
+    ProductImage,
+    ProductReturn,
+)
+from django.db.models import Max
 
 
 @login_required
@@ -57,7 +55,7 @@ def dashboard_home(request):
     total_products = Product.objects.count()
 
     total_orders = Order.objects.count()
-    
+
     total_categories = Category.objects.count()
 
     # Today's Sale
@@ -65,210 +63,113 @@ def dashboard_home(request):
     today = timezone.now().date()
 
     today_sale = (
-        Order.objects.filter(
-            created_at__date=today,
-            payment_status="Paid"
-        )
-        .aggregate(
+        Order.objects.filter(created_at__date=today, payment_status="Paid").aggregate(
             total=Sum("total")
         )["total"]
         or 0
     )
-
 
     # Total Sale
 
     total_sale = (
-        Order.objects.filter(
-            payment_status="Paid"
-        )
-        .aggregate(
-            total=Sum("total")
-        )["total"]
+        Order.objects.filter(payment_status="Paid").aggregate(total=Sum("total"))[
+            "total"
+        ]
         or 0
     )
-
 
     # Pending Payment
 
     pending_payment = (
-        Order.objects.filter(
-            payment_status="Pending"
-        )
-        .aggregate(
-            total=Sum("total")
-        )["total"]
+        Order.objects.filter(payment_status="Pending").aggregate(total=Sum("total"))[
+            "total"
+        ]
         or 0
     )
 
-
     # Paid Orders Count
 
-    paid_orders = Order.objects.filter(
-        payment_status="Paid"
-    ).count()
-
-
+    paid_orders = Order.objects.filter(payment_status="Paid").count()
 
     # Order Status Count
 
-    pending_orders = Order.objects.filter(
-        status="Pending"
-    ).count()
+    pending_orders = Order.objects.filter(status="Pending").count()
 
+    confirmed_orders = Order.objects.filter(status="Confirmed").count()
 
-    confirmed_orders = Order.objects.filter(
-        status="Confirmed"
-    ).count()
+    shipped_orders = Order.objects.filter(status="Shipped").count()
 
-
-    shipped_orders = Order.objects.filter(
-        status="Shipped"
-    ).count()
-
-
-    delivered_orders = Order.objects.filter(
-        status="Delivered"
-    ).count()
-
-
+    delivered_orders = Order.objects.filter(status="Delivered").count()
 
     # Low Stock Count
 
-    low_stock = Product.objects.filter(
-        stock__lte=F("low_stock_limit")
-    ).count()
-
-
+    low_stock = Product.objects.filter(stock__lte=F("low_stock_limit")).count()
 
     # Recent Orders
 
-    recent_orders = Order.objects.all().order_by(
-        "-created_at"
-    )[:5]
-
-
+    recent_orders = Order.objects.all().order_by("-created_at")[:5]
 
     # Low Stock Products
 
-    low_stock_products = Product.objects.filter(
-        stock__lte=F("low_stock_limit")
-    )[:5]
-
-
+    low_stock_products = Product.objects.filter(stock__lte=F("low_stock_limit"))[:5]
 
     # Material Wise Stock
 
     material_stock = (
         Product.objects.values("material")
-        .annotate(
-            total_products=Count("id"),
-            total_stock=Sum("stock")
-        )
+        .annotate(total_products=Count("id"), total_stock=Sum("stock"))
         .order_by("-total_stock")
     )
-
-
 
     # Cash Report
 
     now = timezone.now()
 
-
     month_sale = (
         Order.objects.filter(
             created_at__year=now.year,
             created_at__month=now.month,
-            payment_status="Paid"
-        )
-        .aggregate(
-            total=Sum("total")
-        )["total"]
+            payment_status="Paid",
+        ).aggregate(total=Sum("total"))["total"]
         or 0
     )
-
-
 
     cod_sale = (
-        Order.objects.filter(
-            payment_method="COD",
-            payment_status="Paid"
-        )
-        .aggregate(
+        Order.objects.filter(payment_method="COD", payment_status="Paid").aggregate(
             total=Sum("total")
         )["total"]
         or 0
     )
-
-
 
     online_sale = (
         Order.objects.filter(
-            payment_method__in=[
-                "JazzCash",
-                "EasyPaisa",
-                "Bank"
-            ],
-            payment_status="Paid"
-        )
-        .aggregate(
-            total=Sum("total")
-        )["total"]
+            payment_method__in=["JazzCash", "EasyPaisa", "Bank"], payment_status="Paid"
+        ).aggregate(total=Sum("total"))["total"]
         or 0
     )
 
-
-
     context = {
-
         "total_products": total_products,
-
         "total_orders": total_orders,
-        
         "total_categories": total_categories,
-
         "today_sale": today_sale,
-
         "total_sale": total_sale,
-
         "pending_payment": pending_payment,
-
         "paid_orders": paid_orders,
-
-
         "pending_orders": pending_orders,
-
         "confirmed_orders": confirmed_orders,
-
         "shipped_orders": shipped_orders,
-
         "delivered_orders": delivered_orders,
-
-
         "low_stock": low_stock,
-
         "recent_orders": recent_orders,
-
         "low_stock_products": low_stock_products,
-
         "material_stock": material_stock,
-
-
         "month_sale": month_sale,
-
         "cod_sale": cod_sale,
-
         "online_sale": online_sale,
-
     }
 
-
-    return render(
-        request,
-        "dashboard/dashboard.html",
-        context
-    )    
-    
+    return render(request, "dashboard/dashboard.html", context)
 
     # ============================
     # CASH REPORT
@@ -380,44 +281,25 @@ def product_add(request):
     if request.method == "POST":
 
         product = Product.objects.create(
-
             category_id=request.POST.get("category"),
-
             name=request.POST.get("name"),
-
             sku=request.POST.get("sku"),
-
             price=request.POST.get("price"),
-
             stock=request.POST.get("stock"),
-
             description=request.POST.get("description"),
-
             main_image=request.FILES.get("main_image"),
-
         )
 
         gallery_images = request.FILES.getlist("gallery")
 
         for image in gallery_images:
 
-            ProductImage.objects.create(
-
-                product=product,
-
-                image=image
-
-            )
+            ProductImage.objects.create(product=product, image=image)
 
         return redirect("dashboard:products")
 
-    return render(
-        request,
-        "dashboard/products/add.html",
-        {
-            "categories": categories
-        }
-    )
+    return render(request, "dashboard/products/add.html", {"categories": categories})
+
 
 # ============================
 # PRODUCT EDIT
@@ -630,32 +512,21 @@ def order_list(request):
 
     return render(request, "dashboard/orders/list.html", {"orders": orders})
 
+
 @login_required
 def customer_list(request):
 
     customers = (
-        Order.objects
-        .values(
-            "full_name",
-            "phone",
-            "email"
-        )
+        Order.objects.values("full_name", "phone", "email")
         .annotate(
             total_orders=Count("id"),
             total_spent=Sum("total"),
-            last_order=Max("created_at")
+            last_order=Max("created_at"),
         )
         .order_by("-last_order")
     )
 
-
-    return render(
-        request,
-        "dashboard/customers/list.html",
-        {
-            "customers": customers
-        }
-    )
+    return render(request, "dashboard/customers/list.html", {"customers": customers})
 
 
 @login_required
@@ -663,49 +534,35 @@ def sales_report(request):
 
     today = timezone.now().date()
 
-
     today_sale = (
-        Order.objects.filter(
-            created_at__date=today,
-            payment_status="Paid"
-        )
-        .aggregate(
+        Order.objects.filter(created_at__date=today, payment_status="Paid").aggregate(
             total=Sum("total")
-        )["total"] or 0
+        )["total"]
+        or 0
     )
-
 
     month_sale = (
         Order.objects.filter(
             created_at__month=today.month,
             created_at__year=today.year,
-            payment_status="Paid"
-        )
-        .aggregate(
-            total=Sum("total")
-        )["total"] or 0
+            payment_status="Paid",
+        ).aggregate(total=Sum("total"))["total"]
+        or 0
     )
-
 
     total_sale = (
-        Order.objects.filter(
-            payment_status="Paid"
-        )
-        .aggregate(
-            total=Sum("total")
-        )["total"] or 0
+        Order.objects.filter(payment_status="Paid").aggregate(total=Sum("total"))[
+            "total"
+        ]
+        or 0
     )
-
 
     pending_payment = (
-        Order.objects.filter(
-            payment_status="Pending"
-        )
-        .aggregate(
-            total=Sum("total")
-        )["total"] or 0
+        Order.objects.filter(payment_status="Pending").aggregate(total=Sum("total"))[
+            "total"
+        ]
+        or 0
     )
-
 
     return render(
         request,
@@ -715,76 +572,46 @@ def sales_report(request):
             "month_sale": month_sale,
             "total_sale": total_sale,
             "pending_payment": pending_payment,
-        }
+        },
     )
+
 
 @login_required
 def product_report(request):
 
     products = (
-        OrderItem.objects
-        .values(
-            "product__name"
-        )
-        .annotate(
-            total_quantity=Sum("quantity"),
-            total_sales=Sum("price")
-        )
-        .order_by(
-            "-total_quantity"
-        )
+        OrderItem.objects.values("product__name")
+        .annotate(total_quantity=Sum("quantity"), total_sales=Sum("price"))
+        .order_by("-total_quantity")
     )
 
+    return render(request, "dashboard/reports/products.html", {"products": products})
 
-    return render(
-        request,
-        "dashboard/reports/products.html",
-        {
-            "products": products
-        }
-    )
 
 @login_required
 def payment_report(request):
 
     payments = (
-        Order.objects
-        .filter(payment_status="Paid")
+        Order.objects.filter(payment_status="Paid")
         .values("payment_method")
-        .annotate(
-            total_amount=Sum("total"),
-            total_orders=Count("id")
-        )
+        .annotate(total_amount=Sum("total"), total_orders=Count("id"))
         .order_by("-total_amount")
     )
 
-
-    return render(
-        request,
-        "dashboard/reports/payment.html",
-        {
-            "payments": payments
-        }
-    )
-
-pending_orders = Order.objects.filter(
-    status="Pending"
-).count()
+    return render(request, "dashboard/reports/payment.html", {"payments": payments})
 
 
-confirmed_orders = Order.objects.filter(
-    status="Confirmed"
-).count()
+pending_orders = Order.objects.filter(status="Pending").count()
 
 
-shipped_orders = Order.objects.filter(
-    status="Shipped"
-).count()
+confirmed_orders = Order.objects.filter(status="Confirmed").count()
 
 
-delivered_orders = Order.objects.filter(
-    status="Delivered"
-).count()
+shipped_orders = Order.objects.filter(status="Shipped").count()
+
+
+delivered_orders = Order.objects.filter(status="Delivered").count()
+
 
 @login_required
 def order_detail(request, id):
@@ -793,22 +620,15 @@ def order_detail(request, id):
 
     return render(request, "dashboard/orders/detail.html", {"order": order})
 
+
 @login_required
 def order_invoice(request, id):
 
-    order = get_object_or_404(
-        Order,
-        id=id
-    )
+    order = get_object_or_404(Order, id=id)
+
+    return render(request, "dashboard/orders/invoice.html", {"order": order})
 
 
-    return render(
-        request,
-        "dashboard/orders/invoice.html",
-        {
-            "order": order
-        }
-    )
 @login_required
 def update_order_status(request, id):
 
@@ -859,11 +679,11 @@ def stock_in(request, id):
 
     return render(request, "dashboard/stock/in.html", {"product": product})
 
+
 @login_required
 def stock_out(request, id):
 
     product = get_object_or_404(Product, id=id)
-
 
     if request.method == "POST":
 
@@ -871,71 +691,37 @@ def stock_out(request, id):
 
         note = request.POST.get("note")
 
-
         if product.stock >= quantity:
 
             product.stock -= quantity
 
             product.save()
 
-
             InventoryHistory.objects.create(
-
-                product=product,
-
-                quantity=-quantity,
-
-                note=note
-
+                product=product, quantity=-quantity, note=note
             )
-
 
         return redirect("dashboard:stock")
 
-
-    return render(
-        request,
-        "dashboard/stock/out.html",
-        {
-            "product": product
-        }
-    )
-
+    return render(request, "dashboard/stock/out.html", {"product": product})
 
 
 @login_required
 def stock_history(request):
 
-    history = (
-        InventoryHistory.objects
-        .select_related("product")
-        .order_by("-id")
-    )
+    history = InventoryHistory.objects.select_related("product").order_by("-id")
 
-    return render(
-        request,
-        "dashboard/stock/history.html",
-        {
-            "history": history
-        }
-    )
-    
+    return render(request, "dashboard/stock/history.html", {"history": history})
+
+
 @login_required
 def low_stock_list(request):
 
-    products = Product.objects.filter(
-        stock__lte=F("low_stock_limit")
-    ).order_by("stock")
+    products = Product.objects.filter(stock__lte=F("low_stock_limit")).order_by("stock")
+
+    return render(request, "dashboard/stock/low_stock.html", {"products": products})
 
 
-    return render(
-        request,
-        "dashboard/stock/low_stock.html",
-        {
-            "products": products
-        }
-    )
-    
 @login_required
 def dispatch_order(request, id):
 
@@ -990,3 +776,119 @@ def add_return(request, id):
         return redirect("dashboard:order_detail", id=id)
 
     return redirect("dashboard:orders")
+
+
+# ============================
+# ACCOUNT / PROFILE
+# ============================
+
+
+@login_required
+def account(request):
+
+    if request.method == "POST":
+
+        user = request.user
+
+        user.username = request.POST.get("username")
+        user.email = request.POST.get("email")
+        user.first_name = request.POST.get("first_name")
+
+        user.save()
+
+        messages.success(request, "Profile updated successfully")
+
+        return redirect("dashboard:account")
+
+    return render(request, "dashboard/account.html")
+
+
+# ============================
+# CHANGE PASSWORD
+# ============================
+
+
+@login_required
+def change_password(request):
+
+    if request.method == "POST":
+
+        form = PasswordChangeForm(request.user, request.POST)
+
+        if form.is_valid():
+
+            user = form.save()
+
+            update_session_auth_hash(request, user)
+
+            messages.success(request, "Password changed successfully")
+
+            return redirect("dashboard:account")
+
+    else:
+
+        form = PasswordChangeForm(request.user)
+
+    return render(request, "dashboard/change_password.html", {"form": form})
+
+
+@login_required
+def banner_list(request):
+
+    banners = Banner.objects.all()
+
+    return render(
+        request,
+        "dashboard/banners/list.html",
+        {
+            "banners": banners
+        }
+    )
+    
+@login_required
+def best_seller_list(request):
+
+    products = (
+        OrderItem.objects
+        .values("product__name")
+        .annotate(
+            total_quantity=Sum("quantity"),
+            total_sales=Sum("price")
+        )
+        .order_by("-total_quantity")
+    )
+
+
+    return render(
+        request,
+        "dashboard/best_sellers/list.html",
+        {
+            "products": products
+        }
+    )    
+    
+@login_required
+def offer_list(request):
+
+    offers = Offer.objects.all().order_by("-id")
+
+    return render(
+        request,
+        "dashboard/offers/list.html",
+        {
+            "offers": offers
+        }
+    )  
+    
+@login_required
+def instagram_list(request):
+
+    posts = InstagramPost.objects.all().order_by("-id")
+
+    return render(
+        request,
+        "dashboard/instagram/list.html",
+        {
+            "posts": posts
+        }
+    )      
