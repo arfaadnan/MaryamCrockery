@@ -136,7 +136,7 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "arfahanif2812@gmail.com"
-EMAIL_HOST_PASSWORD = "arfam1234567890"
+EMAIL_HOST_PASSWORD = env_config("EMAIL_HOST_PASSWORD", default="")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # ==========================================

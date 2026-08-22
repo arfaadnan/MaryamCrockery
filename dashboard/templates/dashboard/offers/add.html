@@ -1,0 +1,119 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Add Offer
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body p-4">
+
+
+<!-- ========================= -->
+<!-- ADD OFFER FORM -->
+<!-- ========================= -->
+
+
+<h3 class="fw-bold mb-4">
+Add Offer
+</h3>
+
+
+
+<form method="POST" enctype="multipart/form-data">
+
+
+{% csrf_token %}
+
+
+
+<label>
+Title
+</label>
+
+<input 
+type="text"
+name="title"
+class="form-control mb-3"
+required>
+
+
+
+
+<label>
+Description
+</label>
+
+<textarea
+name="description"
+class="form-control mb-3"></textarea>
+
+
+
+
+<label>
+Discount
+</label>
+
+<input
+type="text"
+name="discount"
+class="form-control mb-3"
+required>
+
+
+
+
+<label>
+Image
+</label>
+
+<input
+type="file"
+name="image"
+class="form-control mb-4">
+
+
+
+
+<button class="btn btn-primary">
+
+Save Offer
+
+</button>
+
+
+
+<a href="{% url 'dashboard:offers' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+{% endblock %}

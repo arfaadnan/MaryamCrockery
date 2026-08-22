@@ -1,0 +1,160 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+
+{% block title %}
+Edit Offer
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+
+<div class="container-fluid">
+
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+
+<div class="card-body p-4">
+
+
+
+<!-- ========================= -->
+<!-- EDIT OFFER FORM -->
+<!-- ========================= -->
+
+
+<h3 class="fw-bold mb-4">
+Edit Offer
+</h3>
+
+
+
+
+<form method="POST" enctype="multipart/form-data">
+
+
+{% csrf_token %}
+
+
+
+
+
+<label class="mb-2">
+Offer Title
+</label>
+
+
+<input
+type="text"
+name="title"
+class="form-control mb-3"
+value="{{ offer.title }}">
+
+
+
+
+
+<label class="mb-2">
+Description
+</label>
+
+
+<textarea
+name="description"
+class="form-control mb-3">{{ offer.description }}</textarea>
+
+
+
+
+
+<label class="mb-2">
+Discount
+</label>
+
+
+<input
+type="text"
+name="discount"
+class="form-control mb-3"
+value="{{ offer.discount }}">
+
+
+
+
+
+<label class="mb-2">
+Current Image
+</label>
+
+
+<br>
+
+
+{% if offer.image %}
+
+<img src="{{ offer.image.url }}"
+width="150"
+class="rounded mb-3">
+
+{% endif %}
+
+
+
+
+
+<label class="mb-2">
+Change Image
+</label>
+
+
+<input
+type="file"
+name="image"
+class="form-control mb-4">
+
+
+
+
+
+<button class="btn btn-dark">
+
+Update Offer
+
+</button>
+
+
+
+
+<a href="{% url 'dashboard:offers' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+
+
+
+</form>
+
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+{% endblock %}

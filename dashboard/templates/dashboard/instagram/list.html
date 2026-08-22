@@ -6,6 +6,7 @@ Instagram Posts
 {% endblock %}
 
 
+
 {% block content %}
 
 
@@ -18,61 +19,186 @@ Instagram Posts
 <div class="card-body p-4">
 
 
-<h3 class="fw-bold mb-4">
-Instagram Posts
+
+<!-- ========================= -->
+<!-- INSTAGRAM HEADER -->
+<!-- ========================= -->
+
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+
+<h3 class="fw-bold">
+Manage Instagram Posts
 </h3>
 
 
-<div class="row g-4">
 
+<a href="{% url 'dashboard:instagram_add' %}"
+class="btn btn-primary">
 
-{% for post in posts %}
+Add Post
 
-
-<div class="col-lg-3">
-
-
-<div class="card shadow border-0 rounded-4">
-
-
-<img src="{{ post.image.url }}"
-class="card-img-top rounded-4">
-
-
-<div class="card-body">
-
-
-<p>
-{{ post.caption }}
-</p>
-
-
-<a href="#"
-class="btn btn-danger btn-sm">
-Delete
 </a>
 
 
 </div>
 
 
-</div>
 
 
-</div>
+<!-- ========================= -->
+<!-- INSTAGRAM TABLE -->
+<!-- ========================= -->
+
+
+<table class="table table-hover">
+
+
+
+<thead class="table-dark">
+
+
+<tr>
+
+<th>
+Image
+</th>
+
+<th>
+Caption
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Action
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+<tbody>
+
+
+
+{% for post in posts %}
+
+
+<tr>
+
+
+<td>
+
+<img src="{{ post.image.url }}"
+width="100"
+class="rounded">
+
+</td>
+
+
+
+<td>
+
+{{ post.caption }}
+
+</td>
+
+
+
+
+<td>
+
+
+{% if post.is_active %}
+
+
+<span class="badge bg-success">
+Active
+</span>
+
+
+{% else %}
+
+
+<span class="badge bg-danger">
+Inactive
+</span>
+
+
+{% endif %}
+
+
+</td>
+
+
+
+
+<td>
+
+
+<a href="{% url 'dashboard:instagram_edit' post.id %}"
+class="btn btn-warning btn-sm">
+
+Edit
+
+</a>
+
+
+
+<a href="{% url 'dashboard:instagram_delete' post.id %}"
+class="btn btn-danger btn-sm"
+onclick="return confirm('Delete this post?')">
+
+Delete
+
+</a>
+
+
+
+</td>
+
+
+
+</tr>
+
 
 
 {% empty %}
 
 
-<p class="text-center">
+<tr>
+
+<td colspan="4"
+class="text-center">
+
 No Instagram Posts Found
-</p>
+
+</td>
+
+</tr>
+
 
 
 {% endfor %}
 
 
+
+</tbody>
+
+
+</table>
+
+
+
 </div>
 
 
@@ -81,8 +207,6 @@ No Instagram Posts Found
 
 </div>
 
-
-</div>
 
 
 {% endblock %}

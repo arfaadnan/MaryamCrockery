@@ -97,9 +97,13 @@ def _get_or_create_cart(request):
     if not request.session.session_key:
         request.session.create()
     session_key = request.session.session_key
+
+    if request.user.is_authenticated:
+        cart, _ = Cart.objects.get_or_create(user=request.user)
+        return cart
+
     cart, _ = Cart.objects.get_or_create(session_key=session_key)
     return cart
-
 
 # ===============================
 # HOME
@@ -647,7 +651,10 @@ def add_to_wishlist(request, slug):
         request.session.create()
 
     session_key = request.session.session_key
-    wishlist_obj, _ = Wishlist.objects.get_or_create(session_key=session_key)
+    if request.user.is_authenticated:
+        wishlist_obj, _ = Wishlist.objects.get_or_create(user=request.user)
+    else:
+        wishlist_obj, _ = Wishlist.objects.get_or_create(session_key=session_key)
     _, created = WishlistItem.objects.get_or_create(wishlist=wishlist_obj, product=product)
 
     if created:
@@ -657,17 +664,18 @@ def add_to_wishlist(request, slug):
 
     return redirect(request.META.get("HTTP_REFERER", "store:shop"))
 
-
 def wishlist(request):
     if not request.session.session_key:
         request.session.create()
 
     session_key = request.session.session_key
-    wishlist_obj, _ = Wishlist.objects.get_or_create(session_key=session_key)
+    if request.user.is_authenticated:
+        wishlist_obj, _ = Wishlist.objects.get_or_create(user=request.user)
+    else:
+        wishlist_obj, _ = Wishlist.objects.get_or_create(session_key=session_key)
     items = wishlist_obj.items.select_related("product")
 
     return render(request, "store/wishlist.html", {"wishlist": wishlist_obj, "items": items})
-
 
 @require_POST
 def remove_wishlist(request, item_id):

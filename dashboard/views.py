@@ -11,12 +11,11 @@ from .models import (
     Banner,
     Offer,
     InstagramPost,
-    
 )
 
-from .models import Banner, Offer, InstagramPost
+from .models import StoreSetting, SiteSetting
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 
 from django.contrib import messages
@@ -26,6 +25,7 @@ from django.db.models import (
     Count,
     Sum,
     F,
+    Max,
 )
 
 from django.http import JsonResponse
@@ -44,8 +44,55 @@ from store.models import (
     ProductImage,
     ProductReturn,
 )
-from django.db.models import Max
 
+
+# ============================================
+# AUTH — LOGIN / LOGOUT
+# ============================================
+
+def manager_login(request):
+
+    if request.user.is_authenticated:
+        return redirect("dashboard:home")
+
+    if request.method == "POST":
+
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+
+            # Sirf manager dashboard access
+
+            if user.is_staff or user.is_superuser:
+
+                login(request, user)
+
+                return redirect("dashboard:home")
+
+            else:
+
+                messages.error(request, "Aap ko manager access nahi hai.")
+
+        else:
+
+            messages.error(request, "Username ya password ghalat hai.")
+
+    return render(request, "dashboard/login.html")
+
+@login_required
+def manager_logout(request):
+
+    logout(request)
+
+    return redirect("dashboard:login")
+
+
+# ============================================
+# DASHBOARD HOME
+# ============================================
 
 @login_required
 def dashboard_home(request):
@@ -171,99 +218,10 @@ def dashboard_home(request):
 
     return render(request, "dashboard/dashboard.html", context)
 
-    # ============================
-    # CASH REPORT
-    # ============================
 
-    now = timezone.now()
-
-    month_sale = (
-        Order.objects.filter(
-            created_at__year=now.year,
-            created_at__month=now.month,
-            payment_status="Paid",
-        ).aggregate(total=Sum("total"))["total"]
-        or 0
-    )
-
-    cod_sale = (
-        Order.objects.filter(payment_method="COD", payment_status="Paid").aggregate(
-            total=Sum("total")
-        )["total"]
-        or 0
-    )
-
-    online_sale = (
-        Order.objects.filter(
-            payment_method__in=["JazzCash", "EasyPaisa", "Bank"], payment_status="Paid"
-        ).aggregate(total=Sum("total"))["total"]
-        or 0
-    )
-
-    context = {
-        "total_products": total_products,
-        "total_orders": total_orders,
-        "today_sale": today_sale,
-        "total_sale": total_sale,
-        "pending_payment": pending_payment,
-        "paid_orders": paid_orders,
-        "low_stock": low_stock,
-        "recent_orders": recent_orders,
-        "low_stock_products": low_stock_products,
-        "material_stock": material_stock,
-        "month_sale": month_sale,
-        "cod_sale": cod_sale,
-        "online_sale": online_sale,
-    }
-
-    return render(request, "dashboard/dashboard.html", context)
-
-
-def manager_login(request):
-
-    if request.user.is_authenticated:
-        return redirect("dashboard:home")
-
-    if request.method == "POST":
-
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-
-            # Sirf manager dashboard access
-
-            if user.is_staff or user.is_superuser:
-
-                login(request, user)
-
-                return redirect("dashboard:home")
-
-            else:
-
-                messages.error(request, "Aap ko manager access nahi hai.")
-
-        else:
-
-            messages.error(request, "Username ya password ghalat hai.")
-
-    return render(request, "dashboard/login.html")
-
-
-@login_required
-def manager_logout(request):
-
-    logout(request)
-
-    return redirect("dashboard:login")
-
-
-# ============================
-# PRODUCT MANAGEMENT
-# ============================
-
+# ============================================
+# PRODUCTS
+# ============================================
 
 @login_required
 def product_list(request):
@@ -271,7 +229,6 @@ def product_list(request):
     products = Product.objects.all()
 
     return render(request, "dashboard/products/list.html", {"products": products})
-
 
 @login_required
 def product_add(request):
@@ -304,7 +261,6 @@ def product_add(request):
 # ============================
 # PRODUCT EDIT
 # ============================
-
 
 @login_required
 def product_edit(request, id):
@@ -368,7 +324,6 @@ def product_edit(request, id):
 # PRODUCT DELETE
 # ============================
 
-
 @login_required
 def product_delete(request, id):
 
@@ -383,10 +338,9 @@ def product_delete(request, id):
     return render(request, "dashboard/products/delete.html", {"product": product})
 
 
-# ============================
-# CATEGORY MANAGEMENT
-# ============================
-
+# ============================================
+# CATEGORIES
+# ============================================
 
 @login_required
 def category_list(request):
@@ -394,7 +348,6 @@ def category_list(request):
     categories = Category.objects.all()
 
     return render(request, "dashboard/categories/list.html", {"categories": categories})
-
 
 @login_required
 def category_add(request):
@@ -412,7 +365,6 @@ def category_add(request):
 
     return render(request, "dashboard/categories/add.html")
 
-
 @login_required
 def category_delete(request, id):
 
@@ -427,10 +379,9 @@ def category_delete(request, id):
     return render(request, "dashboard/categories/delete.html", {"category": category})
 
 
-# ============================
-# SUBCATEGORY MANAGEMENT
-# ============================
-
+# ============================================
+# SUBCATEGORIES
+# ============================================
 
 @login_required
 def subcategory_list(request):
@@ -440,7 +391,6 @@ def subcategory_list(request):
     return render(
         request, "dashboard/subcategories/list.html", {"subcategories": subcategories}
     )
-
 
 @login_required
 def subcategory_add(request):
@@ -462,7 +412,6 @@ def subcategory_add(request):
         request, "dashboard/subcategories/add.html", {"categories": categories}
     )
 
-
 @login_required
 def subcategory_delete(request, id):
 
@@ -483,7 +432,6 @@ def subcategory_delete(request, id):
 # LOAD SUBCATEGORIES AJAX
 # ============================
 
-
 @login_required
 def load_subcategories(request):
 
@@ -500,10 +448,9 @@ def load_subcategories(request):
     return JsonResponse({"subcategories": data})
 
 
-# ============================
-# ORDER MANAGEMENT
-# ============================
-
+# ============================================
+# ORDERS
+# ============================================
 
 @login_required
 def order_list(request):
@@ -512,6 +459,170 @@ def order_list(request):
 
     return render(request, "dashboard/orders/list.html", {"orders": orders})
 
+@login_required
+def order_detail(request, id):
+
+    order = get_object_or_404(Order, id=id)
+
+    return render(request, "dashboard/orders/detail.html", {"order": order})
+
+@login_required
+def order_invoice(request, id):
+
+    order = get_object_or_404(Order, id=id)
+
+    return render(request, "dashboard/orders/invoice.html", {"order": order})
+
+@login_required
+def update_order_status(request, id):
+
+    order = get_object_or_404(Order, id=id)
+
+    if request.method == "POST":
+
+        order.status = request.POST.get("status")
+
+        order.save()
+
+        return redirect("dashboard:orders")
+
+    return redirect("dashboard:orders")
+
+
+# ============================
+# INVENTORY MANAGEMENT
+# ============================
+
+@login_required
+def dispatch_order(request, id):
+
+    order = get_object_or_404(Order, id=id)
+
+    if request.method == "POST":
+
+        order.courier_name = request.POST.get("courier_name")
+
+        order.tracking_number = request.POST.get("tracking_number")
+
+        order.status = "Shipped"
+
+        order.dispatch_date = timezone.now()
+
+        order.save()
+
+        return redirect("dashboard:order_detail", id=id)
+
+    return redirect("dashboard:orders")
+
+@login_required
+def add_return(request, id):
+
+    order = get_object_or_404(Order, id=id)
+
+    if request.method == "POST":
+
+        product_id = request.POST.get("product")
+
+        quantity = int(request.POST.get("quantity"))
+
+        reason = request.POST.get("reason")
+
+        product = get_object_or_404(Product, id=product_id)
+
+        ProductReturn.objects.create(
+            order=order, product=product, quantity=quantity, reason=reason
+        )
+
+        # Stock wapas add
+
+        product.stock += quantity
+
+        product.save()
+
+        InventoryHistory.objects.create(
+            product=product, quantity=quantity, note="Customer Return"
+        )
+
+        return redirect("dashboard:order_detail", id=id)
+
+    return redirect("dashboard:orders")
+
+
+# ============================================
+# STOCK / INVENTORY
+# ============================================
+
+@login_required
+def stock_list(request):
+
+    products = Product.objects.all().order_by("name")
+
+    return render(request, "dashboard/stock/list.html", {"products": products})
+
+@login_required
+def stock_in(request, id):
+
+    product = get_object_or_404(Product, id=id)
+
+    if request.method == "POST":
+
+        quantity = int(request.POST.get("quantity"))
+
+        note = request.POST.get("note")
+
+        product.stock += quantity
+
+        product.save()
+
+        InventoryHistory.objects.create(product=product, quantity=quantity, note=note)
+
+        return redirect("dashboard:stock")
+
+    return render(request, "dashboard/stock/in.html", {"product": product})
+
+@login_required
+def stock_out(request, id):
+
+    product = get_object_or_404(Product, id=id)
+
+    if request.method == "POST":
+
+        quantity = int(request.POST.get("quantity"))
+
+        note = request.POST.get("note")
+
+        if product.stock >= quantity:
+
+            product.stock -= quantity
+
+            product.save()
+
+            InventoryHistory.objects.create(
+                product=product, quantity=-quantity, note=note
+            )
+
+        return redirect("dashboard:stock")
+
+    return render(request, "dashboard/stock/out.html", {"product": product})
+
+@login_required
+def stock_history(request):
+
+    history = InventoryHistory.objects.select_related("product").order_by("-id")
+
+    return render(request, "dashboard/stock/history.html", {"history": history})
+
+@login_required
+def low_stock_list(request):
+
+    products = Product.objects.filter(stock__lte=F("low_stock_limit")).order_by("stock")
+
+    return render(request, "dashboard/stock/low_stock.html", {"products": products})
+
+
+# ============================================
+# CUSTOMERS
+# ============================================
 
 @login_required
 def customer_list(request):
@@ -528,6 +639,10 @@ def customer_list(request):
 
     return render(request, "dashboard/customers/list.html", {"customers": customers})
 
+
+# ============================================
+# REPORTS
+# ============================================
 
 @login_required
 def sales_report(request):
@@ -575,7 +690,6 @@ def sales_report(request):
         },
     )
 
-
 @login_required
 def product_report(request):
 
@@ -586,7 +700,6 @@ def product_report(request):
     )
 
     return render(request, "dashboard/reports/products.html", {"products": products})
-
 
 @login_required
 def payment_report(request):
@@ -601,187 +714,9 @@ def payment_report(request):
     return render(request, "dashboard/reports/payment.html", {"payments": payments})
 
 
-pending_orders = Order.objects.filter(status="Pending").count()
-
-
-confirmed_orders = Order.objects.filter(status="Confirmed").count()
-
-
-shipped_orders = Order.objects.filter(status="Shipped").count()
-
-
-delivered_orders = Order.objects.filter(status="Delivered").count()
-
-
-@login_required
-def order_detail(request, id):
-
-    order = get_object_or_404(Order, id=id)
-
-    return render(request, "dashboard/orders/detail.html", {"order": order})
-
-
-@login_required
-def order_invoice(request, id):
-
-    order = get_object_or_404(Order, id=id)
-
-    return render(request, "dashboard/orders/invoice.html", {"order": order})
-
-
-@login_required
-def update_order_status(request, id):
-
-    order = get_object_or_404(Order, id=id)
-
-    if request.method == "POST":
-
-        order.status = request.POST.get("status")
-
-        order.save()
-
-        return redirect("dashboard:orders")
-
-    return redirect("dashboard:orders")
-
-
-# ============================
-# INVENTORY MANAGEMENT
-# ============================
-
-
-@login_required
-def stock_list(request):
-
-    products = Product.objects.all().order_by("name")
-
-    return render(request, "dashboard/stock/list.html", {"products": products})
-
-
-@login_required
-def stock_in(request, id):
-
-    product = get_object_or_404(Product, id=id)
-
-    if request.method == "POST":
-
-        quantity = int(request.POST.get("quantity"))
-
-        note = request.POST.get("note")
-
-        product.stock += quantity
-
-        product.save()
-
-        InventoryHistory.objects.create(product=product, quantity=quantity, note=note)
-
-        return redirect("dashboard:stock")
-
-    return render(request, "dashboard/stock/in.html", {"product": product})
-
-
-@login_required
-def stock_out(request, id):
-
-    product = get_object_or_404(Product, id=id)
-
-    if request.method == "POST":
-
-        quantity = int(request.POST.get("quantity"))
-
-        note = request.POST.get("note")
-
-        if product.stock >= quantity:
-
-            product.stock -= quantity
-
-            product.save()
-
-            InventoryHistory.objects.create(
-                product=product, quantity=-quantity, note=note
-            )
-
-        return redirect("dashboard:stock")
-
-    return render(request, "dashboard/stock/out.html", {"product": product})
-
-
-@login_required
-def stock_history(request):
-
-    history = InventoryHistory.objects.select_related("product").order_by("-id")
-
-    return render(request, "dashboard/stock/history.html", {"history": history})
-
-
-@login_required
-def low_stock_list(request):
-
-    products = Product.objects.filter(stock__lte=F("low_stock_limit")).order_by("stock")
-
-    return render(request, "dashboard/stock/low_stock.html", {"products": products})
-
-
-@login_required
-def dispatch_order(request, id):
-
-    order = get_object_or_404(Order, id=id)
-
-    if request.method == "POST":
-
-        order.courier_name = request.POST.get("courier_name")
-
-        order.tracking_number = request.POST.get("tracking_number")
-
-        order.status = "Shipped"
-
-        order.dispatch_date = timezone.now()
-
-        order.save()
-
-        return redirect("dashboard:order_detail", id=id)
-
-    return redirect("dashboard:orders")
-
-
-@login_required
-def add_return(request, id):
-
-    order = get_object_or_404(Order, id=id)
-
-    if request.method == "POST":
-
-        product_id = request.POST.get("product")
-
-        quantity = int(request.POST.get("quantity"))
-
-        reason = request.POST.get("reason")
-
-        product = get_object_or_404(Product, id=product_id)
-
-        ProductReturn.objects.create(
-            order=order, product=product, quantity=quantity, reason=reason
-        )
-
-        # Stock wapas add
-
-        product.stock += quantity
-
-        product.save()
-
-        InventoryHistory.objects.create(
-            product=product, quantity=quantity, note="Customer Return"
-        )
-
-        return redirect("dashboard:order_detail", id=id)
-
-    return redirect("dashboard:orders")
-
-
-# ============================
+# ============================================
 # ACCOUNT / PROFILE
-# ============================
-
+# ============================================
 
 @login_required
 def account(request):
@@ -789,8 +724,18 @@ def account(request):
     if request.method == "POST":
 
         user = request.user
+        new_username = request.POST.get("username")
 
-        user.username = request.POST.get("username")
+        # Check karein ke ye username kisi AUR user ke pas to nahi
+        username_taken = User.objects.filter(username=new_username).exclude(id=user.id).exists()
+
+        if username_taken:
+
+            messages.error(request, "Ye username pehle se kisi aur account mein use ho raha hai. Koi aur username chunein.")
+
+            return redirect("dashboard:account")
+
+        user.username = new_username
         user.email = request.POST.get("email")
         user.first_name = request.POST.get("first_name")
 
@@ -802,11 +747,9 @@ def account(request):
 
     return render(request, "dashboard/account.html")
 
-
 # ============================
 # CHANGE PASSWORD
 # ============================
-
 
 @login_required
 def change_password(request):
@@ -832,6 +775,10 @@ def change_password(request):
     return render(request, "dashboard/change_password.html", {"form": form})
 
 
+# ============================================
+# BANNERS
+# ============================================
+
 @login_required
 def banner_list(request):
 
@@ -844,7 +791,107 @@ def banner_list(request):
             "banners": banners
         }
     )
+
+@login_required
+def banner_add(request):
+
+    if request.method == "POST":
+
+        Banner.objects.create(
+
+            title=request.POST.get("title"),
+
+            description=request.POST.get("description"),
+
+            image=request.FILES.get("image"),
+
+            button_text=request.POST.get("button_text"),
+
+            button_link=request.POST.get("button_link"),
+
+            is_active=True
+
+        )
+
+        return redirect("dashboard:banners")
+
+
+    return render(
+        request,
+        "dashboard/banners/add.html"
+    )    
     
+    
+ # =====================================
+# BANNER EDIT
+# =====================================
+
+@login_required
+def banner_edit(request, id):
+
+    banner = get_object_or_404(
+        Banner,
+        id=id
+    )
+
+
+    if request.method == "POST":
+
+        banner.title = request.POST.get("title")
+        banner.description = request.POST.get("description")
+        banner.button_text = request.POST.get("button_text")
+        banner.button_link = request.POST.get("button_link")
+        banner.is_active = True
+
+
+        if request.FILES.get("image"):
+            banner.image = request.FILES.get("image")
+
+
+        banner.save()
+
+
+        return redirect(
+            "dashboard:banners"
+        )
+
+
+    return render(
+        request,
+        "dashboard/banners/edit.html",
+        {
+            "banner": banner
+        }
+    )
+
+
+# =====================================
+# BANNER DELETE
+# =====================================
+
+@login_required
+def banner_delete(request, id):
+
+    banner = get_object_or_404(
+        Banner,
+        id=id
+    )
+
+
+    banner.delete()
+
+
+    return redirect(
+        "dashboard:banners"
+    )   
+    
+    
+
+
+# ============================================
+# BEST SELLERS
+# ============================================
+
 @login_required
 def best_seller_list(request):
 
@@ -866,20 +913,12 @@ def best_seller_list(request):
             "products": products
         }
     )    
-    
-@login_required
-def offer_list(request):
 
-    offers = Offer.objects.all().order_by("-id")
 
-    return render(
-        request,
-        "dashboard/offers/list.html",
-        {
-            "offers": offers
-        }
-    )  
-    
+# ============================================
+# INSTAGRAM
+# ============================================
+
 @login_required
 def instagram_list(request):
 
@@ -892,3 +931,242 @@ def instagram_list(request):
             "posts": posts
         }
     )      
+
+@login_required
+def instagram_add(request):
+
+    if request.method == "POST":
+
+        InstagramPost.objects.create(
+            image=request.FILES.get("image"),
+            caption=request.POST.get("caption"),
+            link=request.POST.get("link"),
+            is_active=True,
+        )
+
+        return redirect("dashboard:instagram")
+
+    return render(request, "dashboard/instagram/add.html")
+
+@login_required
+def instagram_edit(request, id):
+
+    post = get_object_or_404(InstagramPost, id=id)
+
+    if request.method == "POST":
+
+        post.caption = request.POST.get("caption")
+        post.link = request.POST.get("link")
+
+        if request.FILES.get("image"):
+            post.image = request.FILES.get("image")
+
+        post.save()
+
+        return redirect("dashboard:instagram")
+
+    return render(request, "dashboard/instagram/edit.html", {"post": post})
+
+@login_required
+def instagram_delete(request, id):
+
+    post = get_object_or_404(InstagramPost, id=id)
+
+    if request.method == "POST":
+        post.delete()
+        return redirect("dashboard:instagram")
+
+    return render(request, "dashboard/instagram/delete.html", {"post": post})
+
+
+# ============================================
+# OFFERS
+# ============================================
+
+@login_required
+def offer_list(request):
+
+    offers = Offer.objects.all().order_by("-id")
+
+    return render(
+        request,
+        "dashboard/offers/list.html",
+        {
+            "offers": offers
+        }
+    )
+
+
+# =====================================
+# ADD OFFER
+# =====================================
+
+@login_required
+def offer_add(request):
+
+    if request.method == "POST":
+
+        Offer.objects.create(
+
+            title=request.POST.get("title"),
+
+            description=request.POST.get("description"),
+
+            discount=request.POST.get("discount"),
+
+            image=request.FILES.get("image"),
+
+            active=True
+
+        )
+
+
+        return redirect(
+            "dashboard:offers"
+        )
+
+
+    return render(
+        request,
+        "dashboard/offers/add.html"
+    )
+
+
+# =====================================
+# EDIT OFFER
+# =====================================
+
+@login_required
+def offer_edit(request, id):
+
+    offer = get_object_or_404(
+        Offer,
+        id=id
+    )
+
+
+    if request.method == "POST":
+
+        offer.title = request.POST.get("title")
+
+        offer.description = request.POST.get("description")
+
+        offer.discount = request.POST.get("discount")
+
+
+        if request.FILES.get("image"):
+
+            offer.image = request.FILES.get("image")
+
+
+        offer.save()
+
+
+        return redirect(
+            "dashboard:offers"
+        )
+
+
+    return render(
+        request,
+        "dashboard/offers/edit.html",
+        {
+            "offer": offer
+        }
+    )
+
+
+# =====================================
+# DELETE OFFER
+# =====================================
+
+@login_required
+def offer_delete(request, id):
+
+    offer = get_object_or_404(
+        Offer,
+        id=id
+    )
+
+
+    offer.delete()
+
+
+    return redirect(
+        "dashboard:offers"
+    )    
+
+
+# ============================================
+# SITE & STORE SETTINGS
+# ============================================
+
+@login_required
+def store_setting(request):
+
+    setting = StoreSetting.objects.first()
+
+    if request.method == "POST":
+
+        if not setting:
+            setting = StoreSetting()
+
+        setting.store_name = request.POST.get("store_name")
+        setting.phone = request.POST.get("phone")
+        setting.whatsapp = request.POST.get("whatsapp")
+        setting.email = request.POST.get("email")
+        setting.address = request.POST.get("address")
+        setting.opening_hours = request.POST.get("opening_hours")
+        setting.delivery_charges = request.POST.get("delivery_charges")
+
+        if request.FILES.get("logo"):
+            setting.logo = request.FILES.get("logo")
+
+        setting.save()
+
+        return redirect("dashboard:store_setting")
+
+
+    return render(
+        request,
+        "dashboard/settings/store.html",
+        {
+            "setting": setting
+        }
+    )
+
+@login_required
+def site_setting(request):
+
+    setting = SiteSetting.objects.first()
+
+    if request.method == "POST":
+
+        if not setting:
+            setting = SiteSetting()
+
+        setting.site_title = request.POST.get("site_title")
+        setting.meta_description = request.POST.get("meta_description")
+        setting.facebook = request.POST.get("facebook")
+        setting.instagram = request.POST.get("instagram")
+        setting.youtube = request.POST.get("youtube")
+        setting.footer_text = request.POST.get("footer_text")
+        setting.announcement = request.POST.get("announcement")
+
+
+        if request.FILES.get("favicon"):
+            setting.favicon = request.FILES.get("favicon")
+
+
+        setting.save()
+
+        return redirect("dashboard:site_setting")
+
+
+    return render(
+        request,
+        "dashboard/settings/site.html",
+        {
+            "setting": setting
+        }
+    )

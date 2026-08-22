@@ -6,49 +6,121 @@ Banners
 {% endblock %}
 
 
+
 {% block content %}
+
 
 <div class="container-fluid">
 
+
 <div class="card shadow border-0 rounded-4">
+
 
 <div class="card-body p-4">
 
 
-<h3 class="fw-bold mb-4">
+
+<!-- ========================= -->
+<!-- BANNER HEADER -->
+<!-- ========================= -->
+
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+
+<h3 class="fw-bold mb-0">
 Manage Banners
 </h3>
 
 
+
+<!-- ========================= -->
+<!-- ADD BANNER BUTTON -->
+<!-- ========================= -->
+
+
+<a href="{% url 'dashboard:banner_add' %}"
+class="btn btn-primary">
+
+<i class="bi bi-plus-circle"></i>
+
+Add Banner
+
+</a>
+
+
+</div>
+
+
+
+
+<!-- ========================= -->
+<!-- BANNER TABLE -->
+<!-- ========================= -->
+
+
 <div class="table-responsive">
+
 
 <table class="table table-hover">
 
 
+
 <thead class="table-dark">
 
+
 <tr>
-<th>Image</th>
-<th>Title</th>
-<th>Status</th>
-<th>Action</th>
+
+<th>
+Image
+</th>
+
+<th>
+Title
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Action
+</th>
+
+
 </tr>
 
+
 </thead>
+
+
 
 
 <tbody>
 
 
+
 {% for banner in banners %}
+
+
 
 <tr>
 
+
+
 <td>
+
+{% if banner.image %}
+
 <img src="{{ banner.image.url }}"
 width="100"
 class="rounded">
+
+{% endif %}
+
 </td>
+
+
 
 
 <td>
@@ -56,55 +128,96 @@ class="rounded">
 </td>
 
 
+
+
 <td>
+
 
 {% if banner.is_active %}
 
+
 <span class="badge bg-success">
+
 Active
+
 </span>
+
 
 {% else %}
 
+
 <span class="badge bg-danger">
+
 Inactive
+
 </span>
 
+
 {% endif %}
+
 
 </td>
 
 
+
+
 <td>
 
-<a href="#"
-class="btn btn-sm btn-danger">
+
+<a href="{% url 'dashboard:banner_edit' banner.id %}"
+class="btn btn-sm btn-warning">
+
+Edit
+
+</a>
+
+
+<a href="{% url 'dashboard:banner_delete' banner.id %}"
+class="btn btn-sm btn-danger"
+onclick="return confirm('Delete this banner?')">
+
 Delete
+
 </a>
 
 </td>
 
 
+
+
 </tr>
+
+
 
 
 {% empty %}
 
+
+
 <tr>
 
-<td colspan="4" class="text-center">
+
+<td colspan="4"
+class="text-center text-muted">
+
 
 No Banner Found
 
+
 </td>
 
+
 </tr>
+
 
 
 {% endfor %}
 
 
+
+
 </tbody>
+
 
 
 </table>
@@ -113,11 +226,15 @@ No Banner Found
 </div>
 
 
-</div>
 
 </div>
 
+
 </div>
+
+
+</div>
+
 
 
 {% endblock %}

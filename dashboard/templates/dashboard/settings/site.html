@@ -1,0 +1,126 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Site Settings
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body p-4">
+
+
+<h3 class="fw-bold mb-4">
+Site Settings
+</h3>
+
+
+
+<form method="POST" enctype="multipart/form-data">
+
+
+{% csrf_token %}
+
+
+
+<input 
+type="text"
+class="form-control mb-3"
+name="site_title"
+placeholder="Website Title"
+value="{{ setting.site_title|default:'' }}">
+
+
+
+<textarea
+class="form-control mb-3"
+name="meta_description"
+placeholder="Meta Description">{{ setting.meta_description|default:'' }}</textarea>
+
+
+
+
+<input 
+type="url"
+class="form-control mb-3"
+name="facebook"
+placeholder="Facebook Link"
+value="{{ setting.facebook|default:'' }}">
+
+
+
+<input 
+type="url"
+class="form-control mb-3"
+name="instagram"
+placeholder="Instagram Link"
+value="{{ setting.instagram|default:'' }}">
+
+
+
+<input 
+type="url"
+class="form-control mb-3"
+name="youtube"
+placeholder="YouTube Link"
+value="{{ setting.youtube|default:'' }}">
+
+
+
+<input 
+type="text"
+class="form-control mb-3"
+name="announcement"
+placeholder="Announcement Bar Text"
+value="{{ setting.announcement|default:'' }}">
+
+
+
+<textarea
+class="form-control mb-3"
+name="footer_text"
+placeholder="Footer Text">{{ setting.footer_text|default:'' }}</textarea>
+
+
+
+
+<label class="mb-2">
+Upload Favicon
+</label>
+
+
+<input 
+type="file"
+class="form-control mb-3"
+name="favicon">
+
+
+
+<button class="btn btn-dark">
+Save Site Settings
+</button>
+
+
+
+</form>
+
+
+
+</div>
+
+</div>
+
+
+</div>
+
+
+{% endblock %}

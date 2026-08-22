@@ -1,0 +1,85 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+<div class="card shadow rounded-4">
+
+<div class="card-body p-4">
+
+
+<h3 class="fw-bold mb-4">
+Store Settings
+</h3>
+
+
+<form method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+
+<input class="form-control mb-3"
+name="store_name"
+placeholder="Store Name"
+value="{{ setting.store_name|default:'' }}">
+
+
+<input class="form-control mb-3"
+name="phone"
+placeholder="Phone"
+value="{{ setting.phone|default:'' }}">
+
+
+<input class="form-control mb-3"
+name="whatsapp"
+placeholder="WhatsApp"
+value="{{ setting.whatsapp|default:'' }}">
+
+
+<input class="form-control mb-3"
+name="email"
+placeholder="Email"
+value="{{ setting.email|default:'' }}">
+
+
+<textarea class="form-control mb-3"
+name="address"
+placeholder="Address">{{ setting.address|default:'' }}</textarea>
+
+
+<input class="form-control mb-3"
+name="opening_hours"
+placeholder="Opening Hours"
+value="{{ setting.opening_hours|default:'' }}">
+
+
+<input class="form-control mb-3"
+name="delivery_charges"
+placeholder="Delivery Charges"
+value="{{ setting.delivery_charges|default:'' }}">
+
+
+<input type="file"
+class="form-control mb-3"
+name="logo">
+
+
+<button class="btn btn-dark">
+Save Settings
+</button>
+
+
+</form>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+{% endblock %}

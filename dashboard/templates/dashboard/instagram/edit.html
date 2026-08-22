@@ -1,0 +1,152 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+
+{% block title %}
+Edit Instagram Post
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+
+<div class="container-fluid">
+
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+
+<div class="card-body p-4">
+
+
+
+<!-- ========================= -->
+<!-- EDIT INSTAGRAM POST -->
+<!-- ========================= -->
+
+
+<h3 class="fw-bold mb-4">
+
+Edit Instagram Post
+
+</h3>
+
+
+
+
+<form method="POST" enctype="multipart/form-data">
+
+
+{% csrf_token %}
+
+
+
+
+
+<label class="mb-2">
+Current Image
+</label>
+
+
+<br>
+
+
+{% if post.image %}
+
+<img src="{{ post.image.url }}"
+width="150"
+class="rounded mb-3">
+
+{% endif %}
+
+
+
+
+<label class="mb-2">
+
+Change Image
+
+</label>
+
+
+<input
+type="file"
+name="image"
+class="form-control mb-3">
+
+
+
+
+
+<label class="mb-2">
+
+Caption
+
+</label>
+
+
+<textarea
+name="caption"
+class="form-control mb-3">{{ post.caption }}</textarea>
+
+
+
+
+
+<label class="mb-2">
+
+Instagram Link
+
+</label>
+
+
+<input
+type="url"
+name="link"
+class="form-control mb-4"
+value="{{ post.link }}">
+
+
+
+
+
+<button class="btn btn-dark">
+
+Update Post
+
+</button>
+
+
+
+
+<a href="{% url 'dashboard:instagram' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+
+
+
+</form>
+
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,170 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Edit Banner
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+<div class="container-fluid">
+
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+
+<div class="card-body p-4">
+
+
+
+<!-- ========================= -->
+<!-- EDIT BANNER FORM -->
+<!-- ========================= -->
+
+
+<h3 class="fw-bold mb-4">
+Edit Banner
+</h3>
+
+
+
+
+<form method="POST" enctype="multipart/form-data">
+
+
+{% csrf_token %}
+
+
+
+
+<label class="mb-2">
+Title
+</label>
+
+<input 
+type="text"
+class="form-control mb-3"
+name="title"
+value="{{ banner.title }}">
+
+
+
+
+
+<label class="mb-2">
+Description
+</label>
+
+
+<textarea
+class="form-control mb-3"
+name="description">{{ banner.description }}</textarea>
+
+
+
+
+
+<label class="mb-2">
+Button Text
+</label>
+
+
+<input 
+type="text"
+class="form-control mb-3"
+name="button_text"
+value="{{ banner.button_text }}">
+
+
+
+
+
+<label class="mb-2">
+Button Link
+</label>
+
+
+<input 
+type="text"
+class="form-control mb-3"
+name="button_link"
+value="{{ banner.button_link }}">
+
+
+
+
+
+<label class="mb-2">
+Current Image
+</label>
+
+
+<br>
+
+
+{% if banner.image %}
+
+<img src="{{ banner.image.url }}"
+width="150"
+class="rounded mb-3">
+
+{% endif %}
+
+
+
+
+
+<label class="mb-2">
+Change Image
+</label>
+
+
+<input 
+type="file"
+class="form-control mb-4"
+name="image">
+
+
+
+
+
+<button class="btn btn-dark">
+
+Update Banner
+
+</button>
+
+
+
+<a href="{% url 'dashboard:banners' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+
+
+
+</form>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+{% endblock %}

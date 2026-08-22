@@ -1,0 +1,85 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+
+<div class="card shadow rounded-4">
+
+
+<div class="card-body p-4">
+
+
+<h3 class="fw-bold mb-4">
+Add Banner
+</h3>
+
+<a href="{% url 'dashboard:banner_add' %}"
+class="btn btn-primary">
+Add Banner
+</a>
+
+
+<form method="POST" enctype="multipart/form-data">
+
+
+{% csrf_token %}
+
+
+<input 
+class="form-control mb-3"
+name="title"
+placeholder="Banner Title">
+
+
+
+<textarea
+class="form-control mb-3"
+name="description"
+placeholder="Description"></textarea>
+
+
+
+<input
+class="form-control mb-3"
+name="button_text"
+placeholder="Button Text">
+
+
+
+<input
+class="form-control mb-3"
+name="button_link"
+placeholder="Button Link">
+
+
+
+<input
+type="file"
+class="form-control mb-3"
+name="image">
+
+
+
+<button class="btn btn-dark">
+Save Banner
+</button>
+
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+{% endblock %}

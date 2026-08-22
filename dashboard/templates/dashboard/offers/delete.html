@@ -1,0 +1,89 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+{% block title %}
+Delete Offer
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<div class="card-body p-4 text-center">
+
+
+
+<!-- ========================= -->
+<!-- DELETE OFFER CONFIRMATION -->
+<!-- ========================= -->
+
+
+<h3 class="fw-bold mb-4">
+
+Delete Offer
+
+</h3>
+
+
+
+<p>
+
+Are you sure you want to delete:
+
+<strong>
+{{ offer.title }}
+</strong>
+
+?
+
+</p>
+
+
+
+
+<form method="POST">
+
+
+{% csrf_token %}
+
+
+
+<button class="btn btn-danger">
+
+Yes, Delete
+
+</button>
+
+
+
+<a href="{% url 'dashboard:offers' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+
+
+</form>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+{% endblock %}

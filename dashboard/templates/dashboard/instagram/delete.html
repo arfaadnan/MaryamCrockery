@@ -1,0 +1,106 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+
+
+{% block title %}
+Delete Instagram Post
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+
+<div class="container-fluid">
+
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+
+<div class="card-body p-4 text-center">
+
+
+
+<!-- ========================= -->
+<!-- DELETE INSTAGRAM POST -->
+<!-- ========================= -->
+
+
+<h3 class="fw-bold mb-4">
+
+Delete Instagram Post
+
+</h3>
+
+
+
+
+<p>
+
+Are you sure you want to delete this post?
+
+</p>
+
+
+
+
+{% if post.image %}
+
+<img src="{{ post.image.url }}"
+width="150"
+class="rounded mb-3">
+
+{% endif %}
+
+
+
+
+
+<form method="POST">
+
+
+{% csrf_token %}
+
+
+
+
+<button type="submit"
+class="btn btn-danger">
+
+Yes, Delete
+
+</button>
+
+
+
+
+<a href="{% url 'dashboard:instagram' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+
+
+
+</form>
+
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+{% endblock %}
