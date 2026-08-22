@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+Terms & Conditions
+{% endblock %}
+
+{% block content %}
+
+{% include "includes/page_header.html" with title="Terms & Conditions" subtitle="Please read these terms carefully before using our store." crumb="Terms & Conditions" %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+
+                <h4 class="mb-3">Orders & Payment</h4>
+                <p>
+                    By placing an order on {{ site.store_name|default:"our store" }}, you agree to provide accurate
+                    and complete information. Orders are confirmed once payment is verified (for online payments) or
+                    upon order placement (for Cash on Delivery).
+                </p>
+
+                <h4 class="mt-4 mb-3">Pricing</h4>
+                <p>
+                    All prices are listed in Pakistani Rupees (PKR) and are subject to change without prior notice.
+                    We reserve the right to correct any pricing errors.
+                </p>
+
+                <h4 class="mt-4 mb-3">Product Availability</h4>
+                <p>
+                    All products are subject to availability. In case an ordered item is out of stock, we will
+                    contact you to offer an alternative or a full refund.
+                </p>
+
+                <h4 class="mt-4 mb-3">Delivery</h4>
+                <p>
+                    Delivery times are estimates and may vary based on your location and courier service. We are not
+                    responsible for delays caused by circumstances beyond our control.
+                </p>
+
+                <h4 class="mt-4 mb-3">Limitation of Liability</h4>
+                <p>
+                    {{ site.store_name|default:"We" }} shall not be liable for any indirect or consequential damages
+                    arising from the use of our products or website.
+                </p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

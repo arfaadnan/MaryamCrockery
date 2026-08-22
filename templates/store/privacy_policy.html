@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+Privacy Policy
+{% endblock %}
+
+{% block content %}
+
+{% include "includes/page_header.html" with title="Privacy Policy" subtitle="How we collect, use, and protect your information." crumb="Privacy Policy" %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+
+                <h4 class="mb-3">Information We Collect</h4>
+                <p>
+                    When you place an order on {{ site.store_name|default:"our store" }}, we collect information you
+                    provide directly to us, such as your name, phone number, email address, and delivery address.
+                    This information is used solely to process and deliver your order.
+                </p>
+
+                <h4 class="mt-4 mb-3">How We Use Your Information</h4>
+                <p>
+                    We use your information to process orders, send order confirmations, provide customer support,
+                    and communicate important updates about your purchase via email or WhatsApp. We do not sell or
+                    rent your personal information to third parties.
+                </p>
+
+                <h4 class="mt-4 mb-3">Payment Information</h4>
+                <p>
+                    When you pay via JazzCash, EasyPaisa, or bank transfer, your payment details are processed
+                    directly by the respective payment provider. We do not store your card number, wallet PIN, or
+                    banking credentials on our servers.
+                </p>
+
+                <h4 class="mt-4 mb-3">Data Security</h4>
+                <p>
+                    We take reasonable measures to protect your personal information from unauthorized access,
+                    alteration, or disclosure.
+                </p>
+
+                <h4 class="mt-4 mb-3">Contact Us</h4>
+                <p>
+                    If you have any questions about this Privacy Policy, please contact us at
+                    {{ site.email|default:"our support email" }} or {{ site.phone|default:"our support number" }}.
+                </p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

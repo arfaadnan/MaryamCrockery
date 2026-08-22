@@ -715,6 +715,18 @@ def contact(request):
     return render(request, "store/contact.html", {"site": SiteSettings.objects.first()})
 
 
+def privacy_policy(request):
+    return render(request, "store/privacy_policy.html", {"site": SiteSettings.objects.first()})
+
+
+def terms_conditions(request):
+    return render(request, "store/terms_conditions.html", {"site": SiteSettings.objects.first()})
+
+
+def refund_policy(request):
+    return render(request, "store/refund_policy.html", {"site": SiteSettings.objects.first()})
+
+
 def order_success(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     whatsapp_link = request.session.pop("order_whatsapp_link", None)

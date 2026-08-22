@@ -192,6 +192,12 @@ class SiteSettings(models.Model):
     facebook = models.URLField(blank=True)
     instagram = models.URLField(blank=True)
     youtube = models.URLField(blank=True)
+    opening_hours = models.CharField(max_length=150, blank=True, default="")
+    delivery_charges = models.CharField(max_length=50, blank=True, default="")
+    site_title = models.CharField(max_length=200, blank=True, default="")
+    meta_description = models.TextField(blank=True, default="")
+    footer_text = models.CharField(max_length=255, blank=True, default="")
+    favicon = models.ImageField(upload_to="site/", blank=True, null=True)
 
     def __str__(self):
         return self.store_name

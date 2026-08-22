@@ -1,1347 +1,256 @@
 {% extends "dashboard/base_dashboard.html" %}
 
-
 {% block title %}
 Manager Dashboard
 {% endblock %}
 
-
-
 {% block content %}
-
 
 <div class="container-fluid py-4">
 
-
     <!-- HEADER -->
-
     <div class="d-flex justify-content-between align-items-center mb-4">
-
-
         <div>
+            <h2 class="fw-bold">Welcome {{ request.user.username }}</h2>
+            <p class="text-muted">Manager Dashboard Overview</p>
+        </div>
+    </div>
 
-            <h2 class="fw-bold">
-                Welcome {{ request.user.username }}
-            </h2>
+    <!-- TOP STAT CARDS -->
+    <div class="row g-4">
 
-
-            <p class="text-muted">
-                Manager Dashboard Overview
-            </p>
-
-
+        <div class="col-xl-3 col-md-6">
+            <a href="{% url 'dashboard:products' %}" class="text-decoration-none">
+                <div class="dashboard-card card-blue shadow">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6>Products</h6>
+                            <h2 class="fw-bold">{{ total_products }}</h2>
+                            <p class="mb-0">Manage Products</p>
+                        </div>
+                        <i class="bi bi-box fs-1"></i>
+                    </div>
+                </div>
+            </a>
         </div>
 
+        <div class="col-xl-3 col-md-6">
+            <a href="{% url 'dashboard:orders' %}" class="text-decoration-none">
+                <div class="dashboard-card card-yellow shadow">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6>Orders</h6>
+                            <h2 class="fw-bold">{{ total_orders }}</h2>
+                            <p class="mb-0">Customer Orders</p>
+                        </div>
+                        <i class="bi bi-cart-check fs-1"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <a href="{% url 'dashboard:low_stock' %}" class="text-decoration-none">
+                <div class="dashboard-card card-red shadow">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6>Low Stock</h6>
+                            <h2 class="fw-bold">{{ low_stock }}</h2>
+                            <p class="mb-0">Need Restock</p>
+                        </div>
+                        <i class="bi bi-exclamation-triangle fs-1"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <a href="{% url 'dashboard:sales_report' %}" class="text-decoration-none text-white">
+                <div class="dashboard-card card-green shadow">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6>Total Sale</h6>
+                            <h2 class="fw-bold">Rs {{ total_sale }}</h2>
+                            <p class="mb-0">Business Income</p>
+                        </div>
+                        <i class="bi bi-cash-stack fs-1"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
 
     </div>
 
-
-
-
-
-    <!-- TOP COLOUR CARDS -->
-
+    <!-- ORDER STATUS -->
+    <h3 class="fw-bold mt-5 mb-3">Order Status</h3>
 
     <div class="row g-4">
 
-
-
-        <!-- PRODUCTS -->
-
+        <div class="col-xl-3 col-md-6">
+            <div class="status-card status-warning">
+                <i class="bi bi-clock-history"></i>
+                <h6>Pending Orders</h6>
+                <h2>{{ pending_orders }}</h2>
+            </div>
+        </div>
 
         <div class="col-xl-3 col-md-6">
-
-
-            <a href="{% url 'dashboard:products' %}" class="text-decoration-none">
-
-
-                <div class="dashboard-card card-blue shadow">
-
-
-                    <div class="d-flex justify-content-between align-items-center">
-
-
-                        <div>
-
-
-                            <h6>
-                                Products
-                            </h6>
-
-
-                            <h2 class="fw-bold">
-                                {{ total_products }}
-                            </h2>
-
-
-                            <p class="mb-0">
-                                Manage Products
-                            </p>
-
-
-                        </div>
-
-
-                        <i class="bi bi-box fs-1"></i>
-
-
-                    </div>
-
-
-                </div>
-
-
-            </a>
-
-
+            <div class="status-card status-primary">
+                <i class="bi bi-check-circle"></i>
+                <h6>Confirmed Orders</h6>
+                <h2>{{ confirmed_orders }}</h2>
+            </div>
         </div>
-
-
-
-
-
-        <!-- ORDERS -->
-
 
         <div class="col-xl-3 col-md-6">
-
-
-            <a href="{% url 'dashboard:orders' %}" class="text-decoration-none">
-
-
-                <div class="dashboard-card card-yellow shadow">
-
-
-                    <div class="d-flex justify-content-between align-items-center">
-
-
-                        <div>
-
-
-                            <h6>
-                                Orders
-                            </h6>
-
-
-                            <h2 class="fw-bold">
-                                {{ total_orders }}
-                            </h2>
-
-
-                            <p class="mb-0">
-                                Customer Orders
-                            </p>
-
-
-                        </div>
-
-
-                        <i class="bi bi-cart-check fs-1"></i>
-
-
-                    </div>
-
-
-                </div>
-
-
-            </a>
-
-
+            <div class="status-card status-info">
+                <i class="bi bi-truck"></i>
+                <h6>Shipped Orders</h6>
+                <h2>{{ shipped_orders }}</h2>
+            </div>
         </div>
-
-
-
-
-
-        <!-- LOW STOCK -->
-
 
         <div class="col-xl-3 col-md-6">
-
-
-            <a href="{% url 'dashboard:stock' %}" class="text-decoration-none">
-
-
-                <div class="dashboard-card card-red shadow">
-
-
-                    <div class="d-flex justify-content-between align-items-center">
-
-
-                        <div>
-
-
-                            <h6>
-                                Low Stock
-                            </h6>
-
-
-                            <h2 class="fw-bold">
-                                {{ low_stock }}
-                            </h2>
-
-
-                            <p class="mb-0">
-                                Need Restock
-                            </p>
-
-
-                        </div>
-
-
-                        <i class="bi bi-exclamation-triangle fs-1"></i>
-
-
-                    </div>
-
-
-                </div>
-
-
-            </a>
-
-
+            <div class="status-card status-success">
+                <i class="bi bi-bag-check"></i>
+                <h6>Delivered Orders</h6>
+                <h2>{{ delivered_orders }}</h2>
+            </div>
         </div>
 
+    </div>
 
+    <!-- CHART SECTION -->
+    <div class="row mt-5 g-4">
 
-
-
-
-        <!-- TOTAL SALE -->
-
-        <div class="col-xl-3 col-md-6">
-
-
-            <a href="{% url 'dashboard:sales_report' %}" class="text-decoration-none text-white">
-
-
-                <div class="dashboard-card card-green shadow">
-
-
-                    <div class="d-flex justify-content-between align-items-center">
-
-
-                        <div>
-
-
-                            <h6>
-                                Total Sale
-                            </h6>
-
-
-                            <h2 class="fw-bold">
-                                Rs {{ total_sale }}
-                            </h2>
-
-
-                            <p class="mb-0">
-                                Business Income
-                            </p>
-
-
-                        </div>
-
-
-                        <i class="bi bi-cash-stack fs-1"></i>
-
-
-                    </div>
-
-
+        <div class="col-lg-8">
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-body">
+                    <h4 class="fw-bold mb-3">Monthly Sales</h4>
+                    <canvas id="salesChart"></canvas>
                 </div>
-
-
-            </a>
-
-
+            </div>
         </div>
 
-        <!-- ORDER STATUS -->
-
-
-        <h3 class="fw-bold mt-5 mb-3">
-            Order Status
-        </h3>
-
-
-
-
-        <div class="row g-4">
-
-
-
-            <div class="col-xl-3 col-md-6">
-
-
-                <div class="status-card status-warning">
-
-
-                    <i class="bi bi-clock-history"></i>
-
-
-                    <h6>
-                        Pending Orders
-                    </h6>
-
-
-                    <h2>
-                        {{ pending_orders }}
-                    </h2>
-
-
+        <div class="col-lg-4">
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-body">
+                    <h4 class="fw-bold mb-3">Order Status</h4>
+                    <canvas id="orderChart"></canvas>
                 </div>
-
-
             </div>
-
-
-
-
-
-
-            <div class="col-xl-3 col-md-6">
-
-
-                <div class="status-card status-primary">
-
-
-                    <i class="bi bi-check-circle"></i>
-
-
-                    <h6>
-                        Confirmed Orders
-                    </h6>
-
-
-                    <h2>
-                        {{ confirmed_orders }}
-                    </h2>
-
-
-                </div>
-
-
-            </div>
-
-
-
-
-
-
-            <div class="col-xl-3 col-md-6">
-
-
-                <div class="status-card status-info">
-
-
-                    <i class="bi bi-truck"></i>
-
-
-                    <h6>
-                        Shipped Orders
-                    </h6>
-
-
-                    <h2>
-                        {{ shipped_orders }}
-                    </h2>
-
-
-                </div>
-
-
-            </div>
-
-
-
-
-
-
-            <div class="col-xl-3 col-md-6">
-
-
-                <div class="status-card status-success">
-
-
-                    <i class="bi bi-bag-check"></i>
-
-
-                    <h6>
-                        Delivered Orders
-                    </h6>
-
-
-                    <h2>
-                        {{ delivered_orders }}
-                    </h2>
-
-
-                </div>
-
-
-            </div>
-
-
-
         </div>
 
-        <!-- CHART SECTION -->
+    </div>
 
+    <!-- RECENT ORDERS -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-body">
 
-        <div class="row mt-5 g-4">
-
-
-
-            <div class="col-lg-8">
-
-
-                <div class="card shadow border-0 rounded-4">
-
-
-                    <div class="card-body">
-
-
-                        <h4 class="fw-bold mb-3">
-
-                            Monthly Sales
-
-                        </h4>
-
-
-                        <canvas id="salesChart"></canvas>
-
-
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="fw-bold mb-0">Recent Orders</h4>
+                        <a href="{% url 'dashboard:orders' %}" class="btn btn-dark btn-sm">View All</a>
                     </div>
 
+                    <div class="table-responsive">
+                        <table class="table align-middle table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Order</th>
+                                    <th>Customer</th>
+                                    <th>Amount</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in recent_orders %}
+                                <tr>
+                                    <td class="fw-semibold">#{{ order.order_number }}</td>
+                                    <td>{{ order.full_name }}</td>
+                                    <td>Rs {{ order.total }}</td>
+                                    <td><span class="badge bg-secondary">{{ order.payment_method }}</span></td>
+                                    <td>
+                                        {% if order.status == "Delivered" %}
+                                        <span class="badge bg-success">{{ order.status }}</span>
+                                        {% elif order.status == "Cancelled" %}
+                                        <span class="badge bg-danger">{{ order.status }}</span>
+                                        {% elif order.status == "Pending" %}
+                                        <span class="badge bg-warning text-dark">{{ order.status }}</span>
+                                        {% else %}
+                                        <span class="badge bg-primary">{{ order.status }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'dashboard:order_detail' order.id %}" class="btn btn-outline-dark btn-sm">View</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted">No Orders Found</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
-
-
             </div>
-
-
-
-
-
-            <div class="col-lg-4">
-
-
-                <div class="card shadow border-0 rounded-4">
-
-
-                    <div class="card-body">
-
-
-                        <h4 class="fw-bold mb-3">
-
-                            Order Status
-
-                        </h4>
-
-
-                        <canvas id="orderChart"></canvas>
-
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-
         </div>
-
-
-
-
-
-
-
-        <!-- RECENT ORDERS -->
-
-
-        <div class="row mt-5">
-
-
-            <div class="col-12">
-
-
-                <div class="card shadow border-0 rounded-4">
-
-
-                    <div class="card-body">
-
-
-
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-
-
-                            <h4 class="fw-bold mb-0">
-
-                                Recent Orders
-
-                            </h4>
-
-
-
-                            <a href="{% url 'dashboard:orders' %}" class="btn btn-dark btn-sm">
-
-                                View All
-
-                            </a>
-
-
-                        </div>
-
-
-
-
-
-                        <div class="table-responsive">
-
-
-                            <table class="table align-middle table-hover">
-
-
-
-                                <thead class="table-dark">
-
-
-                                    <tr>
-
-
-                                        <th>
-                                            Order
-                                        </th>
-
-
-                                        <th>
-                                            Customer
-                                        </th>
-
-
-                                        <th>
-                                            Amount
-                                        </th>
-
-
-                                        <th>
-                                            Payment
-                                        </th>
-
-
-                                        <th>
-                                            Status
-                                        </th>
-
-
-                                        <th>
-                                            Action
-                                        </th>
-
-
-                                    </tr>
-
-
-                                </thead>
-
-
-
-
-
-                                <tbody>
-
-
-                                    {% for order in recent_orders %}
-
-
-                                    <tr>
-
-
-                                        <td class="fw-semibold">
-
-                                            #{{ order.order_number }}
-
-                                        </td>
-
-
-
-                                        <td>
-
-                                            {{ order.full_name }}
-
-                                        </td>
-
-
-
-                                        <td>
-
-                                            Rs {{ order.total }}
-
-                                        </td>
-
-
-
-                                        <td>
-
-                                            <span class="badge bg-secondary">
-
-                                                {{ order.payment_method }}
-
-                                            </span>
-
-                                        </td>
-
-
-
-
-                                        <td>
-
-
-                                            {% if order.status == "Delivered" %}
-
-
-                                            <span class="badge bg-success">
-
-                                                {{ order.status }}
-
-                                            </span>
-
-
-                                            {% elif order.status == "Cancelled" %}
-
-
-                                            <span class="badge bg-danger">
-
-                                                {{ order.status }}
-
-                                            </span>
-
-
-                                            {% elif order.status == "Pending" %}
-
-
-                                            <span class="badge bg-warning text-dark">
-
-                                                {{ order.status }}
-
-                                            </span>
-
-
-                                            {% else %}
-
-
-                                            <span class="badge bg-primary">
-
-                                                {{ order.status }}
-
-                                            </span>
-
-
-                                            {% endif %}
-
-
-
-                                        </td>
-
-
-
-
-                                        <td>
-
-
-                                            <a href="{% url 'dashboard:order_detail' order.id %}"
-                                                class="btn btn-outline-dark btn-sm">
-
-                                                View
-
-                                            </a>
-
-
-                                        </td>
-
-
-
-                                    </tr>
-
-
-
-                                    {% empty %}
-
-
-
-                                    <tr>
-
-                                        <td colspan="6" class="text-center text-muted">
-
-                                            No Orders Found
-
-                                        </td>
-
-                                    </tr>
-
-
-
-                                    {% endfor %}
-
-
-
-                                </tbody>
-
-
-                            </table>
-
-
-                        </div>
-
-
-
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-
-
-
-
-
-        <!-- QUICK ACTIONS -->
-
-
-        <h3 class="fw-bold mt-5 mb-3">
-
-            Quick Actions
-
-        </h3>
-
-
-
-
-        <div class="row g-4">
-
-
-
-
-
-            <!-- ADD PRODUCT -->
-
-
-            <div class="col-lg-4">
-
-
-                <a href="{% url 'dashboard:product_add' %}" class="text-decoration-none">
-
-
-                    <div class="card shadow border-0 rounded-4">
-
-
-                        <div class="card-body text-center">
-
-
-                            <i class="bi bi-plus-circle fs-1 text-primary"></i>
-
-
-                            <h4 class="fw-bold mt-3">
-
-                                Add Product
-
-                            </h4>
-
-
-                            <p class="text-muted">
-
-                                Add new crockery items
-
-                            </p>
-
-
-                        </div>
-
-
-                    </div>
-
-
-                </a>
-
-
-            </div>
-
-
-
-
-
-            <!-- STOCK -->
-
-
-            <div class="col-lg-4">
-
-
-                <a href="{% url 'dashboard:stock' %}" class="text-decoration-none">
-
-
-                    <div class="card shadow border-0 rounded-4">
-
-
-                        <div class="card-body text-center">
-
-
-                            <i class="bi bi-box-seam fs-1 text-danger"></i>
-
-
-                            <h4 class="fw-bold mt-3">
-
-                                Manage Stock
-
-                            </h4>
-
-
-                            <p class="text-muted">
-
-                                Stock In / Stock Out
-
-                            </p>
-
-
-                        </div>
-
-
-                    </div>
-
-
-                </a>
-
-
-            </div>
-
-
-
-
-
-            <!-- ORDERS -->
-
-
-            <div class="col-lg-4">
-
-
-                <a href="{% url 'dashboard:orders' %}" class="text-decoration-none">
-
-
-                    <div class="card shadow border-0 rounded-4">
-
-
-                        <div class="card-body text-center">
-
-
-                            <i class="bi bi-cart-check fs-1 text-success"></i>
-
-
-                            <h4 class="fw-bold mt-3">
-
-                                View Orders
-
-                            </h4>
-
-
-                            <p class="text-muted">
-
-                                Customer Orders & Dispatch
-
-                            </p>
-
-
-                        </div>
-
-
-                    </div>
-
-
-                </a>
-
-
-            </div>
-
-
-
-        </div>
-
-
-        <div class="row g-4 mt-4">
-
-
-            <div class="col-lg-3">
-                <a href="{% url 'dashboard:banners' %}" class="text-decoration-none">
-
-                    <div class="card shadow border-0 rounded-4">
-                        <div class="card-body text-center">
-
-                            <i class="bi bi-image fs-1 text-primary"></i>
-
-                            <h5 class="fw-bold mt-3">
-                                Banners
-                            </h5>
-
-                            <p class="text-muted">
-                                Manage Homepage Banners
-                            </p>
-
-                        </div>
-                    </div>
-
-                </a>
-            </div>
-
-
-
-            <div class="col-lg-3">
-                <a href="{% url 'dashboard:best_sellers' %}" class="text-decoration-none">
-
-                    <div class="card shadow border-0 rounded-4">
-                        <div class="card-body text-center">
-
-                            <i class="bi bi-star fs-1 text-warning"></i>
-
-                            <h5 class="fw-bold mt-3">
-                                Best Sellers
-                            </h5>
-
-                            <p class="text-muted">
-                                Featured Products
-                            </p>
-
-                        </div>
-                    </div>
-
-                </a>
-            </div>
-
-
-
-
-            <div class="col-lg-3">
-                <a href="{% url 'dashboard:offers' %}" class="text-decoration-none">
-
-                    <div class="card shadow border-0 rounded-4">
-                        <div class="card-body text-center">
-
-                            <i class="bi bi-percent fs-1 text-danger"></i>
-
-                            <h5 class="fw-bold mt-3">
-                                Offers
-                            </h5>
-
-                            <p class="text-muted">
-                                Manage Discounts
-                            </p>
-
-                        </div>
-                    </div>
-
-                </a>
-            </div>
-
-
-
-
-            <div class="col-lg-3">
-                <a href="{% url 'dashboard:instagram' %}" class="text-decoration-none">
-
-                    <div class="card shadow border-0 rounded-4">
-                        <div class="card-body text-center">
-
-                            <i class="bi bi-instagram fs-1 text-success"></i>
-
-                            <h5 class="fw-bold mt-3">
-                                Instagram
-                            </h5>
-
-                            <p class="text-muted">
-                                Social Media Posts
-                            </p>
-
-                        </div>
-                    </div>
-
-                </a>
-            </div>
-
-
-        </div>
-
-
-
-        <!-- STOCK + MATERIAL SECTION -->
-
-
-        <div class="row mt-5 g-4">
-
-
-            <!-- MATERIAL STOCK -->
-
-
-            <div class="col-lg-8">
-
-
-                <div class="card shadow border-0 rounded-4">
-
-
-                    <div class="card-body">
-
-
-                        <h4 class="fw-bold mb-3">
-
-                            Material Wise Stock
-
-                        </h4>
-
-
-
-
-                        <div class="table-responsive">
-
-
-                            <table class="table align-middle table-hover">
-
-
-                                <thead class="table-dark">
-
-
-                                    <tr>
-
-                                        <th>
-                                            Material
-                                        </th>
-
-
-                                        <th>
-                                            Products
-                                        </th>
-
-
-                                        <th>
-                                            Total Stock
-                                        </th>
-
-
-                                    </tr>
-
-
-                                </thead>
-
-
-
-                                <tbody>
-
-
-                                    {% for item in material_stock %}
-
-
-
-                                    <tr>
-
-
-                                        <td class="fw-semibold">
-
-                                            <i class="bi bi-box-seam me-2"></i>
-
-                                            {{ item.material|default:"Other" }}
-
-                                        </td>
-
-
-
-                                        <td>
-
-                                            <span class="badge bg-primary rounded-pill">
-
-                                                {{ item.total_products }}
-
-                                            </span>
-
-                                        </td>
-
-
-
-                                        <td>
-
-                                            <span class="badge bg-success rounded-pill">
-
-                                                {{ item.total_stock }}
-
-                                            </span>
-
-                                        </td>
-
-
-                                    </tr>
-
-
-
-                                    {% empty %}
-
-
-
-                                    <tr>
-
-                                        <td colspan="3" class="text-center text-muted">
-
-                                            No Stock Data Available
-
-                                        </td>
-
-                                    </tr>
-
-
-
-                                    {% endfor %}
-
-
-
-                                </tbody>
-
-
-                            </table>
-
-
-                        </div>
-
-
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-
-
-
-
-            <!-- CASH REPORT -->
-
-
-            <div class="col-lg-4">
-
-
-                <div class="card shadow border-0 rounded-4">
-
-
-                    <div class="card-body">
-
-
-                        <h4 class="fw-bold mb-4">
-
-                            Cash Report
-
-                        </h4>
-
-
-
-
-                        <div class="mb-3 p-3 bg-light rounded-4">
-
-
-                            <h6 class="text-muted">
-
-                                This Month Sale
-
-                            </h6>
-
-
-                            <h3 class="fw-bold">
-
-                                Rs {{ month_sale }}
-
-                            </h3>
-
-
-                        </div>
-
-
-
-
-
-                        <div class="mb-3 p-3 bg-light rounded-4">
-
-
-                            <h6 class="text-muted">
-
-                                COD Sale
-
-                            </h6>
-
-
-                            <h3 class="fw-bold">
-
-                                Rs {{ cod_sale }}
-
-                            </h3>
-
-
-                        </div>
-
-
-
-
-
-                        <div class="p-3 bg-light rounded-4">
-
-
-                            <h6 class="text-muted">
-
-                                Online Payment
-
-                            </h6>
-
-
-                            <h3 class="fw-bold">
-
-                                Rs {{ online_sale }}
-
-                            </h3>
-
-
-                        </div>
-
-
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-
-        </div>
-
-
-
-
-
-
-
-        <!-- CHART SCRIPT -->
-
-        <script>
-
-            console.log("Chart loading...");
-
-
-            const salesChartElement = document.getElementById("salesChart");
-
-
-            if (salesChartElement) {
-
-
-                new Chart(salesChartElement, {
-
-                    type: "line",
-
-                    data: {
-
-                        labels: [
-                            "Jan",
-                            "Feb",
-                            "Mar",
-                            "Apr",
-                            "May",
-                            "Jun"
-                        ],
-
-                        datasets: [{
-
-                            label: "Sales",
-
-                            data: [
-                                12000,
-                                19000,
-                                15000,
-                                25000,
-                                22000,
-                                30000
-                            ],
-
-                            borderWidth: 3
-
-                        }]
-
-                    },
-
-                    options: {
-                        responsive: true
-                    }
-
-                });
-
-
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+    const salesChartElement = document.getElementById("salesChart");
+
+    if (salesChartElement) {
+        new Chart(salesChartElement, {
+            type: "line",
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                datasets: [{
+                    label: "Sales",
+                    data: [12000, 19000, 15000, 25000, 22000, 30000],
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true
             }
+        });
+    }
 
+    const orderChartElement = document.getElementById("orderChart");
 
-
-
-            const orderChartElement = document.getElementById("orderChart");
-
-
-            if (orderChartElement) {
-
-
-                new Chart(orderChartElement, {
-
-                    type: "doughnut",
-
-                    data: {
-
-                        labels: [
-                            "Pending",
-                            "Confirmed",
-                            "Shipped",
-                            "Delivered"
-                        ],
-
-                        datasets: [{
-
-                            data: [
-                                Number("{{ pending_orders|default:0 }}"),
-                                Number("{{ confirmed_orders|default:0 }}"),
-                                Number("{{ shipped_orders|default:0 }}"),
-                                Number("{{ delivered_orders|default:0 }}")
-                            ],
-
-                            borderWidth: 1
-
-                        }]
-
-                    },
-
-                    options: {
-                        responsive: true
-                    }
-
-                });
-
-
+    if (orderChartElement) {
+        new Chart(orderChartElement, {
+            type: "doughnut",
+            data: {
+                labels: ["Pending", "Confirmed", "Shipped", "Delivered"],
+                datasets: [{
+                    data: [
+                        Number("{{ pending_orders|default:0 }}"),
+                        Number("{{ confirmed_orders|default:0 }}"),
+                        Number("{{ shipped_orders|default:0 }}"),
+                        Number("{{ delivered_orders|default:0 }}")
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true
             }
+        });
+    }
 
-
-        </script>
-
-
-        {% endblock %}
+</script>
+{% endblock %}

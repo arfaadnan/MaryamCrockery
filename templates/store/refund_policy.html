@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+Refund & Returns Policy
+{% endblock %}
+
+{% block content %}
+
+{% include "includes/page_header.html" with title="Refund & Returns Policy" subtitle="Our process for returns, exchanges, and refunds." crumb="Refund Policy" %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+
+                <h4 class="mb-3">Return Eligibility</h4>
+                <p>
+                    If you receive a damaged, defective, or incorrect item, please contact us within 3 days of
+                    delivery. Items must be unused, in their original packaging, and accompanied by proof of purchase.
+                </p>
+
+                <h4 class="mt-4 mb-3">How to Request a Return</h4>
+                <p>
+                    Contact us via email at {{ site.email|default:"our support email" }} or WhatsApp with your order
+                    number and photos of the item. Our team will guide you through the return process.
+                </p>
+
+                <h4 class="mt-4 mb-3">Refunds</h4>
+                <p>
+                    Once your return is received and inspected, we will notify you of the approval status. Approved
+                    refunds will be processed via bank transfer or the original payment method within 7-10 business
+                    days.
+                </p>
+
+                <h4 class="mt-4 mb-3">Non-Returnable Items</h4>
+                <p>
+                    Items damaged due to misuse, normal wear and tear, or without original packaging are not eligible
+                    for return.
+                </p>
+
+                <h4 class="mt-4 mb-3">Exchanges</h4>
+                <p>
+                    If you'd like to exchange an item for a different size, color, or product, please contact us and
+                    we will assist you based on stock availability.
+                </p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

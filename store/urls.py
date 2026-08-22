@@ -50,6 +50,9 @@ urlpatterns = [
     
     # Admin & Information Pages
     path("contact/", views.contact, name="contact"),
+    path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
+    path("terms-conditions/", views.terms_conditions, name="terms_conditions"),
+    path("refund-policy/", views.refund_policy, name="refund_policy"),
     path("inventory/low-stock/", views.low_stock_products, name="low_stock_products"),
     path("ajax/load-subcategories/", views.load_subcategories, name="load_subcategories"),
     path("payment/jazzcash/start/<int:order_id>/", views.start_jazzcash_payment, name="jazzcash_start"),

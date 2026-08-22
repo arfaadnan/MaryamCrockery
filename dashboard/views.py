@@ -16,6 +16,7 @@ from .models import (
 from .models import StoreSetting, SiteSetting
 
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 
 from django.contrib import messages
@@ -43,8 +44,8 @@ from store.models import (
     SubCategory,
     ProductImage,
     ProductReturn,
+    SiteSettings,
 )
-
 
 # ============================================
 # AUTH — LOGIN / LOGOUT
@@ -1104,12 +1105,16 @@ def offer_delete(request, id):
 @login_required
 def store_setting(request):
 
-    setting = StoreSetting.objects.first()
+    if not request.user.is_superuser:
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect("dashboard:home")
+
+    setting = SiteSettings.objects.first()
+
+    if not setting:
+        setting = SiteSettings.objects.create()
 
     if request.method == "POST":
-
-        if not setting:
-            setting = StoreSetting()
 
         setting.store_name = request.POST.get("store_name")
         setting.phone = request.POST.get("phone")
@@ -1124,8 +1129,9 @@ def store_setting(request):
 
         setting.save()
 
-        return redirect("dashboard:store_setting")
+        messages.success(request, "Store settings updated successfully")
 
+        return redirect("dashboard:store_setting")
 
     return render(
         request,
@@ -1135,15 +1141,20 @@ def store_setting(request):
         }
     )
 
+
 @login_required
 def site_setting(request):
 
-    setting = SiteSetting.objects.first()
+    if not request.user.is_superuser:
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect("dashboard:home")
+
+    setting = SiteSettings.objects.first()
+
+    if not setting:
+        setting = SiteSettings.objects.create()
 
     if request.method == "POST":
-
-        if not setting:
-            setting = SiteSetting()
 
         setting.site_title = request.POST.get("site_title")
         setting.meta_description = request.POST.get("meta_description")
@@ -1151,17 +1162,16 @@ def site_setting(request):
         setting.instagram = request.POST.get("instagram")
         setting.youtube = request.POST.get("youtube")
         setting.footer_text = request.POST.get("footer_text")
-        setting.announcement = request.POST.get("announcement")
-
+        setting.announcement_text = request.POST.get("announcement")
 
         if request.FILES.get("favicon"):
             setting.favicon = request.FILES.get("favicon")
 
-
         setting.save()
 
-        return redirect("dashboard:site_setting")
+        messages.success(request, "Site settings updated successfully")
 
+        return redirect("dashboard:site_setting")
 
     return render(
         request,
