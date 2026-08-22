@@ -1,147 +1,79 @@
 {% extends "dashboard/base_dashboard.html" %}
 
-
 {% block title %}
 Customers
 {% endblock %}
 
-
-
 {% block content %}
-
 
 <div class="container-fluid">
 
-
 <div class="card shadow border-0 rounded-4">
-
 
 <div class="card-body p-4">
 
-
-<h3 class="fw-bold mb-4">
-Customers
-</h3>
-
-
+<h3 class="fw-bold mb-4">Customers</h3>
 
 <div class="table-responsive">
 
-
 <table class="table table-hover">
 
-
 <thead class="table-dark">
-
 <tr>
-
-<th>
-Name
-</th>
-
-<th>
-Phone
-</th>
-
-<th>
-Email
-</th>
-
-<th>
-Total Orders
-</th>
-
-<th>
-Total Spent
-</th>
-
-<th>
-Last Order
-</th>
-
+<th>Name</th>
+<th>Phone</th>
+<th>Email</th>
+<th>Total Orders</th>
+<th>Total Spent</th>
+<th>Last Order</th>
 </tr>
-
 </thead>
-
-
 
 <tbody>
 
-
 {% for customer in customers %}
 
-
 <tr>
-
 
 <td>
 {{ customer.full_name }}
+{% if customer.total_orders >= 2 %}
+<span class="badge bg-success ms-2">Regular</span>
+{% endif %}
 </td>
 
+<td>{{ customer.phone }}</td>
+
+<td>{{ customer.email|default:"-" }}</td>
 
 <td>
-{{ customer.phone }}
+<span class="fw-bold">{{ customer.total_orders }}</span>
 </td>
 
+<td>Rs {{ customer.total_spent }}</td>
 
-<td>
-{{ customer.email|default:"-" }}
-</td>
-
-
-<td>
-{{ customer.total_orders }}
-</td>
-
-
-<td>
-Rs {{ customer.total_spent }}
-</td>
-
-
-<td>
-{{ customer.last_order|date:"d M Y" }}
-</td>
-
+<td>{{ customer.last_order|date:"d M Y" }}</td>
 
 </tr>
-
-
 
 {% empty %}
 
-
 <tr>
-
-<td colspan="6" class="text-center">
-
-No Customers Found
-
-</td>
-
+<td colspan="6" class="text-center">No Customers Found</td>
 </tr>
-
 
 {% endfor %}
 
-
-
 </tbody>
-
 
 </table>
 
+</div>
 
 </div>
 
-
 </div>
 
-
 </div>
-
-
-</div>
-
 
 {% endblock %}

@@ -33,6 +33,7 @@
 
 .navbar-nav {
     margin-left: 20px;
+    gap: 8px;
 }
 
 .nav-link {
@@ -40,10 +41,13 @@
     font-weight: 600;
     color: var(--text) !important;
     transition: var(--transition);
+    padding: 10px 14px !important;
+    border-radius: 10px;
 }
 
 .nav-link:hover {
     color: var(--primary) !important;
+    background: var(--accent-tint, #F5EBDF);
 }
 
 .dropdown-menu {
@@ -53,8 +57,6 @@
     box-shadow: var(--shadow);
     padding: 10px 0;
 }
-
-
 
 .dropdown-item {
     padding: 12px 20px;
@@ -157,19 +159,4 @@
     align-items: center;
     font-size: 11px;
     font-weight: 600;
-}
-
-/* Premium Nav Hover */
-
-.navbar-nav {
-    gap: 8px;
-}
-
-.nav-link {
-    padding: 10px 14px !important;
-    border-radius: 10px;
-}
-
-.nav-link:hover {
-    background: rgba(15, 118, 110, .08);
 }

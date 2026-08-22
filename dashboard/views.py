@@ -629,17 +629,18 @@ def low_stock_list(request):
 def customer_list(request):
 
     customers = (
-        Order.objects.values("full_name", "phone", "email")
+        Order.objects.values("phone")
         .annotate(
+            full_name=Max("full_name"),
+            email=Max("email"),
             total_orders=Count("id"),
             total_spent=Sum("total"),
             last_order=Max("created_at"),
         )
-        .order_by("-last_order")
+        .order_by("-total_orders", "-last_order")
     )
 
     return render(request, "dashboard/customers/list.html", {"customers": customers})
-
 
 # ============================================
 # REPORTS

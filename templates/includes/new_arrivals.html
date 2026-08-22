@@ -1,31 +1,21 @@
-<section class="section best-seller-section">
+<section class="section">
 
     <div class="container">
 
         <div class="section-header text-center">
-            <span class="section-tag">Top Picks</span>
-            <h2>Best Sellers</h2>
-            <p>Loved by thousands of customers.</p>
+            <span class="section-tag">Just In</span>
+            <h2>New Arrivals</h2>
+            <p>The latest additions to our collection.</p>
         </div>
 
         <div class="row g-4">
 
-            {% for product in best_sellers %}
-
+            {% for product in new_arrivals %}
             <div class="col-lg-3 col-md-6">
-
                 {% include "includes/product_card.html" %}
-
             </div>
-
             {% empty %}
-
-            <div class="text-center">
-
-                No Products
-
-            </div>
-
+            <div class="text-center text-muted">No New Products Yet</div>
             {% endfor %}
 
         </div>

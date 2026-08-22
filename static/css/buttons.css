@@ -1,0 +1,142 @@
+/* ==========================================================
+   GLOBAL BUTTON COLOR SYSTEM — one consistent brand palette
+   across the whole site (overrides raw Bootstrap colors)
+========================================================== */
+
+/* ---------- PRIMARY CTA (main actions: Add to Cart, Checkout,
+   Place Order, Shop Now, Save, Submit) ---------- */
+
+.btn-danger,
+.btn-primary{
+    background-color:var(--ink, #161513) !important;
+    border-color:var(--ink, #161513) !important;
+    color:#fff !important;
+    transition:var(--transition, .25s ease);
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-primary:hover,
+.btn-primary:focus{
+    background-color:var(--accent, #A9682E) !important;
+    border-color:var(--accent, #A9682E) !important;
+    color:#fff !important;
+}
+
+/* ---------- SECONDARY (View Details, Continue Shopping,
+   Cancel, neutral actions) ---------- */
+
+.btn-outline-dark,
+.btn-secondary{
+    background-color:transparent !important;
+    border-color:var(--ink, #161513) !important;
+    color:var(--ink, #161513) !important;
+    transition:var(--transition, .25s ease);
+}
+
+.btn-outline-dark:hover,
+.btn-outline-dark:focus,
+.btn-secondary:hover,
+.btn-secondary:focus{
+    background-color:var(--ink, #161513) !important;
+    border-color:var(--ink, #161513) !important;
+    color:#fff !important;
+}
+
+/* ---------- MUTED / TERTIARY (quantity +/-, minor controls) ---------- */
+
+.btn-outline-secondary{
+    background-color:transparent !important;
+    border-color:var(--line, #E7E3DC) !important;
+    color:var(--ink-soft, #4A4744) !important;
+    transition:var(--transition, .25s ease);
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus{
+    background-color:var(--surface, #F3F1EC) !important;
+    border-color:var(--ink, #161513) !important;
+    color:var(--ink, #161513) !important;
+}
+
+/* ---------- DESTRUCTIVE (Remove, Delete) ---------- */
+
+.btn-outline-danger{
+    background-color:transparent !important;
+    border-color:#C0392B !important;
+    color:#C0392B !important;
+    transition:var(--transition, .25s ease);
+}
+
+.btn-outline-danger:hover,
+.btn-outline-danger:focus{
+    background-color:#C0392B !important;
+    border-color:#C0392B !important;
+    color:#fff !important;
+}
+
+/* ---------- POSITIVE (order confirmed, WhatsApp confirm) ---------- */
+
+.btn-success{
+    background-color:#2E7D5B !important;
+    border-color:#2E7D5B !important;
+    color:#fff !important;
+    transition:var(--transition, .25s ease);
+}
+
+.btn-success:hover,
+.btn-success:focus{
+    background-color:#245F46 !important;
+    border-color:#245F46 !important;
+    color:#fff !important;
+}
+
+/* ---------- INFO / LIGHT (rare, keep neutral & branded) ---------- */
+
+.btn-info{
+    background-color:var(--accent-tint, #F5EBDF) !important;
+    border-color:var(--accent-tint, #F5EBDF) !important;
+    color:var(--accent-dark, #8A5423) !important;
+}
+
+.btn-info:hover,
+.btn-info:focus{
+    background-color:var(--accent, #A9682E) !important;
+    border-color:var(--accent, #A9682E) !important;
+    color:#fff !important;
+}
+
+.btn-light{
+    background-color:var(--surface, #F3F1EC) !important;
+    border-color:var(--line, #E7E3DC) !important;
+    color:var(--ink, #161513) !important;
+}
+
+.btn-light:hover,
+.btn-light:focus{
+    background-color:#fff !important;
+    border-color:var(--ink, #161513) !important;
+}
+
+.btn-dark{
+    background-color:var(--ink, #161513) !important;
+    border-color:var(--ink, #161513) !important;
+    color:#fff !important;
+}
+
+.btn-dark:hover,
+.btn-dark:focus{
+    background-color:var(--accent, #A9682E) !important;
+    border-color:var(--accent, #A9682E) !important;
+}
+
+/* ---------- GENERAL POLISH ---------- */
+
+.btn{
+    font-weight:600;
+    letter-spacing:.3px;
+}
+
+.btn:focus{
+    box-shadow:none !important;
+}
